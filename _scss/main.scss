@@ -1,0 +1,73 @@
+/** PACKAGE **/
+
+.flex {
+    display: flex;
+}
+.justify-center {
+    justify-content: center;
+}
+.align-center {
+    align-items: center;
+}
+.space-between {
+    justify-content: space-between;
+}
+.space-around {
+    justify-content: space-around;
+}
+
+
+/** MAIN **/
+
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    background-color: #e6f4ff;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    
+    #main {
+        width: 1200px;
+        margin: 64px auto;
+
+        #header {
+            text-align: center;
+
+            img {
+                width: 200px;
+            }
+        }
+
+        nav {
+            margin: 32px auto;
+
+            ul {
+                list-style: none;
+                padding: 0;
+                gap: 32px;
+
+                li {
+                    a {
+                        text-decoration: none;
+                        color: #333;
+                        font-weight: bold;
+                        padding: 8px 16px;
+                        border-radius: 4px;
+                        transition: background-color 0.3s;
+
+                        &:hover {
+                            background-color: #ddd;
+                        }
+                    }
+                    .active {
+                        background-color: #ddd;
+                    }
+                }
+            }
+        }
+    }
+
+    footer {
+        text-align: center;
+    }
+}
