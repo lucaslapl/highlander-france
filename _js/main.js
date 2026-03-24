@@ -13,34 +13,17 @@ $.getJSON("./_scripts/hlfr_logs.php", function(logs) {
 
         rows += `
             <tr>
-                <td>${log.id}</td>
+                <td>${date}</td>
+                <td>${log.map}</td>
                 <td>
-                    <a href="https://logs.tf/${log.id}" target="_blank">
+                    <a class="log-link" href="https://logs.tf/${log.id}" target="_blank">
                         ${log.title}
                     </a>
                 </td>
-                <td>${date}</td>
-                <td>${log.map}</td>
+                
             </tr>
         `;
     });
 
     $("#logsTable tbody").html(rows);
-});
-
-$.getJSON("./_scripts/get_staff.php", function(players) {
-
-    let html = "";
-
-    players.forEach(p => {
-        html += `
-            <div class="staff-member">
-                <img src="${p.avatarfull}" alt="${p.personaname}" class="staff-avatar">
-                <h3>${p.personaname}</h3>
-                <a href="${p.profileurl}" target="_blank">Profil Steam</a>
-            </div>
-        `;
-    });
-
-    $("#staff").html(html);
 });

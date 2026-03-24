@@ -23,7 +23,22 @@ body {
     margin: 0;
     padding: 0;
     width: 100%;
-    background-color: #e6f4ff;
+    min-height: 100vh;
+    color: white;
+    background:
+  linear-gradient(
+    90deg,
+    rgba(0, 0, 0, 1) 5%,
+    rgba(0, 0, 0, .8) 10%,
+    rgba(0, 0, 0, 0) 50%,
+    rgba(0, 0, 0, .8) 90%,
+    rgba(0, 0, 0, 1) 95%
+  ),
+  url("../_img/upwardday.png");
+
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     
     #main {
@@ -49,8 +64,8 @@ body {
                 li {
                     a {
                         text-decoration: none;
-                        color: #333;
                         font-weight: bold;
+                        color: white;
                         padding: 8px 16px;
                         border-radius: 4px;
                         transition: background-color 0.3s;
@@ -64,6 +79,15 @@ body {
                     }
                 }
             }
+        }
+        #content {
+                background-color: rgba(0, 0, 0, 0.7);
+                padding: 32px;
+                border-radius: 8px;
+
+                .log-link {
+                    color: gold;
+                }
         }
     }
 

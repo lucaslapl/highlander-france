@@ -16,16 +16,15 @@
 
 
         <section id="content">
-            <h3>Logs des Matchs</h3>
+            <h3>Stats des Matchs</h3>
             <p>Consultez les logs détaillés des matchs de Highlander France.</p>
 
             <table id="logsTable" border="0" cellpadding="0" cellspacing="20">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Titre</th>
                         <th>Date</th>
                         <th>Carte</th>
+                        <th>Titre</th> 
                     </tr>
                 </thead>
                 <tbody id="logs">

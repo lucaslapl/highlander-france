@@ -16,7 +16,24 @@
 
 
         <section id="content">
-            <div id="staff" class="staff-container"></div>
+            <h3>L'équipe Highlander France</h3>
+            <div id="staff" class="flex justify-center align-center">
+                <div class="staff-member">
+                    <img src="_img/staff/1.png" alt="Kaylus">
+                    <h4>Kaylus</h4>
+                    <p>Fondateur & Coach Principal</p>
+                </div>
+                <div class="staff-member">
+                    <img src="_img/staff/2.png" alt="Schmit">
+                    <h4>Schmit</h4>
+                    <p>Manager & Analyste</p>
+                </div>
+                <div class="staff-member">
+                    <img src="_img/staff/3.png" alt="Zen">
+                    <h4>Zen</h4>
+                    <p>Entraîneur Adjoint & Stratège</p>
+                </div>
+            </div>
         </section>
 
     </main>
