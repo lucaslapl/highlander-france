@@ -16,9 +16,25 @@
 
 
         <section id="content">
-            <h3>Bienvenue sur Highlander France</h3>
-            <p>Nous sommes une communauté dédiée à la scène compétitive de Team Fortress 2 en France. Notre mission est de promouvoir, soutenir et faire grandir la scène Highlander en France.</p>
-            <p>Rejoignez-nous pour suivre les dernières actualités, les résultats des matchs, et participer à nos événements communautaires !</p>
+            <ul>
+                <li>Tu joues à Team Fortress 2 et tu parles français ?</li>
+                <li>Tu t'ennuies sur le mode casual et tu as envie de plus de challenge ?</li>
+                <li>Tu te demandes si tu es capable de jouer en compétitif ?</li>
+            </ul>
+            <p>Alors tu es bon endroit ! Bienvenue !</p>
+            <h3>Qui sommes-nous ?</h3>
+            <p>Créée en Février 2026 à l'initiative de joueurs expérimentés au plus haut niveau et des joueurs membre de l'Équipe de France TF2, la communauté Highlander France a vu le jour avec l'objectif de faire découvrir et de réunir les joueurs et joueuses francophones pratiquants ou intéressés par le mode 9v9 et de leur offrir un lieu unique pour échanger, apprendre, jouer ensemble.<br> 
+            Nous mettons un point d'honneur a faire de notre communauté un lieu sûr pour tous.</p>
+            <h3>Comment ça fonctionne ?</h3>
+            <p>Fort de notre expérience nous aidons les débutants et débutantes à appréhender le compétitif, les règles, les tournois, les ligues, les méthodes pour progresser rapidement. Nous organisons régulièrement des matchs de tout niveau pour permettre à tout le monde de développer leur connaissance et mettre en action leur apprentissage ainsi que des demoreview (visionnage de match avec explications) et des maptalks (explications sur comment jouer les maps) et bien plus encore...</p>
+            <h3>En chiffres :</h3>
+            <p>Highlander France, c'est :</p>
+            <ul>
+                <li><b>+80</b> membres actifs</li>
+                <li><b><span id="matchCount"><img src="_img/loading.gif" alt="Chargement..."></span></b> matchs organisés</li>
+                <li><b>+<span id="hoursPlayed"><img src="_img/loading.gif" alt="Chargement..."></b></span> heures de matchs jouées au total !</li>
+            </ul>
+            <p><b>Alors qu'attends-tu pour nous rejoindre ? Cela ne t'engage en rien, tu es libre de participer ou simplement observer et lorsque tu te sens prêt, tu te lances et nous t'aiderons !</b></p>
         </section>
 
     </main>

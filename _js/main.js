@@ -27,3 +27,8 @@ $.getJSON("./_scripts/hlfr_logs.php", function(logs) {
 
     $("#logsTable tbody").html(rows);
 });
+
+$.getJSON("./_scripts/hlfr_indexstats.php", function(stats) {
+    $("#matchCount").text(stats.matches);
+    $("#hoursPlayed").text(stats.hours);
+});
