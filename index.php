@@ -8,13 +8,13 @@
 </head>
 <body>
 
+    
+
+    <?php include("_inc/header.php"); ?>
+
+    
+
     <main id="main">
-
-        <?php include("_inc/header.php"); ?>
-
-        <?php include("_inc/nav.php"); ?>
-
-
         <section id="content">
             <div id="questions">
                 <ul>
