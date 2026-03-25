@@ -30,7 +30,7 @@ body {
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-family: Barlow, Verdana, sans-serif;
 }
 body #main {
   width: 1200px;
@@ -38,40 +38,121 @@ body #main {
 }
 body #main #header {
   text-align: center;
+  text-shadow: 4px 3px 3px rgba(0, 0, 0, 0.7294117647);
 }
 body #main #header img {
   width: 200px;
 }
 body #main nav {
   margin: 32px auto;
+  background: rgba(0, 0, 0, 0.6901960784);
+  padding: 5px 35px;
 }
 body #main nav ul {
   list-style: none;
   padding: 0;
   gap: 32px;
+  width: 500px;
 }
 body #main nav ul li a {
   text-decoration: none;
   font-weight: bold;
   color: white;
   padding: 8px 16px;
-  border-radius: 4px;
-  transition: background-color 0.3s;
+  transition: 0.3s;
 }
 body #main nav ul li a:hover {
-  background-color: #ddd;
+  background-color: gold;
+  color: #000;
 }
 body #main nav ul li .active {
   background-color: #ddd;
 }
+body #main nav .nav-discord {
+  text-decoration: none;
+  font-weight: bold;
+  color: white;
+  background-color: rgb(62, 100, 140);
+  padding: 13px;
+  transition: 0.3s;
+  border-radius: 5px;
+}
+body #main nav .nav-discord:hover {
+  background-color: gold;
+  color: #000;
+}
 body #main #content {
   background-color: rgba(0, 0, 0, 0.7);
   padding: 32px;
-  border-radius: 8px;
 }
-body #main #content .log-link {
+body #main #content b {
+  color: gold;
+}
+body #main #content {
+  /**** HOME PAGE ****/
+}
+body #main #content .stat-load {
+  width: 15px;
+}
+body #main #content #questions {
+  margin-bottom: 32px;
+}
+body #main #content #questions ul {
+  list-style: none;
+  line-height: 3.5em;
+}
+body #main #content #questions ul li {
+  font-size: 1.3em;
+}
+body #main #content #questions p {
+  font-size: 1.5em;
+}
+body #main #content #about {
+  width: 80%;
+}
+body #main #content #about p {
+  line-height: 1.4em;
+}
+body #main #content #numbers {
+  font-size: 1.5em;
+}
+body #main #content {
+  /**** STAFF PAGE ****/
+}
+body #main #content .staff-member {
+  text-align: center;
+  margin: 0 16px;
+  background-color: rgba(0, 0, 0, 0.7098039216);
+  padding: 10px;
+  width: 150px;
+}
+body #main #content .staff-member img {
+  width: 75px;
+  border-radius: 50%;
+  margin-bottom: 16px;
+}
+body #main #content {
+  /**** LOG PAGE****/
+}
+body #main #content #logsTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+body #main #content #logsTable th, body #main #content #logsTable td {
+  padding: 10px;
+  text-align: left;
+}
+body #main #content #logsTable th {
+  background-color: rgba(0, 0, 0, 0.7098039216);
+}
+body #main #content #logsTable tr:nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.5411764706);
+}
+body #main #content #logsTable .log-link {
   color: gold;
 }
 body footer {
   text-align: center;
+  background: rgba(0, 0, 0, 0.7098039216);
+  padding: 15px;
 }/*# sourceMappingURL=main.css.map */

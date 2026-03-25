@@ -25,21 +25,11 @@ body {
     width: 100%;
     min-height: 100vh;
     color: white;
-    background:
-  linear-gradient(
-    90deg,
-    rgba(0, 0, 0, 1) 5%,
-    rgba(0, 0, 0, .8) 10%,
-    rgba(0, 0, 0, 0) 50%,
-    rgba(0, 0, 0, .8) 90%,
-    rgba(0, 0, 0, 1) 95%
-  ),
-  url("../_img/upwardday.png");
-
+    background: linear-gradient(90deg, rgba(0, 0, 0, 1) 5%,rgba(0, 0, 0, .8) 10%,rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, .8) 90%, rgba(0, 0, 0, 1) 95%),url("../_img/upwardday.png");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: Barlow, Verdana, sans-serif;
     
     #main {
         width: 1200px;
@@ -47,6 +37,7 @@ body {
 
         #header {
             text-align: center;
+            text-shadow: 4px 3px 3px #000000ba;
 
             img {
                 width: 200px;
@@ -55,11 +46,14 @@ body {
 
         nav {
             margin: 32px auto;
+            background: #000000b0;
+            padding: 5px 35px;
 
             ul {
                 list-style: none;
                 padding: 0;
                 gap: 32px;
+                width: 500px;
 
                 li {
                     a {
@@ -67,11 +61,11 @@ body {
                         font-weight: bold;
                         color: white;
                         padding: 8px 16px;
-                        border-radius: 4px;
-                        transition: background-color 0.3s;
+                        transition: 0.3s;
 
                         &:hover {
-                            background-color: #ddd;
+                            background-color: gold;
+                            color: #000;
                         }
                     }
                     .active {
@@ -79,19 +73,104 @@ body {
                     }
                 }
             }
+            .nav-discord {
+                text-decoration: none;
+                font-weight: bold;
+                color: white;
+                background-color: rgb(62, 100, 140);
+                padding: 13px;
+                transition: 0.3s;
+                border-radius: 5px;
+
+                &:hover {
+                    background-color: gold;
+                    color: #000;
+                }
+            }
         }
         #content {
-                background-color: rgba(0, 0, 0, 0.7);
-                padding: 32px;
-                border-radius: 8px;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 32px;
+                
+            b {
+                color: gold;
+            }
+
+            /**** HOME PAGE ****/
+
+            .stat-load {
+                width: 15px;
+            }
+            #questions {
+                margin-bottom: 32px;
+
+                ul {
+                    list-style: none;
+                    line-height: 3.5em;
+
+                    li {
+                        font-size: 1.3em;
+                    }
+                }
+                p {
+                    font-size: 1.5em;
+                }
+            }
+            #about {
+                width: 80%;
+
+                p {
+                    line-height: 1.4em;
+                }
+            }
+            #numbers {
+                font-size: 1.5em;
+            }
+
+
+            /**** STAFF PAGE ****/
+
+            .staff-member {
+                text-align: center;
+                margin: 0 16px;
+                background-color: #000000b5;
+                padding: 10px;
+                width: 150px;
+    
+                img {
+                    width: 75px;
+                    border-radius: 50%;
+                    margin-bottom: 16px;
+                }
+            }
+
+            /**** LOG PAGE****/
+
+            #logsTable {
+                width: 100%;
+                border-collapse: collapse;
+
+                th, td {
+                    padding: 10px;
+                    text-align: left;
+                }
+                th {
+                    background-color: #000000b5;
+                }
+                tr:nth-child(even) {
+                    background-color: #0000008a;
+                }
 
                 .log-link {
                     color: gold;
                 }
+            }
         }
     }
 
     footer {
         text-align: center;
+        background: #000000b5;
+        padding: 15px;
     }
 }
