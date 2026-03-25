@@ -21,16 +21,49 @@
                 <div class="staff-member">
                     <img src="_img/kaylus.jpg" alt="Kaylus">
                     <h4>Kaylus</h4>
+                    <div class="staff-links flex justify-center align-center">
+                        <a href="http://steamcommunity.com/profiles/76561198051084840" title="Profil Steam Kaylus" target="_blank">
+                            <img class="steam-img" src="_img/steam-icon.svg">
+                        </a>
+                        <a href="https://etf2l.org/forum/user/58470/" title="Profil ETF2L Kaylus" target="_blank">
+                            <img class="etf2l-img" src="_img/etf2l-logo.png">
+                        </a>
+                        <a href="https://logs.tf/profile/76561198051084840" title="Profil logs.tf Kaylus" target="_blank">
+                            <img class="logstf-img" src="_img/logo-logstf.png">
+                        </a>
+                    </div>
                     <p>Fondateur & Coach Principal</p>
                 </div>
                 <div class="staff-member">
                     <img src="_img/schmit.jpg" alt="Schmit">
                     <h4>Schmit</h4>
+                    <div class="staff-links flex justify-center align-center">
+                        <a href="https://steamcommunity.com/id/DivinSchmitShot/" title="Profil Steam Schmit" target="_blank">
+                            <img class="steam-img" src="_img/steam-icon.svg">
+                        </a>
+                        <a href="https://etf2l.org/forum/user/107814/" title="Profil ETF2L Schmit" target="_blank">
+                            <img class="etf2l-img" src="_img/etf2l-logo.png">
+                        </a>
+                        <a href="https://logs.tf/profile/76561197974486633" title="Profil logs.tf Schmit" target="_blank">
+                            <img class="logstf-img" src="_img/logo-logstf.png">
+                        </a>
+                    </div>
                     <p>Manager & Analyste</p>
                 </div>
                 <div class="staff-member">
                     <img src="_img/zen.jpg" alt="Zen">
                     <h4>Zen</h4>
+                    <div class="staff-links flex justify-center align-center">
+                        <a href="https://steamcommunity.com/id/azazah/" title="Profil Steam Zen" target="_blank">
+                            <img class="steam-img" src="_img/steam-icon.svg">
+                        </a>
+                        <a href="https://etf2l.org/forum/user/137263/" title="Profil ETF2L Zen" target="_blank">
+                            <img class="etf2l-img" src="_img/etf2l-logo.png">
+                        </a>
+                        <a href="https://logs.tf/profile/76561198158964214" title="Profil logs.tf Zen" target="_blank">
+                            <img class="logstf-img" src="_img/logo-logstf.png">
+                        </a>
+                    </div>
                     <p>Entraîneur Adjoint & Stratège</p>
                 </div>
             </div>

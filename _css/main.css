@@ -34,14 +34,14 @@ body {
 }
 body #main {
   width: 1200px;
-  margin: 64px auto;
+  margin: 32px auto;
 }
 body #main #header {
   text-align: center;
   text-shadow: 4px 3px 3px rgba(0, 0, 0, 0.7294117647);
 }
 body #main #header img {
-  width: 200px;
+  width: 175px;
 }
 body #main nav {
   margin: 32px auto;
@@ -124,12 +124,26 @@ body #main #content .staff-member {
   margin: 0 16px;
   background-color: rgba(0, 0, 0, 0.7098039216);
   padding: 10px;
-  width: 150px;
+  width: 300px;
 }
 body #main #content .staff-member img {
   width: 75px;
   border-radius: 50%;
-  margin-bottom: 16px;
+}
+body #main #content .staff-member .staff-links a {
+  margin: 0 5px;
+}
+body #main #content .staff-member .staff-links a img {
+  border-radius: 0;
+}
+body #main #content .staff-member .staff-links a .steam-img {
+  width: 25px;
+}
+body #main #content .staff-member .staff-links a .etf2l-img {
+  width: 32px;
+}
+body #main #content .staff-member .staff-links a .logstf-img {
+  width: 45px;
 }
 body #main #content {
   /**** LOG PAGE****/
