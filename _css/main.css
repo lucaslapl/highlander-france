@@ -1,3 +1,7 @@
+@font-face {
+  font-family: "Montserrat";
+  src: url("../_fonts/Montserrat-Medium.ttf");
+}
 /** PACKAGE **/
 .flex {
   display: flex;
@@ -27,7 +31,7 @@ body {
   min-height: 100vh;
   color: white;
   background-color: #272433;
-  font-family: Barlow, Verdana, sans-serif;
+  font-family: "Montserrat";
 }
 body #header {
   /**background: linear-gradient(90deg, rgba(0, 0, 0, 1) 5%,rgba(0, 0, 0, .8) 10%,rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, .8) 90%, rgba(0, 0, 0, 1) 95%),url("../_img/suijin.png");**/
@@ -89,26 +93,27 @@ body #header nav .nav-content ul li a {
   font-weight: bold;
   color: white;
   padding: 8px 16px;
+  border-radius: 8px;
   transition: 0.3s;
 }
 body #header nav .nav-content ul li a:hover {
-  background-color: gold;
+  background-color: #fbb7fb;
   color: #000;
 }
 body #header nav .nav-content ul li .active {
-  background-color: #ddd;
+  background-color: #fbb7fb;
 }
 body #header nav .nav-discord {
   text-decoration: none;
   font-weight: bold;
   color: white;
-  background-color: rgb(62, 100, 140);
+  background-color: #7289da;
   padding: 13px;
   transition: 0.3s;
   border-radius: 5px;
 }
 body #header nav .nav-discord:hover {
-  background-color: gold;
+  background-color: #fbb7fb;
   color: #000;
 }
 body #main {
@@ -215,6 +220,23 @@ body #main #content #logsTable tr:nth-child(even) {
 }
 body #main #content #logsTable .log-link {
   color: gold;
+}
+body #main #content .pagination {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+body #main #content .page-btn {
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  background: #eee;
+  cursor: pointer;
+}
+body #main #content .page-btn.active {
+  background: #444;
+  color: white;
+  font-weight: bold;
 }
 body footer {
   text-align: center;

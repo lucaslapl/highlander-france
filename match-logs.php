@@ -5,16 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Highlander France</title>
     <link rel="stylesheet" href="_css/main.css">
+
+    <style>
+        #header {
+            position: relative;
+            height: 400px !important;
+        }
+    </style>
 </head>
 <body>
 
+    
+
+    <?php include("_inc/header.php"); ?>
+
     <main id="main">
-
-        <?php include("_inc/header.php"); ?>
-
-        <?php include("_inc/nav.php"); ?>
-
-
         <section id="content">
             <h3>Stats des Matchs</h3>
             <p>Consultez les logs détaillés des matchs de Highlander France.</p>
@@ -31,6 +36,8 @@
                     
                 </tbody>
             </table>
+
+            <div id="pagination" class="pagination"></div>
         </section>
 
     </main>

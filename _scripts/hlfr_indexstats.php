@@ -24,11 +24,13 @@ $data = json_decode(file_get_contents($url), true);
 $totalMatches = 0;
 $totalSeconds = 0;
 
-foreach ($data["logs"] as $log) {
+// 4 premiers logs non pris en compte
+$logs = array_slice($data["logs"], 0, -4);
+
+foreach ($logs as $log) {
 
     $totalMatches++;
 
-    // Récupérer les détails du log pour obtenir la durée
     $logId = $log["id"];
     $detailsUrl = "https://logs.tf/api/v1/log/$logId";
     $details = json_decode(file_get_contents($detailsUrl), true);

@@ -1,3 +1,8 @@
+@font-face {
+    font-family: "Montserrat";
+    src: url("../_fonts/Montserrat-Medium.ttf");
+}
+
 /** PACKAGE **/
 
 .flex {
@@ -26,7 +31,7 @@ body {
     min-height: 100vh;
     color: white;
     background-color: #272433;
-    font-family: Barlow, Verdana, sans-serif;
+    font-family: "Montserrat";
     
         #header {
             /**background: linear-gradient(90deg, rgba(0, 0, 0, 1) 5%,rgba(0, 0, 0, .8) 10%,rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, .8) 90%, rgba(0, 0, 0, 1) 95%),url("../_img/suijin.png");**/
@@ -93,15 +98,16 @@ body {
                                 font-weight: bold;
                                 color: white;
                                 padding: 8px 16px;
+                                border-radius: 8px;
                                 transition: 0.3s;
 
                                 &:hover {
-                                    background-color: gold;
+                                    background-color: #fbb7fb;
                                     color: #000;
                                 }
                             }
                             .active {
-                                background-color: #ddd;
+                                background-color: #fbb7fb;
                             }
                         }
                     }
@@ -112,13 +118,13 @@ body {
                     text-decoration: none;
                     font-weight: bold;
                     color: white;
-                    background-color: rgb(62, 100, 140);
+                    background-color: #7289da;
                     padding: 13px;
                     transition: 0.3s;
                     border-radius: 5px;
 
                     &:hover {
-                        background-color: gold;
+                        background-color: #fbb7fb;
                         color: #000;
                     }
                 }
@@ -246,6 +252,25 @@ body {
                 .log-link {
                     color: gold;
                 }
+            }
+            .pagination {
+                margin-top: 20px;
+                display: flex;
+                justify-content: center;
+                gap: 8px;
+            }
+
+            .page-btn {
+                padding: 6px 12px;
+                border: 1px solid #ccc;
+                background: #eee;
+                cursor: pointer;
+            }
+
+            .page-btn.active {
+                background: #444;
+                color: white;
+                font-weight: bold;
             }
         }
     }

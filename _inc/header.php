@@ -8,7 +8,7 @@
                         Highlander France
                     </h1>
                 </div>
-                <a class="join" href="#">Nous rejoindre</a>
+                <!--<a class="join" href="#">Nous rejoindre</a>-->
             </div>
             <!--<div class="citation">
                 <h3><i>Faire briller la scène compétitive TF2 en France</i></h3>

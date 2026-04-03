@@ -5,16 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Highlander France</title>
     <link rel="stylesheet" href="_css/main.css">
+
+    <style>
+        #header {
+            position: relative;
+            height: 400px !important;
+        }
+    </style>
 </head>
 <body>
 
+    
+
+    <?php include("_inc/header.php"); ?>
+
     <main id="main">
-
-        <?php include("_inc/header.php"); ?>
-
-        <?php include("_inc/nav.php"); ?>
-
-
         <section id="content">
             <h3>L'équipe Highlander France</h3>
             <div id="staff" class="flex justify-center align-center">
