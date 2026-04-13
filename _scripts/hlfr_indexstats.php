@@ -9,7 +9,6 @@ $cacheDuration = 3600; // 1 heure
 if (file_exists($cacheFile)) {
     $cache = json_decode(file_get_contents($cacheFile), true);
 
-    // Si le cache est encore valide, on le renvoie directement
     if (time() - $cache['timestamp'] < $cacheDuration) {
         echo json_encode($cache['data']);
         exit;
@@ -21,11 +20,22 @@ if (file_exists($cacheFile)) {
 $url = "https://logs.tf/api/v1/log?title=Highlander%20France";
 $data = json_decode(file_get_contents($url), true);
 
-$totalMatches = 0;
-$totalSeconds = 0;
+// Liste des logs à exclure
+$blacklist = [
+    4040598
+    // ajoute ici d'autres IDs si nécessaire
+];
 
 // 4 premiers logs non pris en compte
 $logs = array_slice($data["logs"], 0, -4);
+
+// Filtrer la blacklist
+$logs = array_filter($logs, function($log) use ($blacklist) {
+    return !in_array($log["id"], $blacklist);
+});
+
+$totalMatches = 0;
+$totalSeconds = 0;
 
 foreach ($logs as $log) {
 
