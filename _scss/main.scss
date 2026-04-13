@@ -93,6 +93,9 @@
 .space-around {
     justify-content: space-around;
 }
+.wrap {
+    flex-wrap: wrap;
+}
 
 
 /** MAIN **/
@@ -103,15 +106,15 @@ body {
     width: 100%;
     min-height: 100vh;
     color: white;
-    background-color: #272433;
+    background: linear-gradient(75deg,rgb(55, 34, 58) 0%, rgb(17, 9, 22) 34%, rgb(39, 36, 51) 100%);
     font-family: "Montserrat";
     
         #header {
             /**background: linear-gradient(90deg, rgba(0, 0, 0, 1) 5%,rgba(0, 0, 0, .8) 10%,rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, .8) 90%, rgba(0, 0, 0, 1) 95%),url("../_img/suijin.png");**/
-            background-image: url("../_img/suijin.png");
+            background-image: url("../_img/sujin000259.png");
             background-size: cover;
             background-repeat: no-repeat;
-            background-position: bottom;
+            background-position: center;
             text-align: center;
             width: 100%;
             height: 100vh;
@@ -253,8 +256,12 @@ body {
             }
             #numbers {
                 font-size: 1.5em;
-                margin: 0 64px;
+                margin: 0 auto;
                 text-align: center;
+                border: 4px solid #38193d;
+                width: 520px;
+                padding: 15px;
+                border-radius: 25px;
 
                 ul {
                     list-style: none;
@@ -269,41 +276,88 @@ body {
                     }
                 }
             }
+            #join {
+                text-align: center;
+
+                p {
+                    font-size: 1.5em;
+                }
+                a {
+                    display: inline-block;
+                    background-color: #72227d;
+                    color: white;
+                    padding: 15px 30px;
+                    text-decoration: none;
+                    font-size: 2.2em;
+                    border-radius: 8px;
+                    transition: 0.3s;
+                    font-weight: bold;
+
+                    &:hover {
+                        background-color: #fbb7fb;
+                        color: #000;
+                    }
+                }
+            }
 
 
             /**** STAFF PAGE ****/
 
-            .staff-member {
-                text-align: center;
-                margin: 0 16px;
-                background-color: #000000b5;
-                padding: 10px;
-                width: 300px;
-    
-                img {
-                    width: 75px;
-                    border-radius: 50%;
+            #staff {
+
+                h3 {
+                    text-align: center;
+                    margin: 32px 0 16px;
+                    font-size: 2em;
                 }
-                
-                .staff-links {
-                    a {
-                        margin: 0 5px;
-                        
+                .staff-role {
+                    text-align: center;
+                    margin: 0 auto;
+                    background-color: #000000b5;
+                    padding: 10px;
+                    width: 100%;
+                    border: 3px solid;
+                    border-radius: 7px;
+                    box-sizing: border-box;
+                    border-image: linear-gradient(to right,#B8388C,#320031,#B8388C);
+                    border-image-slice: 1;
+
+                    .staff-member {
+                        margin: 15px;
+
+                        h4 {
+                            margin: 5px 0;
+                            font-size: 1.3em;
+                        }
+
                         img {
-                            border-radius: 0;
+                            width: 65px;
+                            border-radius: 50%;
+                            border: 2px solid #462d66;
                         }
-                        .steam-img {
-                            width: 25px;
-                        }
-                        .etf2l-img {
-                            width: 32px;
-                        }
-                        .logstf-img {
-                            width: 45px;
+                        
+                        .staff-links {
+                            a {
+                                margin: 0 5px;
+                                
+                                img {
+                                    border-radius: 0;
+                                    border: none
+                                }
+                                .steam-img {
+                                    width: 25px;
+                                }
+                                .etf2l-img {
+                                    width: 32px;
+                                }
+                                .logstf-img {
+                                    width: 45px;
+                                }
+                            }
                         }
                     }
                 }
-            }
+            }   
 
             /**** LOG PAGE****/
 
@@ -323,7 +377,7 @@ body {
                 }
 
                 .log-link {
-                    color: gold;
+                    color: #e68bff;
                 }
             }
             .pagination {
@@ -352,5 +406,9 @@ body {
         text-align: center;
         background: #000000b5;
         padding: 15px;
+
+        a {
+            color: #fbb7fb;
+        }
     }
 }

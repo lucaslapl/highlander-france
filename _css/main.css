@@ -96,6 +96,10 @@
   justify-content: space-around;
 }
 
+.wrap {
+  flex-wrap: wrap;
+}
+
 /** MAIN **/
 body {
   margin: 0;
@@ -103,15 +107,15 @@ body {
   width: 100%;
   min-height: 100vh;
   color: white;
-  background-color: #272433;
+  background: linear-gradient(75deg, rgb(55, 34, 58) 0%, rgb(17, 9, 22) 34%, rgb(39, 36, 51) 100%);
   font-family: "Montserrat";
 }
 body #header {
   /**background: linear-gradient(90deg, rgba(0, 0, 0, 1) 5%,rgba(0, 0, 0, .8) 10%,rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, .8) 90%, rgba(0, 0, 0, 1) 95%),url("../_img/suijin.png");**/
-  background-image: url("../_img/suijin.png");
+  background-image: url("../_img/sujin000259.png");
   background-size: cover;
   background-repeat: no-repeat;
-  background-position: bottom;
+  background-position: center;
   text-align: center;
   width: 100%;
   height: 100vh;
@@ -232,8 +236,12 @@ body #main #content #about p {
 }
 body #main #content #numbers {
   font-size: 1.5em;
-  margin: 0 64px;
+  margin: 0 auto;
   text-align: center;
+  border: 4px solid #38193d;
+  width: 520px;
+  padding: 15px;
+  border-radius: 25px;
 }
 body #main #content #numbers ul {
   list-style: none;
@@ -245,33 +253,74 @@ body #main #content #numbers ul li {
 body #main #content #numbers ul li span {
   font-size: 2em;
 }
+body #main #content #join {
+  text-align: center;
+}
+body #main #content #join p {
+  font-size: 1.5em;
+}
+body #main #content #join a {
+  display: inline-block;
+  background-color: #72227d;
+  color: white;
+  padding: 15px 30px;
+  text-decoration: none;
+  font-size: 2.2em;
+  border-radius: 8px;
+  transition: 0.3s;
+  font-weight: bold;
+}
+body #main #content #join a:hover {
+  background-color: #fbb7fb;
+  color: #000;
+}
 body #main #content {
   /**** STAFF PAGE ****/
 }
-body #main #content .staff-member {
+body #main #content #staff h3 {
   text-align: center;
-  margin: 0 16px;
+  margin: 32px 0 16px;
+  font-size: 2em;
+}
+body #main #content #staff .staff-role {
+  text-align: center;
+  margin: 0 auto;
   background-color: rgba(0, 0, 0, 0.7098039216);
   padding: 10px;
-  width: 300px;
+  width: 100%;
+  border: 3px solid;
+  border-radius: 7px;
+  box-sizing: border-box;
+  -o-border-image: linear-gradient(to right, #B8388C, #320031, #B8388C);
+     border-image: linear-gradient(to right, #B8388C, #320031, #B8388C);
+  border-image-slice: 1;
 }
-body #main #content .staff-member img {
-  width: 75px;
+body #main #content #staff .staff-role .staff-member {
+  margin: 15px;
+}
+body #main #content #staff .staff-role .staff-member h4 {
+  margin: 5px 0;
+  font-size: 1.3em;
+}
+body #main #content #staff .staff-role .staff-member img {
+  width: 65px;
   border-radius: 50%;
+  border: 2px solid #462d66;
 }
-body #main #content .staff-member .staff-links a {
+body #main #content #staff .staff-role .staff-member .staff-links a {
   margin: 0 5px;
 }
-body #main #content .staff-member .staff-links a img {
+body #main #content #staff .staff-role .staff-member .staff-links a img {
   border-radius: 0;
+  border: none;
 }
-body #main #content .staff-member .staff-links a .steam-img {
+body #main #content #staff .staff-role .staff-member .staff-links a .steam-img {
   width: 25px;
 }
-body #main #content .staff-member .staff-links a .etf2l-img {
+body #main #content #staff .staff-role .staff-member .staff-links a .etf2l-img {
   width: 32px;
 }
-body #main #content .staff-member .staff-links a .logstf-img {
+body #main #content #staff .staff-role .staff-member .staff-links a .logstf-img {
   width: 45px;
 }
 body #main #content {
@@ -292,7 +341,7 @@ body #main #content #logsTable tr:nth-child(even) {
   background-color: rgba(0, 0, 0, 0.5411764706);
 }
 body #main #content #logsTable .log-link {
-  color: gold;
+  color: #e68bff;
 }
 body #main #content .pagination {
   margin-top: 20px;
@@ -315,4 +364,7 @@ body footer {
   text-align: center;
   background: rgba(0, 0, 0, 0.7098039216);
   padding: 15px;
+}
+body footer a {
+  color: #fbb7fb;
 }/*# sourceMappingURL=main.css.map */
