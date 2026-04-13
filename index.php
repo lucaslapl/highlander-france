@@ -36,11 +36,15 @@
             <div id="numbers">
                 <p>Highlander France, c'est :</p>
                 <ul>
-                    <li><span><b>+80</b></span> membres actifs</li>
+                    <li><span><b>+90</b></span> membres actifs</li>
                     <li><b><span id="matchCount"><img class="stat-load" src="_img/loading.gif" alt="Chargement..."></span></b> matchs organisés</li>
-                    <li><b>+<span id="hoursPlayed"><img class="stat-load" src="_img/loading.gif" alt="Chargement..."></b></span> heures de matchs jouées au total</li>
+                    <li><b><span>+</span><span id="hoursPlayed"><img class="stat-load" src="_img/loading.gif" alt="Chargement..."></b></span> heures de matchs jouées au total</li>
                 </ul>
+                
+            </div>
+            <div id="join">
                 <p>Alors qu'attends-tu pour nous rejoindre ? <b>Cela ne t'engage en rien</b>, tu es libre de participer ou simplement observer et lorsque tu te sens prêt, tu te lances et nous t'aiderons !</p>
+                <a href="https://discord.gg/highlanderfrance" class="join-btn">C'est parti !</a>
             </div>
             
         </section>
