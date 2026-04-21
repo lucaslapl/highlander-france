@@ -112,10 +112,10 @@ body {
     
         #header {
             /**background: linear-gradient(90deg, rgba(0, 0, 0, 1) 5%,rgba(0, 0, 0, .8) 10%,rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, .8) 90%, rgba(0, 0, 0, 1) 95%),url("../_img/suijin.png");**/
-            background-image: url("../_img/sujin000259.png");
+            background-image: url("../_img/suijin2.png");
             background-size: cover;
             background-repeat: no-repeat;
-            background-position: center;
+            background-position: bottom;
             text-align: center;
             width: 100%;
             height: 100vh;
@@ -152,7 +152,7 @@ body {
             }
 
             nav {
-                background: #000000b0;
+                background: linear-gradient(205deg, rgb(72, 30, 71) 8%, rgba(0,0,0,0.79) 57%, rgb(78, 14, 73) 100%);
                 padding: 5px 35px;
                 box-sizing: border-box;
                 position: absolute;
@@ -231,13 +231,14 @@ body {
                 top: 3px;
             }
             #questions {
-                margin-bottom: 32px;
+                margin-bottom: 72px;
                 text-align: center;
 
                 ul {
                     list-style: none;
                     line-height: 3em;
                     padding: 0;
+                    font-weight: 600;
 
                     li {
                         font-size: 1.3em;
@@ -250,20 +251,30 @@ body {
             #about {
                 margin: 0 64px;
 
-
+                h3 {
+                    font-size: 1.7em;
+                    margin-top: 60px;
+                    filter: drop-shadow(0px 0px 50px #8700e3);
+                }
+                img {
+                    float: left;
+                    width: 120px;
+                    margin: 0 25px;
+                }
                 p {
-                    line-height: 1.4em;
+                    line-height: 1.5em;
                     text-align: justify;
                 }
             }
             #numbers {
                 font-size: 1.5em;
-                margin: 0 auto;
+                margin: 30px auto;
                 text-align: center;
                 border: 4px solid #38193d;
                 width: 520px;
                 padding: 15px;
                 border-radius: 25px;
+                filter: drop-shadow(0px 0px 50px #8700e3);
 
                 ul {
                     list-style: none;
@@ -381,6 +392,18 @@ body {
                 .log-link {
                     color: #e68bff;
                 }
+
+                .log-row {
+                    opacity: 0;
+                    transform: translateX(-30px);
+                    transition: opacity 0.5s ease, transform 0.5s ease;
+                }
+
+                .log-row.visible {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+
             }
             .pagination {
                 margin-top: 20px;
