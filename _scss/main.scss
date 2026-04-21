@@ -437,3 +437,61 @@ body {
         }
     }
 }
+
+
+/***** MEDIA QUERIES *****/
+
+@media all and (max-width: 1290px) {
+    body #header .head-content,
+    body #header nav .nav-content {
+        width: 95%;
+    }
+    body #main {
+        width: 100%;
+    }
+}
+
+@media all and (max-width: 726px) {
+    body #header nav {
+        padding: 5px 15px;
+
+        .nav-content {
+            width: 100%;
+
+            ul {
+                gap: 5px;
+                width: auto;
+            }
+        }
+    }
+    body #main #content #questions ul {
+        line-height: unset;
+
+        li {
+            margin-bottom: 20px;
+        }
+    }
+    body #main #content #about {
+        margin: 0;
+    }
+    body #main #content #numbers {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+@media all and (max-width: 560px) {
+    body #header nav .nav-content ul {
+        flex-direction: column;
+        gap: 40px;
+    }
+}
+
+@media all and (max-width: 420px) {
+    body #main #content #numbers {
+        font-size: 1.2em;
+    }
+    body #main #content #join a {
+        font-size: 1.5em;
+    }
+}
