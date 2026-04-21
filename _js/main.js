@@ -11,9 +11,11 @@ $.getJSON("./_scripts/hlfr_logs.php", function(logs) {
         const end = start + logsPerPage;
         const pageLogs = logs.slice(start, end);
 
+        
+
         let rows = "";
 
-        pageLogs.forEach(log => {
+        pageLogs.forEach((log, index) => {
             const date = new Date(log.date * 1000).toLocaleString("fr-FR", {
                 year: "numeric",
                 month: "2-digit",
@@ -23,7 +25,7 @@ $.getJSON("./_scripts/hlfr_logs.php", function(logs) {
             });
 
             rows += `
-                <tr>
+                <tr class="log-row" data-index="${index}">
                     <td>${date}</td>
                     <td>${log.map}</td>
                     <td>
@@ -36,6 +38,13 @@ $.getJSON("./_scripts/hlfr_logs.php", function(logs) {
         });
 
         $("#logsTable tbody").html(rows);
+
+        // Animation progressive
+        $(".log-row").each(function(i) {
+            setTimeout(() => {
+                $(this).addClass("visible");
+            }, i * 120); // délai entre chaque ligne (120ms)
+        });
     }
 
     function renderPagination() {
@@ -52,7 +61,6 @@ $.getJSON("./_scripts/hlfr_logs.php", function(logs) {
 
         $("#pagination").html(buttons);
 
-        // Gestion du clic
         $(".page-btn").on("click", function() {
             currentPage = parseInt($(this).data("page"));
             renderTable(currentPage);
@@ -64,6 +72,7 @@ $.getJSON("./_scripts/hlfr_logs.php", function(logs) {
     renderTable(currentPage);
     renderPagination();
 });
+
 
 
 $.getJSON("./_scripts/hlfr_indexstats.php", function(stats) {
