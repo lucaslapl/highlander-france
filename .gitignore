@@ -1,2 +1,2 @@
 .env
-*.json
+_scripts/cache_hlfr_stats.json
