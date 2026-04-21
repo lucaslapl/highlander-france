@@ -14,7 +14,7 @@ $filtered = [];
 foreach ($data["logs"] as $log) {
 
     if (in_array($log["id"], $blacklist)) {
-        continue; // Ignorer ce log
+        continue;
     }
 
     $filtered[] = $log;
