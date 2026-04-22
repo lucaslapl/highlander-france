@@ -61,7 +61,7 @@
             
             <div id="about">
                 <h3><b>Qui sommes-nous ?</b></h3>
-                <img src="_img/hf.webp" alt="Logo Highlander France">
+                <img src="_img/logo-anim.gif" alt="Logo Highlander France">
                 <p>Créée en Février 2026 à l'initiative de joueurs expérimentés au plus haut niveau et des joueurs membre de l'Équipe de France TF2, la communauté Highlander France a vu le jour avec l'objectif de <b>faire découvrir et de réunir</b> les joueurs et joueuses francophones pratiquants ou intéressés par le mode 9v9 et de leur offrir un lieu unique pour <b>échanger, apprendre, jouer ensemble.</b><br> 
                 Nous mettons un point d'honneur a faire de notre communauté un <b>lieu sûr pour tous.</b></p>
                 <h3><b>Comment ça fonctionne ?</b></h3>
