@@ -79,3 +79,27 @@ $.getJSON("./_scripts/hlfr_indexstats.php", function(stats) {
     $("#matchCount").text(stats.matches);
     $("#hoursPlayed").text(stats.hours);
 });
+
+
+
+$.getJSON("./_scripts/hlfr_leaderboard.php", function(players) {
+
+    let rows = "";
+
+    players.forEach(p => {
+        rows += `
+            <tr>
+                <td><img src="${p.avatar}" width="48" height="48" style="border-radius:6px"></td>
+                <td>
+                    <a href="https://steamcommunity.com/profiles/${p.steamid64}" target="_blank">
+                        ${p.name}
+                    </a>
+                </td>
+                <td>${p.matches}</td>
+            </tr>
+        `;
+    });
+
+    $("#leaderboardTable tbody").html(rows);
+});
+

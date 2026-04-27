@@ -31,6 +31,19 @@
             </table>
 
             <div id="pagination" class="pagination"></div>
+
+            <table id="leaderboardTable">
+                <thead>
+                    <tr>
+                        <th>Avatar</th>
+                        <th>Joueur</th>
+                        <th>Matchs</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+
+
         </section>
 
     </main>
