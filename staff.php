@@ -97,6 +97,18 @@
                             </a>
                         </div>
                     </div>
+                    <div class="staff-member">
+                        <img src="_img/mathis.jpg" alt="Mathis">
+                        <h4>Mathis</h4>
+                        <div class="staff-links flex justify-center align-center">
+                            <a href="http://steamcommunity.com/profiles/76561199353050656" title="Profil Steam Mathis" target="_blank">
+                                <img class="steam-img" src="_img/steam-icon.svg">
+                            </a>
+                            <a href="https://etf2l.org/forum/user/147473/" title="Profil ETF2L Mathis" target="_blank">
+                                <img class="etf2l-img" src="_img/etf2l-logo.png">
+                            </a>
+                        </div>
+                    </div>
                 </div>
                 <h3>Lanceurs de mix</h3>
                 <div class="staff-role flex space-around align-center wrap">
