@@ -32,7 +32,7 @@
                     </div>
                     <div class="staff-member">
                         <img src="_img/schmit.jpg" alt="Schmit">
-                        <h4>Schmit</h4>
+                        <h4>SchmitShot</h4>
                         <div class="staff-links flex justify-center align-center">
                             <a href="https://steamcommunity.com/id/DivinSchmitShot/" title="Profil Steam Schmit" target="_blank">
                                 <img class="steam-img" src="_img/steam-icon.svg">
@@ -44,7 +44,7 @@
                     </div>
                     <div class="staff-member">
                         <img src="_img/zen.jpg" alt="Zen">
-                        <h4>Zen</h4>
+                        <h4>zen</h4>
                         <div class="staff-links flex justify-center align-center">
                             <a href="https://steamcommunity.com/id/azazah/" title="Profil Steam Zen" target="_blank">
                                 <img class="steam-img" src="_img/steam-icon.svg">
@@ -55,10 +55,12 @@
                         </div>
                     </div>
                 </div>
+                <!--
                 <h3>Modération</h3>
                 <div class="staff-role flex space-around align-center wrap">
                     (prévisionnel)
                 </div>
+                -->
                 <h3>Mentors</h3>
                 <div class="staff-role flex space-around align-center wrap">
                     <div class="staff-member">
@@ -69,6 +71,18 @@
                                 <img class="steam-img" src="_img/steam-icon.svg">
                             </a>
                             <a href="https://etf2l.org/forum/user/58470/" title="Profil ETF2L Kaylus" target="_blank">
+                                <img class="etf2l-img" src="_img/etf2l-logo.png">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="staff-member">
+                        <img src="_img/mathis.jpg" alt="Mathis">
+                        <h4>Mathis</h4>
+                        <div class="staff-links flex justify-center align-center">
+                            <a href="http://steamcommunity.com/profiles/76561199353050656" title="Profil Steam Mathis" target="_blank">
+                                <img class="steam-img" src="_img/steam-icon.svg">
+                            </a>
+                            <a href="https://etf2l.org/forum/user/147473/" title="Profil ETF2L Mathis" target="_blank">
                                 <img class="etf2l-img" src="_img/etf2l-logo.png">
                             </a>
                         </div>
@@ -86,25 +100,13 @@
                         </div>
                     </div>
                     <div class="staff-member">
-                        <img src="_img/schmit.jpg" alt="Schmit">
-                        <h4>Schmit</h4>
+                        <img src="_img/schmit.jpg" alt="SchmitShot">
+                        <h4>SchmitShot</h4>
                         <div class="staff-links flex justify-center align-center">
                             <a href="https://steamcommunity.com/id/DivinSchmitShot/" title="Profil Steam Schmit" target="_blank">
                                 <img class="steam-img" src="_img/steam-icon.svg">
                             </a>
                             <a href="https://etf2l.org/forum/user/107814/" title="Profil ETF2L Schmit" target="_blank">
-                                <img class="etf2l-img" src="_img/etf2l-logo.png">
-                            </a>
-                        </div>
-                    </div>
-                    <div class="staff-member">
-                        <img src="_img/mathis.jpg" alt="Mathis">
-                        <h4>Mathis</h4>
-                        <div class="staff-links flex justify-center align-center">
-                            <a href="http://steamcommunity.com/profiles/76561199353050656" title="Profil Steam Mathis" target="_blank">
-                                <img class="steam-img" src="_img/steam-icon.svg">
-                            </a>
-                            <a href="https://etf2l.org/forum/user/147473/" title="Profil ETF2L Mathis" target="_blank">
                                 <img class="etf2l-img" src="_img/etf2l-logo.png">
                             </a>
                         </div>
@@ -137,8 +139,8 @@
                         </div>
                     </div>
                     <div class="staff-member">
-                        <img src="_img/schmit.jpg" alt="Schmit">
-                        <h4>Schmit</h4>
+                        <img src="_img/schmit.jpg" alt="SchmitShot">
+                        <h4>SchmitShot</h4>
                         <div class="staff-links flex justify-center align-center">
                             <a href="https://steamcommunity.com/id/DivinSchmitShot/" title="Profil Steam Schmit" target="_blank">
                                 <img class="steam-img" src="_img/steam-icon.svg">
@@ -162,7 +164,7 @@
                     </div>
                     <div class="staff-member">
                         <img src="_img/zen.jpg" alt="Zen">
-                        <h4>Zen</h4>
+                        <h4>zen</h4>
                         <div class="staff-links flex justify-center align-center">
                             <a href="https://steamcommunity.com/id/azazah/" title="Profil Steam Zen" target="_blank">
                                 <img class="steam-img" src="_img/steam-icon.svg">
