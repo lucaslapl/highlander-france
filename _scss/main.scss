@@ -217,7 +217,7 @@ body {
 
         #content {
             /**background-color: rgba(0, 0, 0, 0.7);**/
-            padding: 32px;
+            padding: 0 32px;
                 
             b {
                 color: #fbb7fb;
@@ -336,6 +336,44 @@ body {
             /**** STAFF PAGE ****/
 
             #staff {
+
+                hr {
+                    width: 40px;
+                    color: #d061e77d;
+                }
+                p {
+                    text-align: center;
+                    font-style: italic;
+                    color: #cbcbcb;
+                }
+
+                #sous-staff {
+                    align-items: flex-start;
+
+                    #mentors, #mixers {
+                        margin: 0 15px;
+                        .staff-role {
+                            width: 350px;
+                            .staff-member {
+                                .staff-pic {
+                                    width: 50px;
+                                }
+                            }
+                        }
+
+                        h4 {
+                            margin: 5px 10px;
+                        }
+                        .staff-links {
+                            a {
+                                margin: 0 2px;
+                                img {
+                                    width: 25px;
+                                }
+                            }
+                        }
+                    }
+                }
 
                 h3 {
                     text-align: center;
@@ -470,6 +508,12 @@ body {
     }
 }
 
+@media all and (max-width: 870px) {
+    body #main #content #staff #sous-staff {
+        flex-direction: column;
+    }
+}
+
 @media all and (max-width: 726px) {
     body #header nav {
         padding: 5px 15px;
@@ -503,6 +547,22 @@ body {
     body #header nav .nav-content ul {
         flex-direction: column;
         gap: 40px;
+    }
+}
+
+@media all and (max-width: 450px) {
+    body #main #content #staff #sous-staff #mentors,
+    body #main #content #staff #sous-staff #mixers {
+        width: 100%;
+        margin: 0 auto;
+    }
+    body #main #content #staff #sous-staff #mentors .staff-role,
+    body #main #content #staff #sous-staff #mixers .staff-role {
+        width: 100%;
+    }
+    body #main #content #staff #sous-staff #mentors h4,
+    body #main #content #staff #sous-staff #mixers h4 {
+        font-size: 1em;
     }
 }
 

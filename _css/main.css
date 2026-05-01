@@ -201,7 +201,7 @@ body #main {
 }
 body #main #content {
   /**background-color: rgba(0, 0, 0, 0.7);**/
-  padding: 32px;
+  padding: 0 32px;
 }
 body #main #content b {
   color: #fbb7fb;
@@ -307,6 +307,36 @@ body #main #content #join a:hover {
 }
 body #main #content {
   /**** STAFF PAGE ****/
+}
+body #main #content #staff hr {
+  width: 40px;
+  color: rgba(208, 97, 231, 0.4901960784);
+}
+body #main #content #staff p {
+  text-align: center;
+  font-style: italic;
+  color: #cbcbcb;
+}
+body #main #content #staff #sous-staff {
+  align-items: flex-start;
+}
+body #main #content #staff #sous-staff #mentors, body #main #content #staff #sous-staff #mixers {
+  margin: 0 15px;
+}
+body #main #content #staff #sous-staff #mentors .staff-role, body #main #content #staff #sous-staff #mixers .staff-role {
+  width: 350px;
+}
+body #main #content #staff #sous-staff #mentors .staff-role .staff-member .staff-pic, body #main #content #staff #sous-staff #mixers .staff-role .staff-member .staff-pic {
+  width: 50px;
+}
+body #main #content #staff #sous-staff #mentors h4, body #main #content #staff #sous-staff #mixers h4 {
+  margin: 5px 10px;
+}
+body #main #content #staff #sous-staff #mentors .staff-links a, body #main #content #staff #sous-staff #mixers .staff-links a {
+  margin: 0 2px;
+}
+body #main #content #staff #sous-staff #mentors .staff-links a img, body #main #content #staff #sous-staff #mixers .staff-links a img {
+  width: 25px;
 }
 body #main #content #staff h3 {
   text-align: center;
@@ -419,6 +449,11 @@ body footer a {
     width: 100%;
   }
 }
+@media all and (max-width: 870px) {
+  body #main #content #staff #sous-staff {
+    flex-direction: column;
+  }
+}
 @media all and (max-width: 726px) {
   body #header nav {
     padding: 5px 15px;
@@ -448,6 +483,21 @@ body footer a {
   body #header nav .nav-content ul {
     flex-direction: column;
     gap: 40px;
+  }
+}
+@media all and (max-width: 450px) {
+  body #main #content #staff #sous-staff #mentors,
+  body #main #content #staff #sous-staff #mixers {
+    width: 100%;
+    margin: 0 auto;
+  }
+  body #main #content #staff #sous-staff #mentors .staff-role,
+  body #main #content #staff #sous-staff #mixers .staff-role {
+    width: 100%;
+  }
+  body #main #content #staff #sous-staff #mentors h4,
+  body #main #content #staff #sous-staff #mixers h4 {
+    font-size: 1em;
   }
 }
 @media all and (max-width: 420px) {
