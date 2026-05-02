@@ -256,7 +256,22 @@ body #main #content #about img {
 body #main #content #about p {
   line-height: 1.8em;
   text-align: justify;
-  margin-bottom: 90px;
+  margin-bottom: 45px;
+}
+body #main #content #about .pres-video {
+  perspective: 800px;
+  text-align: center;
+}
+body #main #content #about .pres-video video {
+  border-radius: 10px;
+  transition: transform 0.3s;
+  width: 500px;
+  transform: rotateY(24deg) rotateX(20deg);
+  box-shadow: -6px 7px #e97fff;
+  filter: drop-shadow(5px 17px 12px #000);
+}
+body #main #content #about .pres-video video:hover {
+  transform: rotateY(0deg);
 }
 body #main #content #numbers {
   font-size: 1.5em;
@@ -366,7 +381,7 @@ body #main #content #staff .staff-role .staff-member h4 {
 body #main #content #staff .staff-role .staff-member img {
   width: 65px;
   border-radius: 50%;
-  border: 2px solid #462d66;
+  border: 1px solid rgba(250, 87, 255, 0.5882352941);
 }
 body #main #content #staff .staff-role .staff-member .staff-links a {
   margin: 0 5px;
