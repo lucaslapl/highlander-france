@@ -110,6 +110,7 @@
         width: 540,
         height: 304,
         channel: "reconnexionTF",
+        autoplay: true,
         muted: true,
         layout: "video",
         // Only needed if this page is going to be embedded on other websites
