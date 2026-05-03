@@ -101,6 +101,11 @@
 <script src="https://kit.fontawesome.com/2f306d349c.js" crossorigin="anonymous"></script>
 <script src="https://embed.twitch.tv/embed/v1.js"></script>
 <script>
+    $.getJSON("_scripts/get_index_stats.php", function(stats) {
+        $("#matchCount").text(stats.matches);
+        $("#hoursPlayed").text(stats.hours);
+    });
+
     new Twitch.Embed("twitch-embed", {
         width: 540,
         height: 304,
@@ -110,11 +115,6 @@
         // Only needed if this page is going to be embedded on other websites
         // parent: ["embed.example.com", "othersite.example.com"]
       });
-    
-    $.getJSON("_scripts/get_index_stats.php", function(stats) {
-        $("#matchCount").text(stats.matches);
-        $("#hoursPlayed").text(stats.hours);
-    });
 </script>
 </body>
 </html>
