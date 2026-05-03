@@ -10,9 +10,11 @@
                 </div>
                 <!--<a class="join" href="#">Nous rejoindre</a>-->
             </div>
-            <div class="embed">
+            <!-- Twitch Embed -->
+            <!--<div class="embed">
                 <div id="twitch-embed"></div>
-            </div>
+            </div>-->
+
             <nav id="nav">
                 <div class="nav-content flex space-between align-center">
                     <ul class="flex justify-center align-center">
