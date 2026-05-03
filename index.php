@@ -63,12 +63,16 @@
                 <h3><b>Qui sommes-nous ?</b></h3>
                 <p>Créée en Février 2026 à l'initiative de joueurs expérimentés au plus haut niveau et des joueurs membre de l'Équipe de France TF2, la communauté Highlander France a vu le jour avec l'objectif de <b>faire découvrir et de réunir</b> les joueurs et joueuses francophones pratiquants ou intéressés par le mode 9v9 et de leur offrir un lieu unique pour <b>échanger, apprendre, jouer ensemble.</b><br> 
                 Nous mettons un point d'honneur a faire de notre communauté un <b>lieu sûr pour tous.</b></p>
-                <div class="pres-video">
-                    <video autoplay muted loop>
-                        <source src="https://i.imgur.com/We4yrzC.mp4" type="video/mp4">
-                        Votre navigateur ne supporte pas la lecture de vidéos.
-                    </video>
+                <div class="vid-container">
+                    <div class="pres-video">
+                        <video autoplay muted loop>
+                            <source src="https://i.imgur.com/We4yrzC.mp4" type="video/mp4">
+                            Votre navigateur ne supporte pas la lecture de vidéos.
+                        </video>
+                        <p class="vid-desc">Matchs amicaux streamés en direct sur Twitch!</p>
+                    </div>
                 </div>
+                
                 <h3><b>Comment ça fonctionne ?</b></h3>
                 <p>Fort de notre expérience <b>nous aidons les débutants et débutantes à appréhender le compétitif</b>, les règles, les tournois, les ligues, les méthodes pour progresser rapidement. Nous organisons régulièrement des matchs de tout niveau pour permettre à tout le monde de développer leur connaissance et mettre en action leur apprentissage ainsi que des demoreview (visionnage de match avec explications) et des maptalks (explications sur comment jouer les maps) et bien plus encore...</p>
             </div>
@@ -95,6 +99,18 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://kit.fontawesome.com/2f306d349c.js" crossorigin="anonymous"></script>
+<script src="https://embed.twitch.tv/embed/v1.js"></script>
+<script>
+    new Twitch.Embed("twitch-embed", {
+        width: 540,
+        height: 304,
+        channel: "reconnexionTF",
+        muted: true,
+        layout: "video",
+        // Only needed if this page is going to be embedded on other websites
+        // parent: ["embed.example.com", "othersite.example.com"]
+      });
+</script>
 <script src="_js/main.js"></script>
 </body>
 </html>

@@ -10,9 +10,9 @@
                 </div>
                 <!--<a class="join" href="#">Nous rejoindre</a>-->
             </div>
-            <!--<div class="citation">
-                <h3><i>Faire briller la scène compétitive TF2 en France</i></h3>
-            </div>-->
+            <div class="embed">
+                <div id="twitch-embed"></div>
+            </div>
             <nav id="nav">
                 <div class="nav-content flex space-between align-center">
                     <ul class="flex justify-center align-center">
