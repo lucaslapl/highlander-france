@@ -99,13 +99,17 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://kit.fontawesome.com/2f306d349c.js" crossorigin="anonymous"></script>
-<script src="https://embed.twitch.tv/embed/v1.js"></script>
+<!--<script src="https://embed.twitch.tv/embed/v1.js"></script>-->
 <script>
-    $.getJSON("_scripts/get_index_stats.php", function(stats) {
-        $("#matchCount").text(stats.matches);
-        $("#hoursPlayed").text(stats.hours);
-    });
-
+$.getJSON("_scripts/get_index_stats.php", function(stats) {
+    if (stats.data) {
+        $("#matchCount").text(stats.data.matches);
+        $("#hoursPlayed").text(stats.data.hours);
+    } else {
+        console.error("Structure JSON inattendue :", stats);
+    }
+});
+    /** 
     new Twitch.Embed("twitch-embed", {
         width: 540,
         height: 304,
@@ -116,6 +120,7 @@
         // Only needed if this page is going to be embedded on other websites
         // parent: ["embed.example.com", "othersite.example.com"]
       });
+      **/
 </script>
 </body>
 </html>
