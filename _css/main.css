@@ -360,6 +360,8 @@ body #main #content #numbers ul li b {
 }
 body #main #content #numbers ul li span {
   font-size: 2em;
+  position: relative;
+  top: 7px;
 }
 body #main #content #join {
   text-align: center;

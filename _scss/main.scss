@@ -389,7 +389,9 @@ body {
                             font-family: "TF2Secondary";
                         }
                         span {
-                            font-size: 2em; 
+                            font-size: 2em;
+                            position: relative;
+                            top: 7px;
                         }
                     }
                 }
