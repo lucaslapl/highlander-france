@@ -3,6 +3,7 @@
                 <ul class="flex justify-center align-center">
                     <li><a href="index.php">Accueil</a></li>
                     <li><a href="staff.php">L'équipe</a></li>
+                    <li><a href="hall-of-fame.php">Hall of Fame</a></li>
                     <li><a href="match-logs.php">Match Stats</a></li>
                 </ul>
                 <a class="nav-discord" href="https://discord.gg/highlanderfrance" class="discord-link">
