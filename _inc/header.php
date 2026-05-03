@@ -20,7 +20,7 @@
                         <li><a href="staff.php">L'équipe</a></li>
                         <li><a href="match-logs.php">Match Stats</a></li>
                     </ul>
-                    <a class="nav-discord" href="https://discord.gg/highlanderfrance" class="discord-link">
+                    <a class="nav-discord discord-link" href="https://discord.gg/highlanderfrance">
                         <i class="fa-brands fa-discord"></i> Discord
                     </a>
                 </div>

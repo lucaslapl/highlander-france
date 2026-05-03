@@ -62,7 +62,7 @@
             <div id="about">
                 <h3><b>Qui sommes-nous ?</b></h3>
                 <p>Créée en Février 2026 à l'initiative de joueurs expérimentés au plus haut niveau et des joueurs membre de l'Équipe de France TF2, la communauté Highlander France a vu le jour avec l'objectif de <b>faire découvrir et de réunir</b> les joueurs et joueuses francophones pratiquants ou intéressés par le mode 9v9 et de leur offrir un lieu unique pour <b>échanger, apprendre, jouer ensemble.</b><br> 
-                Nous mettons un point d'honneur a faire de notre communauté un <b>lieu sûr pour tous.</b></p>
+                Nous mettons un point d'honneur à faire de notre communauté un <b>lieu sûr pour tous.</b></p>
                 <div class="vid-container">
                     <div class="pres-video">
                         <video autoplay muted loop>
@@ -82,7 +82,7 @@
                 <ul>
                     <li><span><b>+110</b></span> membres actifs</li>
                     <li><b><span id="matchCount"><img class="stat-load" src="_img/loading.gif" alt="Chargement..."></span></b> matchs organisés</li>
-                    <li><b><span>+</span><span id="hoursPlayed"><img class="stat-load" src="_img/loading.gif" alt="Chargement..."></b></span> heures de matchs jouées au total</li>
+                    <li><b><span>+</span><span id="hoursPlayed"><img class="stat-load" src="_img/loading.gif" alt="Chargement..."></span></b> heures de matchs jouées au total</li>
                 </ul>
                 
             </div>
