@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @font-face {
   font-family: "Montserrat";
   src: url("../_fonts/Montserrat-Thin.ttf");
@@ -207,6 +208,7 @@ body #header nav .nav-content ul {
   padding: 0;
   gap: 32px;
   width: 500px;
+  text-wrap: nowrap;
 }
 body #header nav .nav-content ul li a {
   text-decoration: none;
@@ -221,7 +223,7 @@ body #header nav .nav-content ul li a:hover {
   color: #000;
 }
 body #header nav .nav-content ul li .active {
-  background-color: #fbb7fb;
+  border-bottom: 3px solid rgba(255, 98, 194, 0.431372549);
 }
 body #header nav .nav-discord {
   text-decoration: none;
@@ -555,6 +557,33 @@ body #main #content .leaderboard-container #leaderboard-body tr:nth-child(-n+3) 
 }
 body #main #content .leaderboard-container #leaderboard-body tr:nth-child(-n+3) td {
   font-weight: bold;
+}
+body #main #content .leaderboard-container #leaderboard-body tr:nth-child(1) {
+  color: gold;
+}
+body #main #content .leaderboard-container #leaderboard-body tr:nth-child(1) td:nth-child(2) span::after {
+  content: " 🥇";
+  font-size: 0.8em;
+  position: relative;
+  top: 0px;
+}
+body #main #content .leaderboard-container #leaderboard-body tr:nth-child(2) {
+  color: #ececec;
+}
+body #main #content .leaderboard-container #leaderboard-body tr:nth-child(2) td:nth-child(2) span::after {
+  content: " 🥈";
+  font-size: 1em;
+  position: relative;
+  top: 0px;
+}
+body #main #content .leaderboard-container #leaderboard-body tr:nth-child(3) {
+  color: #cd7f32;
+}
+body #main #content .leaderboard-container #leaderboard-body tr:nth-child(3) td:nth-child(2) span::after {
+  content: " 🥉";
+  font-size: 1em;
+  position: relative;
+  top: 0px;
 }
 body #main #content .leaderboard-container .player-info {
   display: flex;
