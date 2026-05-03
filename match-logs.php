@@ -20,7 +20,6 @@
             <div id="filters">
                 <input type="text" id="filter-date" placeholder="Rechercher par date (ex: 27/04)">
                 <input type="text" id="filter-map" placeholder="Rechercher une map…">
-                <input type="text" id="filter-title" placeholder="Rechercher un titre…">
             </div>
 
             <table id="logsTable" border="0" cellspacing="20">
@@ -37,21 +36,6 @@
             </table>
 
             <div id="pagination" class="pagination"></div>
-
-            <div class="leaderboard-container">
-                <h2>TOP 18 Joueurs actifs (all-time)</h2>
-                <table id="leaderboard-table">
-                    <thead>
-                        <tr>
-                            <th>Rang</th>
-                            <th>Joueur</th>
-                            <th>Matchs</th>
-                        </tr>
-                    </thead>
-                    <tbody id="leaderboard-body">
-                        </tbody>
-                </table>
-            </div>
 
         </section>
 
@@ -112,7 +96,6 @@ $.getJSON("./_scripts/hlfr_logs.php", function(logs) {
     function applyFilters() {
         const dateFilter = $("#filter-date").val().trim().toLowerCase();
         const mapFilter = $("#filter-map").val().trim().toLowerCase();
-        const titleFilter = $("#filter-title").val().trim().toLowerCase();
 
         filteredLogs = logs.filter(log => {
             const dateStr = new Date(log.date * 1000).toLocaleString("fr-FR", {
@@ -128,7 +111,7 @@ $.getJSON("./_scripts/hlfr_logs.php", function(logs) {
 
             if (dateFilter && !dateStr.includes(dateFilter)) return false;
             if (mapFilter && !mapStr.includes(mapFilter)) return false;
-            if (titleFilter && !titleStr.includes(titleFilter)) return false;
+            // if (titleFilter && !titleStr.includes(titleFilter)) return false;
 
             return true;
         });
@@ -198,7 +181,6 @@ $.getJSON("./_scripts/hlfr_logs.php", function(logs) {
     // Événements des filtres
     $("#filter-date").on("input", applyFilters);
     $("#filter-map").on("input", applyFilters);
-    $("#filter-title").on("input", applyFilters);
     
 
     // Affichage initial
