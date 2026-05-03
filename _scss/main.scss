@@ -518,6 +518,28 @@ body {
 
             /**** LOG PAGE****/
 
+            #filters {
+                display: flex;
+                justify-content: center;
+                gap: 20px;
+                margin-bottom: 20px;
+
+                input {
+                    padding: 8px 12px;
+                    border-radius: 5px;
+                    border: 1px solid #ccc;
+                    background: #2e2938;
+                    color: white;
+                    width: 200px;
+                    transition: .3s;
+
+                    &:focus {
+                        border-color: #fbb7fb;
+                        outline: none;
+                    }
+                }
+            }
+
             #logsTable {
                 width: 100%;
                 border-collapse: collapse;
@@ -564,7 +586,7 @@ body {
             }
 
             .page-btn.active {
-                background: #444;
+                background: #43132c;
                 color: white;
                 font-weight: bold;
             }
@@ -646,6 +668,15 @@ body {
     body #main #content #numbers {
         width: 100%;
         box-sizing: border-box;
+    }
+
+    body #main #content #filters {
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+    body #main #content #logsTable {
+        font-size: .8em;
     }
 }
 

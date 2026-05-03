@@ -465,6 +465,25 @@ body #main #content #staff .staff-role .staff-member .staff-links a .logstf-img 
 body #main #content {
   /**** LOG PAGE****/
 }
+body #main #content #filters {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+body #main #content #filters input {
+  padding: 8px 12px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background: #2e2938;
+  color: white;
+  width: 200px;
+  transition: 0.3s;
+}
+body #main #content #filters input:focus {
+  border-color: #fbb7fb;
+  outline: none;
+}
 body #main #content #logsTable {
   width: 100%;
   border-collapse: collapse;
@@ -504,7 +523,7 @@ body #main #content .page-btn {
   cursor: pointer;
 }
 body #main #content .page-btn.active {
-  background: #444;
+  background: #43132c;
   color: white;
   font-weight: bold;
 }
@@ -572,6 +591,14 @@ body footer a {
   body #main #content #numbers {
     width: 100%;
     box-sizing: border-box;
+  }
+  body #main #content #filters {
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+  }
+  body #main #content #logsTable {
+    font-size: 0.8em;
   }
 }
 @media all and (max-width: 650px) {

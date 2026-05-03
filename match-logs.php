@@ -17,6 +17,12 @@
             <h3>Stats des Matchs</h3>
             <p>Consultez les logs détaillés des matchs de Highlander France.</p>
 
+            <div id="filters">
+                <input type="text" id="filter-date" placeholder="Rechercher par date (ex: 27/04)">
+                <input type="text" id="filter-map" placeholder="Rechercher une map…">
+                <input type="text" id="filter-title" placeholder="Rechercher un titre…">
+            </div>
+
             <table id="logsTable" border="0" cellspacing="20">
                 <thead>
                     <tr>
