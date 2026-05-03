@@ -511,7 +511,7 @@ body #main #content #logsTable .log-row.visible {
   transform: translateX(0);
 }
 body #main #content .pagination {
-  margin-top: 20px;
+  margin: 20px auto 50px auto;
   display: flex;
   justify-content: center;
   gap: 8px;
@@ -526,6 +526,43 @@ body #main #content .page-btn.active {
   background: #43132c;
   color: white;
   font-weight: bold;
+}
+body #main #content .leaderboard-container {
+  width: 100%;
+}
+body #main #content .leaderboard-container #leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+body #main #content .leaderboard-container #leaderboard-table th, body #main #content .leaderboard-container #leaderboard-table td {
+  padding: 10px;
+  text-align: left;
+}
+body #main #content .leaderboard-container #leaderboard-body th, body #main #content .leaderboard-container #leaderboard-body td {
+  padding: 10px;
+  text-align: left;
+}
+body #main #content .leaderboard-container #leaderboard-body th {
+  background-color: rgba(0, 0, 0, 0.7098039216);
+}
+body #main #content .leaderboard-container #leaderboard-body tr:nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.5411764706);
+}
+body #main #content .leaderboard-container #leaderboard-body tr:nth-child(-n+3) {
+  background-color: rgba(253, 59, 195, 0.1);
+}
+body #main #content .leaderboard-container #leaderboard-body tr:nth-child(-n+3) td {
+  font-weight: bold;
+}
+body #main #content .leaderboard-container .player-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+body #main #content .leaderboard-container .player-info .player-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
 }
 body footer {
   text-align: center;

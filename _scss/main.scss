@@ -572,7 +572,7 @@ body {
 
             }
             .pagination {
-                margin-top: 20px;
+                margin: 20px auto 50px auto;
                 display: flex;
                 justify-content: center;
                 gap: 8px;
@@ -589,6 +589,50 @@ body {
                 background: #43132c;
                 color: white;
                 font-weight: bold;
+            }
+            .leaderboard-container { 
+                width: 100%; 
+
+                #leaderboard-table {
+                    width: 100%;
+                    border-collapse: collapse;
+
+                    th, td {
+                        padding: 10px;
+                        text-align: left;
+                    }
+                }
+
+                #leaderboard-body {
+                    th, td {
+                        padding: 10px;
+                        text-align: left;
+                    }
+                    th {
+                        background-color: #000000b5;
+                    }
+                    tr:nth-child(even) {
+                        background-color: #0000008a;
+                    }
+                    tr:nth-child(-n+3) {
+                        background-color: rgba(253, 59, 195, 0.10);
+                        td {
+                            font-weight: bold;
+                        }
+                    }
+                }
+
+                .player-info {
+                    display: flex; 
+                    align-items: center; 
+                    gap: 10px;
+
+                    .player-avatar {
+                        width: 32px; 
+                        height: 32px; 
+                        border-radius: 50%;
+                    }
+                }
             }
         }
     }

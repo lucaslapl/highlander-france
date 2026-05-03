@@ -39,25 +39,19 @@
             <div id="pagination" class="pagination"></div>
 
             <div class="leaderboard-container">
-    <h2>TOP 18 Joueurs</h2>
-    <table id="leaderboard-table">
-        <thead>
-            <tr>
-                <th>Rang</th>
-                <th>Joueur</th>
-                <th>Matchs</th>
-            </tr>
-        </thead>
-        <tbody id="leaderboard-body">
-            </tbody>
-    </table>
-</div>
-
-<style>
-.leaderboard-container { max-width: 600px; margin: auto; font-family: sans-serif; }
-.player-info { display: flex; align-items: center; gap: 10px; }
-.player-avatar { width: 32px; height: 32px; border-radius: 50%; }
-</style>
+                <h2>TOP 18 Joueurs actifs (all-time)</h2>
+                <table id="leaderboard-table">
+                    <thead>
+                        <tr>
+                            <th>Rang</th>
+                            <th>Joueur</th>
+                            <th>Matchs</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leaderboard-body">
+                        </tbody>
+                </table>
+            </div>
 
         </section>
 
