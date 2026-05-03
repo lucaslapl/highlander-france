@@ -110,7 +110,11 @@
         // Only needed if this page is going to be embedded on other websites
         // parent: ["embed.example.com", "othersite.example.com"]
       });
+    
+    $.getJSON("_scripts/get_index_stats.php", function(stats) {
+        $("#matchCount").text(stats.matches);
+        $("#hoursPlayed").text(stats.hours);
+    });
 </script>
-<script src="_js/main.js"></script>
 </body>
 </html>
