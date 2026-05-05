@@ -1,6 +1,6 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+//error_reporting(E_ALL);
+//ini_set('display_errors', 1);
 // On charge la configuration et les fonctions
 require_once __DIR__ . '/../_inc/config.php';
 require_once __DIR__ . '/../_inc/functions.php';
@@ -54,10 +54,15 @@ if (empty($user['name']) || ($last_update < time() - 86400)) {
 // 5. Affichage
 ?>
 <h1>Bienvenue, <?php echo htmlspecialchars($user['display_name'] ?? 'Joueur'); ?> !</h1>
-<p>Votre SteamID : <?php echo $_SESSION['steamid']; ?></p>
+<p>Votre SteamID : <?php echo $steamid3; ?></p>
 
 <br>
 
+<div class="info-container">
+    <h2>Vos informations</h2>
+    <p>Prochainement !</p>
+</div>
+<!--
 <?php if (isset($_GET['success'])): ?>
     <div style="color: green; margin-bottom: 10px;">
         Votre pseudo a bien été mis à jour !
@@ -74,5 +79,6 @@ if (empty($user['name']) || ($last_update < time() - 86400)) {
     <input type="text" name="display_name" value="<?php echo htmlspecialchars($valeur_nom); ?>">
     <button type="submit">Enregistrer</button>
 </form>
+-->
 
 <a href="../logout.php">Déconnexion</a>

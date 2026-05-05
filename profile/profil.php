@@ -1,6 +1,9 @@
 <?php
+//error_reporting(E_ALL);
+//ini_set('display_errors', 1);
 // 1. On charge la configuration
 require_once __DIR__ . '/../_inc/config.php';
+require_once __DIR__ . '/../_inc/functions.php';
 
 // 2. On récupère l'ID passé dans l'URL (ex: profil.php?steamid=7656...)
 $steamid = $_GET['steamid'] ?? null;
@@ -41,7 +44,7 @@ if (!$player) {
 
     <div class="stats-container">
         <h2>Statistiques</h2>
-        <p>Section en construction...</p>
+        <p>Prochainement !</p>
     </div>
 
     <br>
