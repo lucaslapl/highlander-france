@@ -8,7 +8,40 @@ require_once "_inc/functions.php";
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Highlander France</title>
+    <!-- HTML Meta Tags -->
+    <title>Highlander France - Communauté Compétitive de TF2</title>
+    <meta name="description" content="Highlander France est une communauté compétitive francophone de Team Fortress 2, offrant un espace pour les joueurs de tous niveaux pour apprendre, jouer et progresser ensemble.">
+
+    <!-- Facebook Meta Tags -->
+    <meta property="og:url" content="https://highlanderfrance.tf/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Highlander France - Communauté Compétitive de TF2">
+    <meta property="og:description" content="Highlander France est une communauté compétitive francophone de Team Fortress 2, offrant un espace pour les joueurs de tous niveaux pour apprendre, jouer et progresser ensemble.">
+    <meta property="og:image" content="https://highlanderfrance.tf/_img/hf.webp">
+
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="twitter:domain" content="highlanderfrance.tf">
+    <meta property="twitter:url" content="https://highlanderfrance.tf/">
+    <meta name="twitter:title" content="Highlander France - Communauté Compétitive de TF2">
+    <meta name="twitter:description" content="Highlander France est une communauté compétitive francophone de Team Fortress 2, offrant un espace pour les joueurs de tous niveaux pour apprendre, jouer et progresser ensemble.">
+    <meta name="twitter:image" content="https://highlanderfrance.tf/_img/hf.webp">
+
+    <!-- Favicon standard -->
+    <link rel="shortcut icon" href="https://highlanderfrance.tf/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://highlanderfrance.tf/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://highlanderfrance.tf/favicon-16x16.png">
+    <link rel="icon" type="image/x-icon" href="https://highlanderfrance.tf/favicon.ico">
+
+    <!-- Apple Touch Icon (iPhone/iPad) -->
+    <link rel="apple-touch-icon" href="https://highlanderfrance.tf/apple-touch-icon.png">
+
+    <!-- Android Chrome -->
+    <link rel="icon" type="image/png" sizes="192x192" href="https://highlanderfrance.tf/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="https://highlanderfrance.tf/android-chrome-512x512.png">
+
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="/site.webmanifest">
     <link rel="stylesheet" href="_css/main.css">
 </head>
 <body>
