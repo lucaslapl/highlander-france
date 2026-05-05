@@ -1,7 +1,7 @@
         <header id="header">
             <div class="head-content flex space-between align-center">
                 <div class="flex justify-center align-center">
-                    <a href="https://highlander-france.fr">
+                    <a href="https://highlanderfrance.tf">
                         <img class="header-logo" src="_img/hf.webp" alt="Highlander France">
                     </a>
                     <h1>
