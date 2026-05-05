@@ -187,9 +187,24 @@ body #header .embed #twitch-embed iframe {
   border: 5px solid #977ce1;
   box-shadow: 0 0 50px #000;
 }
-body #header img {
+body #header .header-logo {
   width: 80px;
   margin: 0 16px;
+}
+body #header #session-profile {
+  padding: 20px;
+  background: #383838;
+  border-radius: 25px;
+}
+body #header #session-profile a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  margin: 0 10px;
+  transition: 0.3s;
+}
+body #header #session-profile a:hover {
+  color: #fbb7fb;
 }
 body #header nav {
   background: linear-gradient(205deg, rgb(72, 30, 71) 8%, rgba(0, 0, 0, 0.79) 57%, rgb(78, 14, 73) 100%);

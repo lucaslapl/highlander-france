@@ -194,10 +194,27 @@ body {
                 }
             }
 
-            img {
+            .header-logo {
                 width: 80px;
                 margin: 0 16px;
             }
+            #session-profile {
+                padding: 20px;
+                background: #383838;
+                border-radius: 25px;
+                a {
+                    color: white;
+                    text-decoration: none;
+                    font-weight: bold;
+                    margin: 0 10px;
+                    transition: .3s;
+
+                    &:hover {
+                        color: #fbb7fb;
+                    }
+                }
+            }
+            
 
             nav {
                 background: linear-gradient(205deg, rgb(72, 30, 71) 8%, rgba(0,0,0,0.79) 57%, rgb(78, 14, 73) 100%);
