@@ -2,13 +2,22 @@
             <div class="head-content flex space-between align-center">
                 <div class="flex justify-center align-center">
                     <a href="https://highlander-france.fr">
-                        <img src="_img/hf.webp" alt="Highlander France">
+                        <img class="header-logo" src="_img/hf.webp" alt="Highlander France">
                     </a>
                     <h1>
                         Highlander France
                     </h1>
                 </div>
-                <!--<a class="join" href="#">Nous rejoindre</a>-->
+                <div id="session-profile" class="flex justify-center align-center">
+                    <?php if (isset($_SESSION['steamid'])): ?>
+                        <a href="profile/dashboard.php">Mon Profil</a>
+                        <a href="logout.php">Déconnexion</a>
+                    <?php else: ?>
+                        <a href="login.php">
+                            <img class="steamlogin" src="_img/sits_01.png" alt="Connexion via Steam">
+                        </a>
+                    <?php endif; ?>
+                </div>
             </div>
             <!-- Twitch Embed -->
             <!--<div class="embed">
