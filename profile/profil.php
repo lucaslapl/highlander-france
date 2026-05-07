@@ -73,7 +73,10 @@ if (!$player) {
 </head>
 <body>
 
-    <h1>Profil de <?php echo htmlspecialchars($player['display_name']); ?></h1>
+    <div class="profile-header">
+        <img src="<?php echo htmlspecialchars($player['avatar']); ?>" alt="Avatar de <?php echo htmlspecialchars($player['display_name']); ?>" class="profile-avatar">
+        <h1><?php echo htmlspecialchars($player['display_name']); ?></h1>
+    </div>
     
     <p>SteamID : <?php echo htmlspecialchars($player['steamid']); ?></p>
 
