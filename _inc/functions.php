@@ -17,6 +17,14 @@ function steamID3ToSteamID64($steamid3) {
     return bcadd($account_id, '76561197960265728');
 }
 
+function steamID3To64($steamID3) {
+    // Extrait le chiffre après le deuxième deux-points [U:1:XXXXXXXX]
+    if (preg_match('/\[U:1:(\d+)\]/', $steamID3, $matches)) {
+        return bcadd($matches[1], '76561197960265728');
+    }
+    return null;
+}
+
 function syncSteamProfile($steamid3, $db, $apiKey) {
     $env = parse_ini_file(__DIR__ . '/.env');
     $STEAM_API_KEY = $env['STEAM_API_KEY'];
