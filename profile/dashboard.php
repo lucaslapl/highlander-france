@@ -52,6 +52,8 @@ if (empty($user['name']) || ($last_update < time() - 86400)) {
 }
 
 // 5. Affichage
+$date_brute = $user['created_at'];
+$date_formatee = $date_brute ? date('d/m/Y', strtotime($date_brute)) : "n/c";
 ?>
 
 <!DOCTYPE html>
@@ -98,7 +100,7 @@ if (empty($user['name']) || ($last_update < time() - 86400)) {
 <body>
     <h1>Bienvenue, <?php echo htmlspecialchars($user['display_name'] ?? 'Joueur'); ?> !</h1>
     <p>Votre SteamID : <?php echo $steamid3; ?></p>
-
+    <p>Vous avez rejoint le : <?php echo $date_formatee; ?></p>
 <br>
 
 <div class="info-container">
