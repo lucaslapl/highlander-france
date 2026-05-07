@@ -129,8 +129,10 @@ async function loadLeaderboard() {
                 <td>#${index + 1}</td>
                 <td>
                     <div class="player-info">
-                        <img src="${player.avatar}" class="player-avatar" alt="avatar">
-                        <span>${escapeHtml(player.name)}</span>
+                        <a href="profile/profil.php?steamid=${player.steamid}" class="player-link">
+                            <img src="${player.avatar}" class="player-avatar" alt="avatar">
+                            <span>${escapeHtml(player.name)}</span>
+                        </a>
                     </div>
                 </td>
                 <td>${player.count}</td>
