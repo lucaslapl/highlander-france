@@ -1,6 +1,6 @@
 <?php
-//error_reporting(E_ALL);
-//ini_set('display_errors', 1);
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 // 1. On charge la configuration
 require_once __DIR__ . '/../_inc/config.php';
 require_once __DIR__ . '/../_inc/functions.php';
@@ -23,6 +23,13 @@ $steamid3 = steamID64ToSteamID3($steamid);
 $stmt = $db->prepare("SELECT * FROM players_info WHERE steamid = ?");
 $stmt->execute([$steamid3]);
 $player = $stmt->fetch();
+
+$date_brute = $player['created_at'];
+$date_formatee = $date_brute ? date('d/m/Y', strtotime($date_brute)) : "n/c";
+
+$stmt_matches = $db->prepare("SELECT count as total_matches FROM player_stats WHERE steamid = ?");
+$stmt_matches->execute([$steamid3]);
+$matches = $stmt_matches->fetch();
 
 // 5. Si le joueur n'existe pas en base
 if (!$player) {
@@ -79,6 +86,10 @@ if (!$player) {
     </div>
     
     <p>SteamID : <?php echo htmlspecialchars($player['steamid']); ?></p>
+    <p>Inscrit depuis le : <?php echo $date_formatee; ?></p>
+    <br>
+    <a href="https://steamcommunity.com/profiles/<?php echo $steamid; ?>" target="_blank">Profil Steam</a>
+    <p>Nombre de matchs : <?php echo $matches['total_matches']; ?></p>
 
     <div class="stats-container">
         <h2>Statistiques</h2>
@@ -86,7 +97,7 @@ if (!$player) {
     </div>
 
     <br>
-    <a href="index.php">Retour à l'accueil</a>
+    <a href="../index.php">Retour à l'accueil</a>
 
 </body>
 </html>
