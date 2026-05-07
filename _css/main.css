@@ -573,8 +573,9 @@ body #main #content .leaderboard-container #leaderboard-body tr:nth-child(-n+3) 
 body #main #content .leaderboard-container #leaderboard-body tr:nth-child(-n+3) td {
   font-weight: bold;
 }
-body #main #content .leaderboard-container #leaderboard-body tr:nth-child(1) {
-  color: gold;
+body #main #content .leaderboard-container #leaderboard-body tr:nth-child(1) td:nth-child(2) a {
+  color: #ffdf00 !important;
+  font-weight: bold;
 }
 body #main #content .leaderboard-container #leaderboard-body tr:nth-child(1) td:nth-child(2) span::after {
   content: " 🥇";
@@ -582,8 +583,9 @@ body #main #content .leaderboard-container #leaderboard-body tr:nth-child(1) td:
   position: relative;
   top: 0px;
 }
-body #main #content .leaderboard-container #leaderboard-body tr:nth-child(2) {
-  color: #ececec;
+body #main #content .leaderboard-container #leaderboard-body tr:nth-child(2) td:nth-child(2) a {
+  color: #ececec !important;
+  font-weight: bold;
 }
 body #main #content .leaderboard-container #leaderboard-body tr:nth-child(2) td:nth-child(2) span::after {
   content: " 🥈";
@@ -591,8 +593,9 @@ body #main #content .leaderboard-container #leaderboard-body tr:nth-child(2) td:
   position: relative;
   top: 0px;
 }
-body #main #content .leaderboard-container #leaderboard-body tr:nth-child(3) {
-  color: #cd7f32;
+body #main #content .leaderboard-container #leaderboard-body tr:nth-child(3) td:nth-child(2) a {
+  color: #cd7f32 !important;
+  font-weight: bold;
 }
 body #main #content .leaderboard-container #leaderboard-body tr:nth-child(3) td:nth-child(2) span::after {
   content: " 🥉";
@@ -600,12 +603,19 @@ body #main #content .leaderboard-container #leaderboard-body tr:nth-child(3) td:
   position: relative;
   top: 0px;
 }
-body #main #content .leaderboard-container .player-info {
+body #main #content .leaderboard-container .player-info .player-link {
   display: flex;
   align-items: center;
   gap: 10px;
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  transition: 0.3s;
 }
-body #main #content .leaderboard-container .player-info .player-avatar {
+body #main #content .leaderboard-container .player-info .player-link:hover {
+  color: #fbb7fb;
+}
+body #main #content .leaderboard-container .player-info .player-link .player-avatar {
   width: 32px;
   height: 32px;
   border-radius: 50%;

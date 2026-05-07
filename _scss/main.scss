@@ -641,8 +641,11 @@ body {
                         }
                     }
                     tr:nth-child(1) {
-                        color: gold;
                         td:nth-child(2) {
+                            a {
+                                color: #ffdf00 !important;
+                                font-weight: bold;
+                            }
                             span::after {
                                 content: " 🥇";
                                 font-size: 0.8em;
@@ -652,8 +655,11 @@ body {
                         }
                     }
                     tr:nth-child(2) {
-                        color: #ececec;
                         td:nth-child(2) {
+                            a {
+                                color: #ececec !important;
+                                font-weight: bold;
+                            }
                             span::after {
                                 content: " 🥈";
                                 font-size: 1em;
@@ -663,8 +669,11 @@ body {
                         }
                     }
                     tr:nth-child(3) {
-                        color: #cd7f32;
                         td:nth-child(2) {
+                            a {
+                                color: #cd7f32 !important;
+                                font-weight: bold;
+                            }
                             span::after {
                                 content: " 🥉";
                                 font-size: 1em;
@@ -676,14 +685,25 @@ body {
                 }
 
                 .player-info {
-                    display: flex; 
-                    align-items: center; 
-                    gap: 10px;
 
-                    .player-avatar {
-                        width: 32px; 
-                        height: 32px; 
-                        border-radius: 50%;
+                    .player-link {
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                        text-decoration: none;
+                        color: white;
+                        font-weight: bold;
+                        transition: .3s;
+
+                        &:hover {
+                            color: #fbb7fb;
+                        }
+
+                        .player-avatar {
+                            width: 32px; 
+                            height: 32px; 
+                            border-radius: 50%;
+                        }
                     }
                 }
             }
