@@ -17,7 +17,7 @@ require_once "_inc/functions.php";
     <meta property="og:type" content="website">
     <meta property="og:title" content="Highlander France - Communauté Compétitive de TF2">
     <meta property="og:description" content="Highlander France est une communauté compétitive francophone de Team Fortress 2, offrant un espace pour les joueurs de tous niveaux pour apprendre, jouer et progresser ensemble.">
-    <meta property="og:image" content="https://highlanderfrance.tf/_img/hf.webp">
+    <meta property="og:image" content="https://highlanderfrance.tf/_img/meta-bg-hlfr.jpg">
 
     <!-- Twitter Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
@@ -25,7 +25,7 @@ require_once "_inc/functions.php";
     <meta property="twitter:url" content="https://highlanderfrance.tf/">
     <meta name="twitter:title" content="Highlander France - Communauté Compétitive de TF2">
     <meta name="twitter:description" content="Highlander France est une communauté compétitive francophone de Team Fortress 2, offrant un espace pour les joueurs de tous niveaux pour apprendre, jouer et progresser ensemble.">
-    <meta name="twitter:image" content="https://highlanderfrance.tf/_img/hf.webp">
+    <meta name="twitter:image" content="https://highlanderfrance.tf/_img/meta-bg-hlfr.jpg">
 
     <!-- Favicon standard -->
     <link rel="shortcut icon" href="https://highlanderfrance.tf/favicon.ico">
