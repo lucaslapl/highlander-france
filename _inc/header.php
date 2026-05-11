@@ -1,4 +1,4 @@
-        <header id="header">
+        <header id="header" fetchpriority="high">
             <div class="head-content flex space-between align-center">
                 <div class="flex justify-center align-center">
                     <a href="https://highlanderfrance.tf">
