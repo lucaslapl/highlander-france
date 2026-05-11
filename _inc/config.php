@@ -1,8 +1,8 @@
 <?php
-ini_set('session.save_path', __DIR__ . '/../tmp/sessions');
-
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
+if (php_sapi_name() !== 'cli') {
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
 }
 
 $db_path = __DIR__ . '/../_scripts/stats.db';
