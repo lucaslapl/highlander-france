@@ -9,13 +9,13 @@ require_once "_inc/functions.php";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- HTML Meta Tags -->
-    <title>Highlander France - Communauté Compétitive de TF2</title>
+    <title>Highlander France - Logs des Matchs</title>
     <meta name="description" content="Highlander France est une communauté compétitive francophone de Team Fortress 2, offrant un espace pour les joueurs de tous niveaux pour apprendre, jouer et progresser ensemble.">
 
     <!-- Facebook Meta Tags -->
     <meta property="og:url" content="https://highlanderfrance.tf/">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Highlander France - Communauté Compétitive de TF2">
+    <meta property="og:title" content="Highlander France - Logs des Matchs">
     <meta property="og:description" content="Highlander France est une communauté compétitive francophone de Team Fortress 2, offrant un espace pour les joueurs de tous niveaux pour apprendre, jouer et progresser ensemble.">
     <meta property="og:image" content="https://highlanderfrance.tf/_img/meta-bg-hlfr.jpg">
 
@@ -23,7 +23,7 @@ require_once "_inc/functions.php";
     <meta name="twitter:card" content="summary_large_image">
     <meta property="twitter:domain" content="highlanderfrance.tf">
     <meta property="twitter:url" content="https://highlanderfrance.tf/">
-    <meta name="twitter:title" content="Highlander France - Communauté Compétitive de TF2">
+    <meta name="twitter:title" content="Highlander France - Logs des Matchs">
     <meta name="twitter:description" content="Highlander France est une communauté compétitive francophone de Team Fortress 2, offrant un espace pour les joueurs de tous niveaux pour apprendre, jouer et progresser ensemble.">
     <meta name="twitter:image" content="https://highlanderfrance.tf/_img/meta-bg-hlfr.jpg">
 
