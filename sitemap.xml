@@ -24,4 +24,10 @@
             <priority>0.8</priority>
             <changefreq>daily</changefreq>
       </url>
+      <url>
+            <loc>https://highlanderfrance.tf/confidentialite.php</loc>
+            <lastmod>2026-05-11</lastmod>
+            <priority>0.6</priority>
+            <changefreq>monthly</changefreq>
+      </url>
 </urlset>
