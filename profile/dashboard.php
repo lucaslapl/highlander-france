@@ -100,41 +100,75 @@ $matches = $stmt_matches->fetch();
     <link rel="manifest" href="/site.webmanifest">
 
     <link rel="stylesheet" href="../_css/main.css">
+    <style>
+        body #header {
+            height: 425px;
+            position: relative;
+        }
+
+        body #main {
+            min-height: 500px;
+            position: relative;
+        }
+        body #main #content .personnal-info .profile-header {
+            gap: 20px;
+        }
+        body #main #content .personnal-info .profile-header img {
+            width: 125px;
+            border-radius: 50%;
+        }
+        body #main #content .personnal-info .profile-header h1 {
+            font-size: 3em;
+        }
+        body #main #content .personnal-info .profile-header h1 span {
+            font-size: 0.25em;
+            font-weight: normal;
+        }
+    </style>
 </head>
 <body>
 
     <?php include("../_inc/header.php"); ?>
 
-    <h1>Bienvenue, <?php echo htmlspecialchars($user['display_name'] ?? 'Joueur'); ?> !</h1>
-    <p>Votre SteamID : <?php echo $steamid3; ?></p>
-    <p>Vous avez rejoint le : <?php echo $date_formatee; ?></p>
-    <p>Nombre total de matchs joués : <?php echo $matches['total_matches'] ?? 0; ?></p>
-<br>
+    <div id="main">
+        <section id="content">
+            <div class="personnal-info">
+                <div class="profile-header flex align-center">
+                    <img src="<?php echo htmlspecialchars($user['avatar']); ?>" alt="Avatar de <?php echo htmlspecialchars($user['display_name']); ?>" class="profile-avatar">
+                    <h1><?php echo htmlspecialchars($user['display_name'] ?? 'Joueur'); ?> <span>inscrit le <?php echo $date_formatee; ?></span></h1>
+                </div>
+                <h2>Informations personnelles</h2>
+                <p>SteamID : <?php echo $steamid3; ?></p>
+            </div>
 
-<div class="info-container">
-    <h2>Vos informations</h2>
-    <p>Prochainement !</p>
-</div>
-<!--
-<?php if (isset($_GET['success'])): ?>
-    <div style="color: green; margin-bottom: 10px;">
-        Votre pseudo a bien été mis à jour !
+            <br>
+
+            <div class="player-stats">
+                <h2>Vos stats</h2>
+                <p><b><?php echo $matches['total_matches'] ?? 0; ?></b> matchs joués</p>
+                <br>
+                <p><b>D'autres stats à venir !</b></p>
+            </div>
+            <!--
+            <?php if (isset($_GET['success'])): ?>
+                <div style="color: green; margin-bottom: 10px;">
+                    Votre pseudo a bien été mis à jour !
+                </div>
+            <?php endif; ?>
+
+            <form action="update_profile.php" method="POST">
+                <label>Mon nom d'affichage :</label>
+                <?php
+                // On sécurise : si $user n'est pas un tableau (donc false), on met une chaîne vide
+                $valeur_nom = ($user !== false && isset($user['display_name'])) ? $user['display_name'] : '';
+                ?>
+
+                <input type="text" name="display_name" value="<?php echo htmlspecialchars($valeur_nom); ?>">
+                <button type="submit">Enregistrer</button>
+            </form>
+            -->
+        </section>
     </div>
-<?php endif; ?>
-
-<form action="update_profile.php" method="POST">
-    <label>Mon nom d'affichage :</label>
-    <?php
-    // On sécurise : si $user n'est pas un tableau (donc false), on met une chaîne vide
-    $valeur_nom = ($user !== false && isset($user['display_name'])) ? $user['display_name'] : '';
-    ?>
-
-    <input type="text" name="display_name" value="<?php echo htmlspecialchars($valeur_nom); ?>">
-    <button type="submit">Enregistrer</button>
-</form>
--->
-
-<a href="../logout.php">Déconnexion</a>
 
     <?php include("../_inc/footer.php"); ?>
 
