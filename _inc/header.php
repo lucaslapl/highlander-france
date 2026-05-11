@@ -10,10 +10,10 @@
                 </div>
                 <div id="session-profile" class="flex justify-center align-center">
                     <?php if (isset($_SESSION['steamid'])): ?>
-                        <a href="profile/dashboard.php">Mon Profil</a>
-                        <a href="logout.php">Déconnexion</a>
+                        <a href="/profile/dashboard.php">Mon Profil</a>
+                        <a href="/logout.php">Déconnexion</a>
                     <?php else: ?>
-                        <a href="login.php">
+                        <a href="/login.php">
                             <img class="steamlogin" src="/_img/sits_01.png" alt="Connexion via Steam">
                         </a>
                     <?php endif; ?>
