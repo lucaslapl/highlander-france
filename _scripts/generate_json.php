@@ -5,7 +5,6 @@ error_reporting(E_ALL);
 require_once __DIR__ . '/../_inc/config.php';
 require_once __DIR__ . '/../_inc/functions.php';
 
-$db = new PDO('sqlite:' . __DIR__ . '/stats.db');
 $query = $db->query("SELECT 
                         COALESCE(p.display_name, p.name) AS name, 
                         p.avatar,
@@ -30,4 +29,5 @@ foreach ($rows as $row) {
 }
 
 file_put_contents(__DIR__ . '/leaderboard_cache.json', json_encode($final_results));
+file_put_contents(__DIR__ . '/log_generate_json.txt', date('Y-m-d H:i:s') . " OK\n", FILE_APPEND);
 echo "Cache mis à jour avec succès.";
