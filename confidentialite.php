@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once "_inc/config.php";
 require_once "_inc/functions.php";
 ?>

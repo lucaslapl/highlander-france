@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once "_inc/config.php";
 require_once "_inc/functions.php";
 ?>
@@ -23,7 +22,7 @@ require_once "_inc/functions.php";
     <meta name="twitter:card" content="summary_large_image">
     <meta property="twitter:domain" content="highlanderfrance.tf">
     <meta property="twitter:url" content="https://highlanderfrance.tf/">
-    <meta name="twitter:title" content="Highlander France - L'équipe">
+    <meta name="twitter:title" content="Highlander France - Communauté Compétitive de TF2">
     <meta name="twitter:description" content="Highlander France est une communauté compétitive francophone de Team Fortress 2, offrant un espace pour les joueurs de tous niveaux pour apprendre, jouer et progresser ensemble.">
     <meta name="twitter:image" content="https://highlanderfrance.tf/_img/meta-bg-hlfr.jpg">
 
