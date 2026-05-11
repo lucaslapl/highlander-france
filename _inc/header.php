@@ -27,7 +27,6 @@
             <nav id="nav">
                 <div class="nav-content flex space-between align-center">
                     <?php 
-                    // On récupère le nom du fichier actuel
                     $page_actuelle = basename($_SERVER['PHP_SELF']); 
                     ?>
 

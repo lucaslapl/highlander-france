@@ -255,14 +255,12 @@ async function loadLeaderboard() {
     }
 }
 
-// Sécurité basique pour éviter les caractères spéciaux dans les pseudos
 function escapeHtml(text) {
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
 }
 
-// Lancement au chargement de la page
 loadLeaderboard();
 </script>
 </body>
