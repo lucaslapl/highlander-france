@@ -80,7 +80,7 @@ require_once "_inc/functions.php";
                 Nous mettons un point d'honneur à faire de notre communauté un <b>lieu sûr pour tous.</b></p>
                 <div class="vid-container">
                     <div class="pres-video">
-                        <video autoplay muted loop>
+                        <video autoplay muted loop playsinline>
                             <source src="https://i.imgur.com/We4yrzC.mp4" type="video/mp4">
                             Votre navigateur ne supporte pas la lecture de vidéos.
                         </video>
