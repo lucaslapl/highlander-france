@@ -1,4 +1,6 @@
 <?php
+ini_set('session.save_path', __DIR__ . '/../tmp/sessions');
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
