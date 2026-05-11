@@ -191,21 +191,6 @@ body #header .header-logo {
   width: 80px;
   margin: 0 16px;
 }
-body #header #session-profile {
-  padding: 20px;
-  background: #383838;
-  border-radius: 25px;
-}
-body #header #session-profile a {
-  color: white;
-  text-decoration: none;
-  font-weight: bold;
-  margin: 0 10px;
-  transition: 0.3s;
-}
-body #header #session-profile a:hover {
-  color: #fbb7fb;
-}
 body #header nav {
   background: linear-gradient(205deg, rgb(72, 30, 71) 8%, rgba(0, 0, 0, 0.79) 57%, rgb(78, 14, 73) 100%);
   padding: 5px 35px;
@@ -222,7 +207,6 @@ body #header nav .nav-content ul {
   list-style: none;
   padding: 0;
   gap: 32px;
-  width: 500px;
   text-wrap: nowrap;
 }
 body #header nav .nav-content ul li a {
@@ -239,6 +223,23 @@ body #header nav .nav-content ul li a:hover {
 }
 body #header nav .nav-content ul li .active {
   border-bottom: 3px solid rgba(255, 98, 194, 0.431372549);
+}
+body #header nav .nav-content .nav-right {
+  gap: 15px;
+  padding: 10px 0;
+}
+body #header nav .nav-content .nav-right #session-profile {
+  margin: 10px 0;
+}
+body #header nav .nav-content .nav-right #session-profile a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  margin: 0 10px;
+  transition: 0.3s;
+}
+body #header nav .nav-content .nav-right #session-profile a:hover {
+  color: #fbb7fb;
 }
 body #header nav .nav-discord {
   text-decoration: none;
@@ -637,6 +638,12 @@ body footer a {
   }
   body #main {
     width: 100%;
+  }
+}
+@media all and (max-width: 1040px) {
+  body #header nav .nav-content .nav-right {
+    flex-direction: column;
+    gap: 10px;
   }
 }
 @media all and (max-width: 870px) {

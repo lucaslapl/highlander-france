@@ -198,23 +198,6 @@ body {
                 width: 80px;
                 margin: 0 16px;
             }
-            #session-profile {
-                padding: 20px;
-                background: #383838;
-                border-radius: 25px;
-                a {
-                    color: white;
-                    text-decoration: none;
-                    font-weight: bold;
-                    margin: 0 10px;
-                    transition: .3s;
-
-                    &:hover {
-                        color: #fbb7fb;
-                    }
-                }
-            }
-            
 
             nav {
                 background: linear-gradient(205deg, rgb(72, 30, 71) 8%, rgba(0,0,0,0.79) 57%, rgb(78, 14, 73) 100%);
@@ -232,7 +215,6 @@ body {
                         list-style: none;
                         padding: 0;
                         gap: 32px;
-                        width: 500px;
                         text-wrap: nowrap;
 
                         li {
@@ -251,6 +233,25 @@ body {
                             }
                             .active {
                                 border-bottom: 3px solid #ff62c26e;
+                            }
+                        }
+                    }
+                    .nav-right {
+                        gap: 15px;
+                        padding: 10px 0;
+
+                        #session-profile {
+                            margin: 10px 0;
+                            a {
+                                color: white;
+                                text-decoration: none;
+                                font-weight: bold;
+                                margin: 0 10px;
+                                transition: .3s;
+
+                                &:hover {
+                                    color: #fbb7fb;
+                                }
                             }
                         }
                     }
@@ -731,6 +732,13 @@ body {
     }
     body #main {
         width: 100%;
+    }
+}
+
+@media all and (max-width: 1040px) {
+    body #header nav .nav-content .nav-right {
+        flex-direction: column;
+        gap: 10px;
     }
 }
 
