@@ -77,27 +77,66 @@ if (!$player) {
     <link rel="manifest" href="../site.webmanifest">
 
     <link rel="stylesheet" href="../_css/main.css">
+    <style>
+        body #header {
+            height: 425px;
+            position: relative;
+        }
+
+        body #main {
+            min-height: 500px;
+            position: relative;
+        }
+        body #main #content .personnal-info .profile-header {
+            gap: 20px;
+        }
+        body #main #content .personnal-info .profile-header img {
+            width: 125px;
+            border-radius: 50%;
+        }
+        body #main #content .personnal-info .profile-header h1 {
+            font-size: 3em;
+        }
+        body #main #content .personnal-info .profile-header h1 span {
+            font-size: 0.25em;
+            font-weight: normal;
+        }
+        body #main #content .personnal-info .steam-profile-link {
+            color: #fff;
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
 
-    <div class="profile-header">
-        <img src="<?php echo htmlspecialchars($player['avatar']); ?>" alt="Avatar de <?php echo htmlspecialchars($player['display_name']); ?>" class="profile-avatar">
-        <h1><?php echo htmlspecialchars($player['display_name']); ?></h1>
+    <?php include("../_inc/header.php"); ?>
+
+    <div id="main">
+        <section id="content">
+            <div class="personnal-info">
+                <div class="profile-header flex align-center">
+                    <img src="<?php echo htmlspecialchars($player['avatar']); ?>" alt="Avatar de <?php echo htmlspecialchars($player['display_name']); ?>" class="profile-avatar">
+                    <h1><?php echo htmlspecialchars($player['display_name'] ?? 'Joueur'); ?> <span>inscrit le <?php echo $date_formatee; ?></span></h1>
+                </div>
+                <p>SteamID : <?php echo $steamid3; ?></p>
+                <a href="https://steamcommunity.com/profiles/<?php echo $steamid; ?>" target="_blank" class="steam-profile-link">
+                    <i class="fab fa-steam"></i> Profil Steam
+                </a>
+            </div>
+
+            <br>
+
+            <div class="player-stats">
+                <h2>Stats</h2>
+                <p><b><?php echo $matches['total_matches'] ?? 0; ?></b> matchs joués</p>
+                <br>
+                <p><b>D'autres stats à venir !</b></p>
+            </div>
+
+        </section>
     </div>
-    
-    <p>SteamID : <?php echo htmlspecialchars($player['steamid']); ?></p>
-    <p>Inscrit depuis le : <?php echo $date_formatee; ?></p>
-    <br>
-    <a href="https://steamcommunity.com/profiles/<?php echo $steamid; ?>" target="_blank">Profil Steam</a>
-    <p>Nombre de matchs : <?php echo $matches['total_matches']; ?></p>
+    <?php include("../_inc/footer.php"); ?>
 
-    <div class="stats-container">
-        <h2>Statistiques</h2>
-        <p>Prochainement !</p>
-    </div>
-
-    <br>
-    <a href="../index.php">Retour à l'accueil</a>
-
+    <script src="https://kit.fontawesome.com/2f306d349c.js" crossorigin="anonymous"></script>
 </body>
 </html>
