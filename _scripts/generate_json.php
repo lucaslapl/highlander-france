@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 require_once __DIR__ . '/../_inc/config.php';
 require_once __DIR__ . '/../_inc/functions.php';
 
@@ -27,3 +30,4 @@ foreach ($rows as $row) {
 }
 
 file_put_contents(__DIR__ . '/leaderboard_cache.json', json_encode($final_results));
+echo "Cache mis à jour avec succès.";

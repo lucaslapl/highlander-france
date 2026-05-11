@@ -1,4 +1,7 @@
 <?php
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 $env = parse_ini_file(__DIR__ . '/.env');
 require_once __DIR__ . '/../_inc/config.php';
 $STEAM_API_KEY = $env['STEAM_API_KEY'];
@@ -41,3 +44,4 @@ foreach ($allLogs as $log) {
         usleep(200000);
     }
 }
+echo "Mise à jour des stats terminée.";
