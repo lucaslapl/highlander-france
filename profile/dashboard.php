@@ -54,6 +54,10 @@ if (empty($user['name']) || ($last_update < time() - 86400)) {
 // 5. Affichage
 $date_brute = $user['created_at'];
 $date_formatee = $date_brute ? date('d/m/Y', strtotime($date_brute)) : "n/c";
+
+$stmt_matches = $db->prepare("SELECT count as total_matches FROM player_stats WHERE steamid = ?");
+$stmt_matches->execute([$steamid3]);
+$matches = $stmt_matches->fetch();
 ?>
 
 <!DOCTYPE html>
@@ -98,9 +102,13 @@ $date_formatee = $date_brute ? date('d/m/Y', strtotime($date_brute)) : "n/c";
     <link rel="stylesheet" href="../_css/main.css">
 </head>
 <body>
+
+    <?php include("../_inc/header.php"); ?>
+
     <h1>Bienvenue, <?php echo htmlspecialchars($user['display_name'] ?? 'Joueur'); ?> !</h1>
     <p>Votre SteamID : <?php echo $steamid3; ?></p>
     <p>Vous avez rejoint le : <?php echo $date_formatee; ?></p>
+    <p>Nombre total de matchs joués : <?php echo $matches['total_matches'] ?? 0; ?></p>
 <br>
 
 <div class="info-container">
@@ -127,3 +135,8 @@ $date_formatee = $date_brute ? date('d/m/Y', strtotime($date_brute)) : "n/c";
 -->
 
 <a href="../logout.php">Déconnexion</a>
+
+    <?php include("../_inc/footer.php"); ?>
+
+</body>
+</html>
