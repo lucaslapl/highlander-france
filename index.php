@@ -75,7 +75,7 @@ require_once "_inc/functions.php";
             </div>
             
             <div id="about">
-                <h3><b>Qui sommes-nous ?</b></h3>
+                <h2><b>Qui sommes-nous ?</b></h2>
                 <p>Créée en Février 2026 à l'initiative de joueurs expérimentés au plus haut niveau et des joueurs membre de l'Équipe de France TF2, la communauté Highlander France a vu le jour avec l'objectif de <b>faire découvrir et de réunir</b> les joueurs et joueuses francophones pratiquants ou intéressés par le mode 9v9 et de leur offrir un lieu unique pour <b>échanger, apprendre, jouer ensemble.</b><br> 
                 Nous mettons un point d'honneur à faire de notre communauté un <b>lieu sûr pour tous.</b></p>
                 <div class="vid-container">
@@ -88,7 +88,7 @@ require_once "_inc/functions.php";
                     </div>
                 </div>
                 
-                <h3><b>Comment ça fonctionne ?</b></h3>
+                <h2><b>Comment ça fonctionne ?</b></h2>
                 <p>Fort de notre expérience <b>nous aidons les débutants et débutantes à appréhender le compétitif</b>, les règles, les tournois, les ligues, les méthodes pour progresser rapidement. Nous organisons régulièrement des matchs de tout niveau pour permettre à tout le monde de développer leur connaissance et mettre en action leur apprentissage ainsi que des demoreview (visionnage de match avec explications) et des maptalks (explications sur comment jouer les maps) et bien plus encore...</p>
             </div>
 
@@ -99,7 +99,6 @@ require_once "_inc/functions.php";
                     <li><b><span id="matchCount"><img class="stat-load" src="_img/loading.gif" alt="Chargement..."></span></b> matchs organisés</li>
                     <li><b><span>+</span><span id="hoursPlayed"><img class="stat-load" src="_img/loading.gif" alt="Chargement..."></span></b> heures de matchs jouées au total</li>
                 </ul>
-                
             </div>
             <div id="join">
                 <p>Alors qu'attends-tu pour nous rejoindre ? <b>Cela ne t'engage en rien</b>, tu es libre de participer ou simplement observer et lorsque tu te sens prêt, tu te lances et nous t'aiderons !</p>

@@ -62,45 +62,45 @@ require_once "_inc/functions.php";
 
     <main id="main">
         <section id="content">
-            <h3>L'équipe Highlander France</h3>
+            <h2>L'équipe Highlander France</h2>
             <div id="staff">
                 <h3>Fondateurs</h3>
                 <hr>
                 <p>Les joueurs passionnés à l'initiative de ce projet !</p>
                 <div class="staff-role flex space-around align-center wrap">
                     <div class="staff-member">
-                        <img src="_img/kaylus.jpg" alt="Kaylus">
+                        <img src="_img/kaylus.jpg" alt="Avatar de Kaylus">
                         <h4>Kaylus</h4>
                         <div class="staff-links flex justify-center align-center">
                             <a href="http://steamcommunity.com/profiles/76561198051084840" title="Profil Steam Kaylus" target="_blank">
-                                <img class="steam-img" src="_img/steam-icon.svg">
+                                <img class="steam-img" src="_img/steam-icon.svg" alt="Profil Steam Kaylus" aria-label="Profil Steam Kaylus">
                             </a>
                             <a href="https://etf2l.org/forum/user/58470/" title="Profil ETF2L Kaylus" target="_blank">
-                                <img class="etf2l-img" src="_img/etf2l-logo.png">
+                                <img class="etf2l-img" src="_img/etf2l-logo.png" alt="Profil ETF2L Kaylus" aria-label="Profil ETF2L Kaylus">
                             </a>
                         </div>
                     </div>
                     <div class="staff-member">
-                        <img src="_img/schmit.jpg" alt="Schmit">
+                        <img src="_img/schmit.jpg" alt="Avatar de SchmitShot">
                         <h4>SchmitShot</h4>
                         <div class="staff-links flex justify-center align-center">
                             <a href="https://steamcommunity.com/id/DivinSchmitShot/" title="Profil Steam Schmit" target="_blank">
-                                <img class="steam-img" src="_img/steam-icon.svg">
+                                <img class="steam-img" src="_img/steam-icon.svg" alt="Profil Steam Schmit" aria-label="Profil Steam Schmit">
                             </a>
                             <a href="https://etf2l.org/forum/user/107814/" title="Profil ETF2L Schmit" target="_blank">
-                                <img class="etf2l-img" src="_img/etf2l-logo.png">
+                                <img class="etf2l-img" src="_img/etf2l-logo.png" alt="Profil ETF2L Schmit" aria-label="Profil ETF2L Schmit">
                             </a>
                         </div>
                     </div>
                     <div class="staff-member">
-                        <img src="_img/zen.jpg" alt="Zen">
+                        <img src="_img/zen.jpg" alt="Avatar de zen">
                         <h4>zen</h4>
                         <div class="staff-links flex justify-center align-center">
                             <a href="https://steamcommunity.com/id/azazah/" title="Profil Steam Zen" target="_blank">
-                                <img class="steam-img" src="_img/steam-icon.svg">
+                                <img class="steam-img" src="_img/steam-icon.svg" alt="Profil Steam Zen" aria-label="Profil Steam Zen">
                             </a>
                             <a href="https://etf2l.org/forum/user/137263/" title="Profil ETF2L Zen" target="_blank">
-                                <img class="etf2l-img" src="_img/etf2l-logo.png">
+                                <img class="etf2l-img" src="_img/etf2l-logo.png" alt="Profil ETF2L Zen" aria-label="Profil ETF2L Zen">
                             </a>
                         </div>
                     </div>
@@ -118,50 +118,50 @@ require_once "_inc/functions.php";
                         <p>Les joueurs expérimentés qui accompagnent les nouveaux venus dans leur progression en compétitif !</p>
                         <div class="staff-role">
                             <div class="staff-member flex align-center">
-                                <img class="staff-pic" src="_img/kaylus.jpg" alt="Kaylus">
+                                <img class="staff-pic" src="_img/kaylus.jpg" alt="Avatar de Kaylus">
                                 <h4>Kaylus</h4>
                                 <div class="staff-links flex justify-center align-center">
                                     <a href="http://steamcommunity.com/profiles/76561198051084840" title="Profil Steam Kaylus" target="_blank">
-                                        <img class="steam-img" src="_img/steam-icon.svg">
+                                        <img class="steam-img" src="_img/steam-icon.svg" alt="Profil Steam Kaylus" aria-label="Profil Steam Kaylus">
                                     </a>
                                     <a href="https://etf2l.org/forum/user/58470/" title="Profil ETF2L Kaylus" target="_blank">
-                                        <img class="etf2l-img" src="_img/etf2l-logo.png">
+                                        <img class="etf2l-img" src="_img/etf2l-logo.png" alt="Profil ETF2L Kaylus" aria-label="Profil ETF2L Kaylus">
                                     </a>
                                 </div>
                             </div>
                             <div class="staff-member flex align-center">
-                                <img class="staff-pic" src="_img/mathis.jpg" alt="Mathis">
+                                <img class="staff-pic" src="_img/mathis.jpg" alt="Avatar de Mathis">
                                 <h4>Mathis</h4>
                                 <div class="staff-links flex justify-center align-center">
                                     <a href="http://steamcommunity.com/profiles/76561199353050656" title="Profil Steam Mathis" target="_blank">
-                                        <img class="steam-img" src="_img/steam-icon.svg">
+                                        <img class="steam-img" src="_img/steam-icon.svg" alt="Profil Steam Mathis" aria-label="Profil Steam Mathis">
                                     </a>
                                     <a href="https://etf2l.org/forum/user/147473/" title="Profil ETF2L Mathis" target="_blank">
-                                        <img class="etf2l-img" src="_img/etf2l-logo.png">
+                                        <img class="etf2l-img" src="_img/etf2l-logo.png" alt="Profil ETF2L Mathis" aria-label="Profil ETF2L Mathis">
                                     </a>
                                 </div>
                             </div>
                             <div class="staff-member flex align-center">
-                                <img class="staff-pic" src="_img/nepal.jpg" alt="Nepal">
+                                <img class="staff-pic" src="_img/nepal.jpg" alt="Avatar de Nepal">
                                 <h4>Nepal</h4>
                                 <div class="staff-links flex justify-center align-center">
                                     <a href="http://steamcommunity.com/profiles/76561198239974294" title="Profil Steam Nepal" target="_blank">
-                                        <img class="steam-img" src="_img/steam-icon.svg">
+                                        <img class="steam-img" src="_img/steam-icon.svg" alt="Profil Steam Nepal" aria-label="Profil Steam Nepal">
                                     </a>
                                     <a href="https://etf2l.org/forum/user/125728/" title="Profil ETF2L Nepal" target="_blank">
-                                        <img class="etf2l-img" src="_img/etf2l-logo.png">
+                                        <img class="etf2l-img" src="_img/etf2l-logo.png" alt="Profil ETF2L Nepal" aria-label="Profil ETF2L Nepal">
                                     </a>
                                 </div>
                             </div>
                             <div class="staff-member flex align-center">
-                                <img class="staff-pic" src="_img/schmit.jpg" alt="SchmitShot">
+                                <img class="staff-pic" src="_img/schmit.jpg" alt="Avatar de SchmitShot">
                                 <h4>SchmitShot</h4>
                                 <div class="staff-links flex justify-center align-center">
                                     <a href="https://steamcommunity.com/id/DivinSchmitShot/" title="Profil Steam Schmit" target="_blank">
-                                        <img class="steam-img" src="_img/steam-icon.svg">
+                                        <img class="steam-img" src="_img/steam-icon.svg" alt="Profil Steam Schmit" aria-label="Profil Steam Schmit">
                                     </a>
                                     <a href="https://etf2l.org/forum/user/107814/" title="Profil ETF2L Schmit" target="_blank">
-                                        <img class="etf2l-img" src="_img/etf2l-logo.png">
+                                        <img class="etf2l-img" src="_img/etf2l-logo.png" alt="Profil ETF2L Schmit" aria-label="Profil ETF2L Schmit">
                                     </a>
                                 </div>
                             </div>
@@ -173,62 +173,62 @@ require_once "_inc/functions.php";
                         <p>Les joueurs qui organisent les mixs pour permettre à tous de jouer en compétitif dans une ambiance conviviale !</p>
                         <div class="staff-role">
                             <div class="staff-member flex align-center">
-                                <img class="staff-pic" src="_img/astrya.jpg" alt="Astrya">
+                                <img class="staff-pic" src="_img/astrya.jpg" alt="Avatar de Astrya">
                                 <h4>Astrya</h4>
                                 <div class="staff-links flex justify-center align-center">
                                     <a href="http://steamcommunity.com/profiles/76561198091242337" title="Profil Steam Astrya" target="_blank">
-                                        <img class="steam-img" src="_img/steam-icon.svg">
+                                        <img class="steam-img" src="_img/steam-icon.svg" alt="Profil Steam Astrya" aria-label="Profil Steam Astrya">
                                     </a>
                                     <a href="https://etf2l.org/forum/user/136300/" title="Profil ETF2L Astrya" target="_blank">
-                                        <img class="etf2l-img" src="_img/etf2l-logo.png">
+                                        <img class="etf2l-img" src="_img/etf2l-logo.png" alt="Profil ETF2L Astrya" aria-label="Profil ETF2L Astrya">
                                     </a>
                                 </div>
                             </div>
                             <div class="staff-member flex align-center">
-                                <img class="staff-pic" src="_img/kaylus.jpg" alt="Kaylus">
+                                <img class="staff-pic" src="_img/kaylus.jpg" alt="Avatar de Kaylus">
                                 <h4>Kaylus</h4>
                                 <div class="staff-links flex justify-center align-center">
                                     <a href="http://steamcommunity.com/profiles/76561198051084840" title="Profil Steam Kaylus" target="_blank">
-                                        <img class="steam-img" src="_img/steam-icon.svg">
+                                        <img class="steam-img" src="_img/steam-icon.svg" alt="Profil Steam Kaylus" aria-label="Profil Steam Kaylus">
                                     </a>
                                     <a href="https://etf2l.org/forum/user/58470/" title="Profil ETF2L Kaylus" target="_blank">
-                                        <img class="etf2l-img" src="_img/etf2l-logo.png">
+                                        <img class="etf2l-img" src="_img/etf2l-logo.png" alt="Profil ETF2L Kaylus" aria-label="Profil ETF2L Kaylus">
                                     </a>
                                 </div>
                             </div>
                             <div class="staff-member flex align-center">
-                                <img class="staff-pic" src="_img/schmit.jpg" alt="SchmitShot">
+                                <img class="staff-pic" src="_img/schmit.jpg" alt="Avatar de SchmitShot">
                                 <h4>SchmitShot</h4>
                                 <div class="staff-links flex justify-center align-center">
                                     <a href="https://steamcommunity.com/id/DivinSchmitShot/" title="Profil Steam Schmit" target="_blank">
-                                        <img class="steam-img" src="_img/steam-icon.svg">
+                                        <img class="steam-img" src="_img/steam-icon.svg" alt="Profil Steam Schmit" aria-label="Profil Steam Schmit">
                                     </a>
                                     <a href="https://etf2l.org/forum/user/107814/" title="Profil ETF2L Schmit" target="_blank">
-                                        <img class="etf2l-img" src="_img/etf2l-logo.png">
+                                        <img class="etf2l-img" src="_img/etf2l-logo.png" alt="Profil ETF2L Schmit" aria-label="Profil ETF2L Schmit">
                                     </a>
                                 </div>
                             </div>
                             <div class="staff-member flex align-center">
-                                <img class="staff-pic" src="_img/sossok.jpg" alt="Sossok">
+                                <img class="staff-pic" src="_img/sossok.jpg" alt="Avatar de Sossok">
                                 <h4>Sossok</h4>
                                 <div class="staff-links flex justify-center align-center">
                                     <a href="http://steamcommunity.com/profiles/76561198253350195" title="Profil Steam Sossok" target="_blank">
-                                        <img class="steam-img" src="_img/steam-icon.svg">
+                                        <img class="steam-img" src="_img/steam-icon.svg" alt="Profil Steam Sossok" aria-label="Profil Steam Sossok">
                                     </a>
                                     <a href="https://etf2l.org/forum/user/136916/" title="Profil ETF2L Sossok" target="_blank">
-                                        <img class="etf2l-img" src="_img/etf2l-logo.png">
+                                        <img class="etf2l-img" src="_img/etf2l-logo.png" alt="Profil ETF2L Sossok" aria-label="Profil ETF2L Sossok">
                                     </a>
                                 </div>
                             </div>
                             <div class="staff-member flex align-center">
-                                <img class="staff-pic" src="_img/zen.jpg" alt="Zen">
+                                <img class="staff-pic" src="_img/zen.jpg" alt="Avatar de zen">
                                 <h4>zen</h4>
                                 <div class="staff-links flex justify-center align-center">
                                     <a href="https://steamcommunity.com/id/azazah/" title="Profil Steam Zen" target="_blank">
-                                        <img class="steam-img" src="_img/steam-icon.svg">
+                                        <img class="steam-img" src="_img/steam-icon.svg" alt="Profil Steam Zen" aria-label="Profil Steam Zen">
                                     </a>
                                     <a href="https://etf2l.org/forum/user/137263/" title="Profil ETF2L Zen" target="_blank">
-                                        <img class="etf2l-img" src="_img/etf2l-logo.png">
+                                        <img class="etf2l-img" src="_img/etf2l-logo.png" alt="Profil ETF2L Zen" aria-label="Profil ETF2L Zen">
                                     </a>
                                 </div>
                             </div>

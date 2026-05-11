@@ -87,6 +87,20 @@ if (!$player) {
 
     gtag('config', 'G-30553SX3GJ');
     </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "ProfilePage",
+        "mainEntity": {
+            "@type": "Person",
+            "name": "<?php echo htmlspecialchars($player['display_name']); ?>",
+            "image": "<?php echo htmlspecialchars($player['avatar']); ?>",
+            "description": "Profil de <?php echo htmlspecialchars($player['display_name']); ?> sur Highlander France, communauté compétitive de Team Fortress 2."
+            "identifier": "<?php echo htmlspecialchars($steamid); ?>",
+        }
+    }
+    </script>
     <style>
         body #header {
             height: 425px;
@@ -104,10 +118,10 @@ if (!$player) {
             width: 125px;
             border-radius: 50%;
         }
-        body #main #content .personnal-info .profile-header h1 {
+        body #main #content .personnal-info .profile-header h2 {
             font-size: 3em;
         }
-        body #main #content .personnal-info .profile-header h1 span {
+        body #main #content .personnal-info .profile-header h2 span {
             font-size: 0.25em;
             font-weight: normal;
         }
@@ -126,7 +140,7 @@ if (!$player) {
             <div class="personnal-info">
                 <div class="profile-header flex align-center">
                     <img src="<?php echo htmlspecialchars($player['avatar']); ?>" alt="Avatar de <?php echo htmlspecialchars($player['display_name']); ?>" class="profile-avatar">
-                    <h1><?php echo htmlspecialchars($player['display_name'] ?? 'Joueur'); ?> <span>inscrit le <?php echo $date_formatee; ?></span></h1>
+                    <h2><?php echo htmlspecialchars($player['display_name'] ?? 'Joueur'); ?> <span>inscrit le <?php echo $date_formatee; ?></span></h2>
                 </div>
                 <p>SteamID : <?php echo $steamid3; ?></p>
                 <a href="https://steamcommunity.com/profiles/<?php echo $steamid; ?>" target="_blank" class="steam-profile-link">
@@ -137,7 +151,7 @@ if (!$player) {
             <br>
 
             <div class="player-stats">
-                <h2>Stats</h2>
+                <h3>Stats</h3>
                 <p><b><?php echo $matches['total_matches'] ?? 0; ?></b> matchs joués</p>
                 <br>
                 <p><b>D'autres stats à venir !</b></p>

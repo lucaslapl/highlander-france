@@ -203,6 +203,7 @@ body #header .embed #twitch-embed iframe {
 }
 body #header .header-logo {
   width: 80px;
+  height: 80px;
   margin: 0 16px;
 }
 body #header nav {
@@ -308,24 +309,19 @@ body #main #content #questions ul:hover {
 body #main #content #about {
   margin: 0 64px;
 }
-body #main #content #about h3 {
+body #main #content #about h2 {
   font-size: 1.7em;
   margin-top: 60px;
   text-align: center;
   filter: drop-shadow(0px 0px 50px #8700e3);
 }
-body #main #content #about h3::after {
+body #main #content #about h2::after {
   content: "";
   display: block;
   width: 100%;
   background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, rgba(186, 53, 215, 0.57) 50%, rgba(0, 0, 0, 0) 100%);
   height: 1px;
   margin: 32px 0;
-}
-body #main #content #about img {
-  float: left;
-  width: 120px;
-  margin: 0 25px;
 }
 body #main #content #about p {
   line-height: 1.8em;
@@ -440,6 +436,7 @@ body #main #content #staff #sous-staff #mentors .staff-role, body #main #content
 }
 body #main #content #staff #sous-staff #mentors .staff-role .staff-member .staff-pic, body #main #content #staff #sous-staff #mixers .staff-role .staff-member .staff-pic {
   width: 50px;
+  height: 50px;
 }
 body #main #content #staff #sous-staff #mentors h4, body #main #content #staff #sous-staff #mixers h4 {
   margin: 5px 10px;
@@ -449,6 +446,7 @@ body #main #content #staff #sous-staff #mentors .staff-links a, body #main #cont
 }
 body #main #content #staff #sous-staff #mentors .staff-links a img, body #main #content #staff #sous-staff #mixers .staff-links a img {
   width: 25px;
+  height: 25px;
 }
 body #main #content #staff h3 {
   text-align: center;
@@ -477,6 +475,7 @@ body #main #content #staff .staff-role .staff-member h4 {
 }
 body #main #content #staff .staff-role .staff-member img {
   width: 65px;
+  height: 65px;
   border-radius: 50%;
   border: 1px solid rgba(250, 87, 255, 0.5882352941);
 }
@@ -489,12 +488,15 @@ body #main #content #staff .staff-role .staff-member .staff-links a img {
 }
 body #main #content #staff .staff-role .staff-member .staff-links a .steam-img {
   width: 25px;
+  height: 25px;
 }
 body #main #content #staff .staff-role .staff-member .staff-links a .etf2l-img {
   width: 32px;
+  height: 32px;
 }
 body #main #content #staff .staff-role .staff-member .staff-links a .logstf-img {
   width: 45px;
+  height: 45px;
 }
 body #main #content {
   /**** LOG PAGE****/

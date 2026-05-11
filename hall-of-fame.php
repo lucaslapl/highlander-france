@@ -140,7 +140,7 @@ async function loadLeaderboard() {
                 <td>
                     <div class="player-info">
                         <a href="/profile/profil?steamid=${player.steamid}" class="player-link">
-                            <img src="${player.avatar}" class="player-avatar" alt="avatar">
+                            <img src="${player.avatar}" class="player-avatar" alt="Avatar de ${escapeHtml(player.name)}">
                             <span>${escapeHtml(player.name)}</span>
                         </a>
                     </div>

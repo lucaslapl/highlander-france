@@ -117,10 +117,10 @@ $matches = $stmt_matches->fetch();
             width: 125px;
             border-radius: 50%;
         }
-        body #main #content .personnal-info .profile-header h1 {
+        body #main #content .personnal-info .profile-header h2 {
             font-size: 3em;
         }
-        body #main #content .personnal-info .profile-header h1 span {
+        body #main #content .personnal-info .profile-header h2 span {
             font-size: 0.25em;
             font-weight: normal;
         }
@@ -145,16 +145,16 @@ $matches = $stmt_matches->fetch();
             <div class="personnal-info">
                 <div class="profile-header flex align-center">
                     <img src="<?php echo htmlspecialchars($user['avatar']); ?>" alt="Avatar de <?php echo htmlspecialchars($user['display_name']); ?>" class="profile-avatar">
-                    <h1><?php echo htmlspecialchars($user['display_name'] ?? 'Joueur'); ?> <span>inscrit le <?php echo $date_formatee; ?></span></h1>
+                    <h2><?php echo htmlspecialchars($user['display_name'] ?? 'Joueur'); ?> <span>inscrit le <?php echo $date_formatee; ?></span></h2>
                 </div>
-                <h2>Informations personnelles</h2>
+                <h3>Informations personnelles</h3>
                 <p>SteamID : <?php echo $steamid3; ?></p>
             </div>
 
             <br>
 
             <div class="player-stats">
-                <h2>Vos stats</h2>
+                <h3>Vos stats</h3>
                 <p><b><?php echo $matches['total_matches'] ?? 0; ?></b> matchs joués</p>
                 <br>
                 <p><b>D'autres stats à venir !</b></p>

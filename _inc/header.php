@@ -2,7 +2,7 @@
             <div class="head-content flex space-between align-center">
                 <div class="flex justify-center align-center">
                     <a href="https://highlanderfrance.tf">
-                        <img class="header-logo" src="/_img/hf.webp" alt="Highlander France">
+                        <img class="header-logo" src="/_img/hf.webp" alt="Logo Highlander France" aria-label="Redirection vers la page d'accueil">
                     </a>
                     <h1>
                         Highlander France
@@ -33,7 +33,7 @@
                                 <a href="/logout">Déconnexion</a>
                             <?php else: ?>
                                 <a href="/login">
-                                    <img class="steamlogin" src="/_img/sits_01.png" alt="Connexion via Steam">
+                                    <img class="steamlogin" src="/_img/sits_01.png" alt="Connexion via Steam" aria-label="Se connecter via Steam">
                                 </a>
                             <?php endif; ?>
                         </div>

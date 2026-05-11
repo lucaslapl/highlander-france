@@ -62,7 +62,7 @@ require_once "_inc/functions.php";
 
     <main id="main">
         <section id="content">
-            <h3>Stats des Matchs</h3>
+            <h2>Stats des Matchs</h2>
             <p>Consultez les logs détaillés des matchs de Highlander France.</p>
 
             <div id="filters">
