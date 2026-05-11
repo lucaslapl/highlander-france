@@ -1,4 +1,5 @@
 .env
+.htaccess
 _scripts/cache_hlfr_stats.json
 _scripts/cache_leaderboard.json
 _scripts/stats.db
