@@ -125,6 +125,16 @@ $matches = $stmt_matches->fetch();
             font-weight: normal;
         }
     </style>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-30553SX3GJ"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-30553SX3GJ');
+    </script>
 </head>
 <body>
 

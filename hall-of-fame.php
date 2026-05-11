@@ -43,6 +43,16 @@ require_once "_inc/functions.php";
     <!-- Web App Manifest -->
     <link rel="manifest" href="/site.webmanifest">
     <link rel="stylesheet" href="_css/main.css">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-30553SX3GJ"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-30553SX3GJ');
+    </script>
 </head>
 <body>
 
@@ -129,7 +139,7 @@ async function loadLeaderboard() {
                 <td>#${index + 1}</td>
                 <td>
                     <div class="player-info">
-                        <a href="profile/profil.php?steamid=${player.steamid}" class="player-link">
+                        <a href="/profile/profil?steamid=${player.steamid}" class="player-link">
                             <img src="${player.avatar}" class="player-avatar" alt="avatar">
                             <span>${escapeHtml(player.name)}</span>
                         </a>
