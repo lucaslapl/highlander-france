@@ -93,7 +93,7 @@ require_once "_inc/functions.php";
             </div>
             <div id="join">
                 <p>Alors qu'attends-tu pour nous rejoindre ? <b>Cela ne t'engage en rien</b>, tu es libre de participer ou simplement observer et lorsque tu te sens prêt, tu te lances et nous t'aiderons !</p>
-                <a href="https://discord.gg/highlanderfrance" class="join-btn">Rejoindre la communauté !</a>
+                <a href="https://discord.gg/BMuj3cqUFt" class="join-btn">Rejoindre la communauté !</a>
             </div>
             
         </section>
