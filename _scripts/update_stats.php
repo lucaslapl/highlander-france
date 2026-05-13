@@ -1,4 +1,7 @@
 <?php
+if (php_sapi_name() !== 'cli') {
+    header('HTTP/1.0 403 Forbidden');
+}
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
