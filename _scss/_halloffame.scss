@@ -1,0 +1,99 @@
+            /** HALL OF FAME **/
+
+            .leaderboard-container { 
+                width: 100%; 
+
+                #leaderboard-table {
+                    width: 100%;
+                    border-collapse: collapse;
+
+                    th, td {
+                        padding: 10px;
+                        text-align: left;
+                    }
+                }
+
+                #leaderboard-body {
+                    th, td {
+                        padding: 10px;
+                        text-align: left;
+                    }
+                    th {
+                        background-color: #000000b5;
+                    }
+                    tr:nth-child(even) {
+                        background-color: #0000008a;
+                    }
+                    tr:nth-child(-n+3) {
+                        background-color: $tablefirst3-bg;
+                        td {
+                            font-weight: bold;
+                        }
+                    }
+                    tr:nth-child(1) {
+                        td:nth-child(2) {
+                            a {
+                                color: #ffdf00 !important;
+                                font-weight: bold;
+                            }
+                            span::after {
+                                content: " 🥇";
+                                font-size: 0.8em;
+                                position: relative;
+                                top: 0px;
+                            }
+                        }
+                    }
+                    tr:nth-child(2) {
+                        td:nth-child(2) {
+                            a {
+                                color: #ececec !important;
+                                font-weight: bold;
+                            }
+                            span::after {
+                                content: " 🥈";
+                                font-size: 1em;
+                                position: relative;
+                                top: 0px;
+                            }
+                        }
+                    }
+                    tr:nth-child(3) {
+                        td:nth-child(2) {
+                            a {
+                                color: #cd7f32 !important;
+                                font-weight: bold;
+                            }
+                            span::after {
+                                content: " 🥉";
+                                font-size: 1em;
+                                position: relative;
+                                top: 0px;
+                            }
+                        }
+                    }
+                }
+
+                .player-info {
+
+                    .player-link {
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                        text-decoration: none;
+                        color: white;
+                        font-weight: bold;
+                        transition: .3s;
+
+                        &:hover {
+                            color: $accent;
+                        }
+
+                        .player-avatar {
+                            width: 32px; 
+                            height: 32px; 
+                            border-radius: 50%;
+                        }
+                    }
+                }
+            }

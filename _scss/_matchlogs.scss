@@ -1,0 +1,74 @@
+            /**** LOG PAGE****/
+
+            #filters {
+                display: flex;
+                justify-content: center;
+                gap: 20px;
+                margin-bottom: 20px;
+
+                input {
+                    padding: 8px 12px;
+                    border-radius: 5px;
+                    border: 1px solid #ccc;
+                    background: #2e2938;
+                    color: white;
+                    width: 200px;
+                    transition: .3s;
+
+                    &:focus {
+                        border-color: $accent;
+                        outline: none;
+                    }
+                }
+            }
+
+            #logsTable {
+                width: 100%;
+                border-collapse: collapse;
+
+                th, td {
+                    padding: 10px;
+                    text-align: left;
+                }
+                th {
+                    background-color: #000000b5;
+                }
+                tr:nth-child(even) {
+                    background-color: #0000008a;
+                }
+
+                .log-link {
+                    color: $accent;
+                }
+
+                .log-row {
+                    opacity: 0;
+                    transform: translateX(-30px);
+                    transition: opacity 0.5s ease, transform 0.5s ease;
+                }
+
+                .log-row.visible {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+
+            }
+            .pagination {
+                margin: 20px auto 50px auto;
+                display: flex;
+                justify-content: center;
+                gap: 8px;
+            }
+
+            .page-btn {
+                padding: 6px 12px;
+                border: 1px solid #ccc;
+                background: #eee;
+                cursor: pointer;
+            }
+
+            .page-btn.active {
+                background: $accent;
+                color: white;
+                font-weight: bold;
+            }

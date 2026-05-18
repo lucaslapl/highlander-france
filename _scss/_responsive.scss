@@ -1,0 +1,122 @@
+/***** MEDIA QUERIES *****/
+
+@media all and (max-width: 1290px) {
+    body #header .head-content,
+    body #header nav .nav-content {
+        width: 95%;
+    }
+    body #main {
+        width: 100%;
+    }
+}
+
+@media all and (max-width: 1040px) {
+    body #header nav .nav-content .nav-right {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+@media all and (max-width: 870px) {
+    body #header .embed {
+        position: relative;
+        top: 60px;
+        right: unset;
+        margin: 0 20px;
+        #twitch-embed {
+            transform: none !important;
+            iframe {
+                aspect-ratio: 16/9;
+                width: 100%;
+                height: 100%;
+            }
+        }
+    }
+    body #main #content #staff #sous-staff {
+        flex-direction: column;
+    }
+}
+
+@media all and (max-width: 726px) {
+    body #header nav {
+        padding: 5px 15px;
+
+        .nav-content {
+            width: 100%;
+
+            ul {
+                gap: 5px;
+                width: auto;
+            }
+        }
+    }
+    body #main #content #questions {
+        width: 100%;
+
+            ul {
+                line-height: unset;
+
+            li {
+                margin: 10px 0;
+            }
+        }
+    }
+     
+    body #main #content #about {
+        margin: 0;
+    }
+    body #main #content #numbers {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    body #main #content #filters {
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+    body #main #content #logsTable {
+        font-size: .8em;
+    }
+}
+
+@media all and (max-width: 650px) {
+    body #main #content #about .vid-container .pres-video {
+        width: 95%;
+    }
+    body #main #content #about .vid-container .pres-video video {
+        width: 100%;
+    }
+}
+
+@media all and (max-width: 560px) {
+    body #header nav .nav-content ul {
+        flex-direction: column;
+        gap: 40px;
+    }
+}
+
+@media all and (max-width: 450px) {
+    body #main #content #staff #sous-staff #mentors,
+    body #main #content #staff #sous-staff #mixers {
+        width: 100%;
+        margin: 0 auto;
+    }
+    body #main #content #staff #sous-staff #mentors .staff-role,
+    body #main #content #staff #sous-staff #mixers .staff-role {
+        width: 100%;
+    }
+    body #main #content #staff #sous-staff #mentors h4,
+    body #main #content #staff #sous-staff #mixers h4 {
+        font-size: 1em;
+    }
+}
+
+@media all and (max-width: 420px) {
+    body #main #content #numbers {
+        font-size: 1.2em;
+    }
+    body #main #content #join a {
+        font-size: 1.5em;
+    }
+}
