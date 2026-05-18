@@ -7,6 +7,8 @@ require_once "_inc/functions.php";
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://highlanderfrance.tf/">
     <!-- HTML Meta Tags -->
     <title>Highlander France - Communauté Compétitive de TF2</title>
     <meta name="description" content="Highlander France est une communauté compétitive francophone de Team Fortress 2, offrant un espace pour les joueurs de tous niveaux pour apprendre, jouer et progresser ensemble.">
