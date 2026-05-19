@@ -586,11 +586,15 @@ body #header nav .nav-content .nav-right #session-profile a {
   color: white;
   text-decoration: none;
   font-weight: bold;
-  margin: 0 10px;
+  padding: 8px 16px;
+  border-radius: 8px;
   transition: 0.3s;
 }
 body #header nav .nav-content .nav-right #session-profile a:hover {
   color: #fbb7fb;
+}
+body #header nav .nav-content .nav-right #session-profile .active {
+  border-bottom: 3px solid rgba(255, 98, 194, 0.431372549);
 }
 body #header nav .nav-discord {
   text-decoration: none;

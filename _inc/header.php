@@ -29,7 +29,7 @@
                     <div class="nav-right flex justify-center align-center">
                         <div id="session-profile" class="flex justify-center align-center">
                             <?php if (isset($_SESSION['steamid'])): ?>
-                                <a href="/profile/dashboard">Mon Profil</a>
+                                <a href="/profile/dashboard" class="<?= ($page_actuelle == 'dashboard.php') ? 'active' : '' ?>">Mon Profil</a>
                                 <a href="/logout">Déconnexion</a>
                             <?php else: ?>
                                 <a href="/login">
