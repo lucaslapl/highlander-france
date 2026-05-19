@@ -52,6 +52,9 @@ foreach ($allLogs as $log) {
             continue;
         }
 
+        $rawMap = $details['info']['map'] ?? 'unknown';
+        $mapName = preg_replace('/_(v|rc|f)\d+.*?$/i', '', $rawMap);
+
         if (isset($details['players'])) {
             foreach ($details['players'] as $steamid => $pData) {
 
@@ -59,6 +62,14 @@ foreach ($allLogs as $log) {
                 $db->prepare("INSERT INTO player_stats (steamid, count) VALUES (?, 1) 
                               ON CONFLICT(steamid) DO UPDATE SET count = count + 1")
                    ->execute([$steamid]);
+
+                $classPlayed = 'unknown';
+                if (!empty($pData['class_stats']) && isset($pData['class_stats'][0]['type'])) {
+                    $classPlayed = $pData['class_stats'][0]['type'];
+                }
+                $db->prepare("INSERT OR IGNORE INTO player_matches (steamid, match_id, map_name, class_played) 
+                              VALUES (?, ?, ?, ?)")
+                   ->execute([$steamid, $logId, $mapName, $classPlayed]);
 
                 // check if player info exists
                 $stmtCheck = $db->prepare("SELECT 1 FROM players_info WHERE steamid = ?");

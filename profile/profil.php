@@ -31,9 +31,32 @@ $player = $stmt->fetch();
 $date_brute = $player['created_at'];
 $date_formatee = $date_brute ? date('d/m/Y', strtotime($date_brute)) : "n/c";
 
+/** GET STATS **/
+
 $stmt_matches = $db->prepare("SELECT count as total_matches FROM player_stats WHERE steamid = ?");
 $stmt_matches->execute([$steamid3]);
 $matches = $stmt_matches->fetch();
+
+$stmtMaps = $db->prepare("
+    SELECT map_name, COUNT(map_name) as total 
+    FROM player_matches 
+    WHERE steamid = :steamid 
+    GROUP BY map_name 
+    ORDER BY total DESC 
+    LIMIT 3
+");
+$stmtMaps->execute([':steamid' => $steamid3]); // Remplace par ta variable de SteamID
+$topMaps = $stmtMaps->fetchAll(PDO::FETCH_ASSOC);
+
+$stmtClasses = $db->prepare("
+    SELECT class_played, COUNT(class_played) as total 
+    FROM player_matches 
+    WHERE steamid = :steamid 
+    GROUP BY class_played 
+    ORDER BY total DESC
+");
+$stmtClasses->execute([':steamid' => $steamid3]);
+$classesPlayed = $stmtClasses->fetchAll(PDO::FETCH_ASSOC);
 
 // 5. Si le joueur n'existe pas en base
 if (!$player) {
@@ -135,6 +158,20 @@ if (!$player) {
             color: #fff;
             text-decoration: none;
         }
+
+        /* --- Styles pour les icônes de classe --- */
+        .class-icon {
+            width: 1.5em;
+            height: 1.5em;
+            display: block;
+            object-fit: contain;
+        }
+        .gap-10 {
+            gap: 10px;
+        }
+        .align-center {
+            align-items: center;
+        }
     </style>
 </head>
 <body>
@@ -160,6 +197,42 @@ if (!$player) {
                 <h3>Stats</h3>
                 <p><b><?php echo $matches['total_matches'] ?? 0; ?></b> matchs joués</p>
                 <br>
+                <p><b>Top 3 des maps jouées :</b></p>
+                <?php if (empty($topMaps)): ?>
+                    <p class="no-data">Aucune donnée de map pour le moment.</p>
+                <?php else: ?>
+                    <ul class="stats-list">
+                        <?php foreach ($topMaps as $map): ?>
+                            <li class="flex space-between align-center">
+                                <span class="stat-label"><?= htmlspecialchars($map['map_name']) ?></span>
+                                <span class="stat-value"><?= $map['total'] ?> match(s)</span>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php endif; ?>
+                <br>
+                <p><b>Classes jouées :</b></p>
+                <?php if (empty($classesPlayed)): ?>
+                    <p class="no-data">Aucune donnée de classe pour le moment.</p>
+                <?php else: ?>
+                    <ul class="stats-list">
+                        <?php foreach ($classesPlayed as $class): ?>
+                            <?php
+                            $classNameBrut = htmlspecialchars($class['class_played']);
+                            $iconPath = "/_img/classes/" . $classNameBrut . ".png";
+                            ?>
+                            <li class="flex space-between align-center">
+                                <div class="flex align-center gap-10">
+                                    <img src="<?= $iconPath ?>" 
+                                        alt="<?= ucfirst($classNameBrut) ?>" 
+                                        class="class-icon" 
+                                        title="<?= ucfirst($classNameBrut) ?>">
+                                </div>
+                                <span class="stat-value"><?= $class['total'] ?> match(s)</span>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php endif; ?>
                 <p><b>D'autres stats à venir !</b></p>
             </div>
 
