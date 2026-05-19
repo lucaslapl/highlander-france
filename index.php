@@ -115,6 +115,7 @@ require_once "_inc/functions.php";
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="https://kit.fontawesome.com/2f306d349c.js" crossorigin="anonymous"></script>
 <!--<script src="https://embed.twitch.tv/embed/v1.js"></script>-->
+<script src="_js/main.js"></script>
 <script>
 $.getJSON("_scripts/get_index_stats.php", function(stats) {
     if (stats.data) {
