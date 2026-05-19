@@ -182,5 +182,7 @@ $matches = $stmt_matches->fetch();
 
     <?php include("../_inc/footer.php"); ?>
 
+    <script src="https://kit.fontawesome.com/2f306d349c.js" crossorigin="anonymous"></script>
+    <script src="../_js/main.js"></script>
 </body>
 </html>
