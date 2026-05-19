@@ -77,7 +77,7 @@ require_once "_inc/functions.php";
             
             <div id="about">
                 <h2><b>Qui sommes-nous ?</b></h2>
-                <p>Créée en Février 2026 à l'initiative de joueurs expérimentés au plus haut niveau et des joueurs membre de l'Équipe de France TF2, la communauté Highlander France a vu le jour avec l'objectif de <b>faire découvrir et de réunir</b> les joueurs et joueuses francophones pratiquants ou intéressés par le mode 9v9 et de leur offrir un lieu unique pour <b>échanger, apprendre, jouer ensemble.</b><br> 
+                <p>Créée en Février 2026 à l'initiative de joueurs expérimentés au plus haut niveau et des joueurs membre de l'Équipe de France TF2, la communauté Highlander France a vu le jour avec l'objectif de <b>faire découvrir et de réunir</b> les joueurs et joueuses francophones pratiquant.es ou intéressé.es par le mode 9v9 et de leur offrir un lieu unique pour <b>échanger, apprendre, jouer ensemble.</b><br> 
                 Nous mettons un point d'honneur à faire de notre communauté un <b>lieu sûr pour tous.</b></p>
                 <div class="vid-container">
                     <div class="pres-video">
