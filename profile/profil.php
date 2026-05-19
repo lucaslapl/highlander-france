@@ -10,12 +10,16 @@ $steamid = $_GET['steamid'] ?? null;
 // Sécurité : On vérifie que c'est bien une chaîne de chiffres
 // Le SteamID64 fait toujours 17 caractères chez Steam.
 if (!preg_match('/^\d{17}$/', $steamid)) {
-    die("Format de SteamID invalide.");
+    http_response_code(400);
+    header("Location: ../errors/400.php");
+    exit();
 }
 
 // 3. Si aucun ID n'est fourni, on redirige vers l'accueil
 if (!$steamid) {
-    die("Aucun profil sélectionné.");
+    http_response_code(400);
+    header("Location: ../errors/400.php");
+    exit();
 }
 
 // 4. On cherche le joueur dans la base de données
@@ -33,7 +37,9 @@ $matches = $stmt_matches->fetch();
 
 // 5. Si le joueur n'existe pas en base
 if (!$player) {
-    die("Profil introuvable.");
+    http_response_code(404);
+    header("Location: ../errors/404.php");
+    exit();
 }
 ?>
 
