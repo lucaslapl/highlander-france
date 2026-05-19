@@ -20,7 +20,13 @@
                     $page_actuelle = basename($_SERVER['PHP_SELF']); 
                     ?>
 
-                    <ul class="flex justify-center align-center">
+                    <button class="burger-menu" id="burgerToggle" aria-label="Ouvrir le menu">
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                    </button>
+
+                    <ul class="nav-links flex justify-center align-center">
                         <li><a href="/index" class="<?= ($page_actuelle == 'index.php') ? 'active' : '' ?>">Accueil</a></li>
                         <li><a href="/staff" class="<?= ($page_actuelle == 'staff.php') ? 'active' : '' ?>">L'équipe</a></li>
                         <li><a href="/hall-of-fame" class="<?= ($page_actuelle == 'hall-of-fame.php') ? 'active' : '' ?>">Hall of Fame</a></li>

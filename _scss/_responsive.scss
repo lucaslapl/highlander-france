@@ -18,6 +18,62 @@
 }
 
 @media all and (max-width: 870px) {
+    body #header nav .nav-content {
+        .burger-menu {
+            display: flex;
+            z-index: 101;
+        }
+        .burger-menu.open {
+            position: fixed;
+            top: 40px;
+        }
+        .burger-menu.open .bar:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+        .burger-menu.open .bar:nth-child(2) {
+            opacity: 0;
+        }
+        .burger-menu.open .bar:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
+        }
+        .nav-links {
+            display: none; /* Caché par défaut sur mobile */
+            flex-direction: column;
+            justify-content: start;
+            position: fixed;
+            top: -20px; /* À ajuster selon la hauteur réelle de ta nav */
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background-color: $bg-gradient-1;
+            padding: 75px 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            z-index: 100;
+
+            li {
+                margin: 10px 0;
+                text-align: center;
+
+                a {
+                    font-size: 1.2em;
+                    padding: 10px 20px;
+                    display: block;
+                }
+            }
+        }
+        .nav-right {
+            display: none; /* Caché sur mobile */
+            z-index: 100;
+            position: fixed;
+            top: 473px;
+            left: 85px;
+        }
+        .nav-links.open,
+        .nav-right.open {
+            display: flex; /* Affiché lorsque le menu est ouvert */
+        }
+    }
+
     body #header .embed {
         position: relative;
         top: 60px;
@@ -39,7 +95,7 @@
 
 @media all and (max-width: 726px) {
     body #header nav {
-        padding: 5px 15px;
+        padding: 20px 50px;
 
         .nav-content {
             width: 100%;
