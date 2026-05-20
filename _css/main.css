@@ -427,6 +427,187 @@ body #main #content #join a:hover {
   color: #000;
 }
 
+/* --- CONTAINER GLOBAL --- */
+.etf2l-agenda-container {
+  background: rgba(30, 30, 30, 0);
+  border: 1px solid #38193d;
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 30px;
+  backdrop-filter: blur(5px);
+}
+
+.agenda-header h3 {
+  margin: 0;
+  font-size: 1.25em;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.agenda-header h3 i {
+  margin-right: 8px;
+}
+
+.badge-live-info {
+  background: rgb(55, 34, 58);
+  color: #fbb7fb;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75em;
+  font-weight: bold;
+  text-transform: uppercase;
+  border: 1px solid #38193d;
+}
+
+/* --- LISTE DES MATCHS --- */
+.agenda-list {
+  margin-top: 15px;
+}
+
+.agenda-item {
+  background: rgba(255, 255, 255, 0);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  padding: 12px 15px;
+  margin-bottom: 10px;
+  transition: all 0.2s ease-in-out;
+}
+
+.agenda-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: #38193d;
+}
+
+/* --- BLOC DATE (GAUCHE) --- */
+.match-date-box {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 6px 12px;
+  border-radius: 6px;
+  min-width: 65px;
+  border-left: 3px solid #fbb7fb;
+}
+
+.match-date {
+  display: block;
+  font-weight: bold;
+  color: #fff;
+  font-size: 1.1em;
+}
+
+.match-hour {
+  display: block;
+  color: #aaa;
+  font-size: 0.8em;
+}
+
+/* --- BLOC INFOS / EQUIPES (CENTRE) --- */
+.match-details {
+  padding: 0 20px;
+}
+
+.competition-title {
+  font-size: 0.75em;
+  color: #777;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.teams-line {
+  font-size: 1.05em;
+}
+
+.team-name {
+  color: #eee;
+  font-weight: 500;
+  width: 45%; /* Permet d'aligner parfaitement le VS au centre */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Style pour les drapeaux des équipes dans l'agenda */
+.team-flag {
+  width: 18px;
+  height: auto;
+  border-radius: 2px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  flex-shrink: 0; /* Empêche le drapeau de s'écraser si le nom de l'équipe est trop long */
+}
+
+/* Forcer l'alignement flex même à l'intérieur des spans d'équipe */
+.team-name.flex {
+  display: flex;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+/* Sécurité pour couper proprement les noms d'équipes trop longs */
+.truncate-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.gap-10 {
+  gap: 10px;
+}
+
+.vs-separator {
+  color: #fbb7fb;
+  font-size: 0.8em;
+  font-weight: 900;
+  font-style: italic;
+  width: 10%;
+  text-align: center;
+}
+
+/* --- BOUTON LIEN (DROITE) --- */
+.btn-match-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  color: #ccc;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+
+.btn-match-link:hover {
+  background: #fbb7fb;
+  color: #fff;
+}
+
+/* Outil utilitaire si pas déjà présent */
+.flex-1 {
+  flex: 1;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.agenda-empty {
+  text-align: center;
+  padding: 30px;
+  color: #666;
+  font-style: italic;
+}
+
 /**** STAFF PAGE ****/
 #staff hr {
   width: 40px;
