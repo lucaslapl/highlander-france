@@ -66,7 +66,10 @@ $countries = [
     'uk' => 'Royaume-Uni',
     'eu' => 'Europe',
     'al' => 'Algérie',
-    'mo' => 'Maroc'
+    'mo' => 'Maroc',
+    'tu' => 'Tunisie',
+    'ca' => 'Canada',
+    'breizh' => 'Bretagne',
 ];
 
 // GET STATS

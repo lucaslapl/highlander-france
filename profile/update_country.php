@@ -17,7 +17,7 @@ $steamid3 = steamID64ToSteamID3($steamid64);
 $chosenCountry = isset($_POST['country']) ? trim(strtolower($_POST['country'])) : '';
 
 // Liste des pays autorisés pour bloquer les injections de texte farfelu
-$allowedCountries = ['fr', 'be', 'sw', 'lu', 'uk', 'eu', 'al', 'mo'];
+$allowedCountries = ['fr', 'be', 'sw', 'lu', 'uk', 'eu', 'al', 'mo', 'tu', 'ca', 'breizh']; // Ajoute les codes de pays autorisés
 
 if (empty($chosenCountry) || !in_array($chosenCountry, $allowedCountries)) {
     die("Pays invalide.");
