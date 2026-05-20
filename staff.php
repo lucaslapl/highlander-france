@@ -70,15 +70,21 @@ require_once "_inc/functions.php";
                 <div class="staff-role flex space-around align-center wrap">
                     <div class="staff-member">
                         <img src="_img/kaylus.jpg" alt="Avatar de Kaylus">
-                        <h4>Kaylus</h4>
+                        <a href="/profile/profil?steamid=76561198051084840">
+                            <h4>Kaylus</h4>
+                        </a>
                     </div>
                     <div class="staff-member">
                         <img src="_img/schmit.jpg" alt="Avatar de SchmitShot">
-                        <h4>SchmitShot</h4>
+                        <a href="/profile/profil?steamid=76561197974486633">
+                            <h4>SchmitShot</h4>
+                        </a>
                     </div>
                     <div class="staff-member">
                         <img src="_img/zen.jpg" alt="Avatar de zen">
-                        <h4>zen</h4>
+                        <a href="/profile/profil?steamid=76561198158964214">
+                            <h4>zen</h4>
+                        </a>
                     </div>
                 </div>
                 <!--
@@ -95,19 +101,27 @@ require_once "_inc/functions.php";
                         <div class="staff-role">
                             <div class="staff-member flex align-center">
                                 <img class="staff-pic" src="_img/kaylus.jpg" alt="Avatar de Kaylus">
-                                <h4>Kaylus</h4>
+                                <a href="/profile/profil?steamid=76561198051084840">
+                                    <h4>Kaylus</h4>
+                                </a>
                             </div>
                             <div class="staff-member flex align-center">
                                 <img class="staff-pic" src="_img/mathis.jpg" alt="Avatar de Mathis">
-                                <h4>Mathis</h4>
+                                <a href="/profile/profil?steamid=76561199353050656">
+                                    <h4>Mathis</h4>
+                                </a>
                             </div>
                             <div class="staff-member flex align-center">
                                 <img class="staff-pic" src="_img/nepal.jpg" alt="Avatar de Nepal">
-                                <h4>Nepal</h4>
+                                <a href="/profile/profil?steamid=76561198239974294">
+                                    <h4>Nepal</h4>
+                                </a>
                             </div>
                             <div class="staff-member flex align-center">
                                 <img class="staff-pic" src="_img/schmit.jpg" alt="Avatar de SchmitShot">
-                                <h4>SchmitShot</h4>
+                                <a href="/profile/profil?steamid=76561197974486633">
+                                    <h4>SchmitShot</h4>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -118,23 +132,33 @@ require_once "_inc/functions.php";
                         <div class="staff-role">
                             <div class="staff-member flex align-center">
                                 <img class="staff-pic" src="_img/astrya.jpg" alt="Avatar de Astrya">
-                                <h4>Astrya</h4>
+                                <a href="/profile/profil?steamid=76561198091242337">
+                                    <h4>Astrya</h4>
+                                </a>
                             </div>
                             <div class="staff-member flex align-center">
                                 <img class="staff-pic" src="_img/kaylus.jpg" alt="Avatar de Kaylus">
-                                <h4>Kaylus</h4>
+                                <a href="/profile/profil?steamid=76561198051084840">
+                                    <h4>Kaylus</h4>
+                                </a>
                             </div>
                             <div class="staff-member flex align-center">
                                 <img class="staff-pic" src="_img/schmit.jpg" alt="Avatar de SchmitShot">
-                                <h4>SchmitShot</h4>
+                                <a href="/profile/profil?steamid=76561197974486633">
+                                    <h4>SchmitShot</h4>
+                                </a>
                             </div>
                             <div class="staff-member flex align-center">
                                 <img class="staff-pic" src="_img/sossok.jpg" alt="Avatar de Sossok">
-                                <h4>Sossok</h4>
+                                <a href="/profile/profil?steamid=76561198253350195">
+                                    <h4>Sossok</h4>
+                                </a>
                             </div>
                             <div class="staff-member flex align-center">
                                 <img class="staff-pic" src="_img/zen.jpg" alt="Avatar de zen">
-                                <h4>zen</h4>
+                                <a href="/profile/profil?steamid=76561198158964214">
+                                    <h4>zen</h4>
+                                </a>
                             </div>
                         </div>
                     </div>
