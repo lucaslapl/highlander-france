@@ -217,29 +217,35 @@ $recentMatches = $stmtRecent->fetchAll(PDO::FETCH_ASSOC);
 
             <div class="player-stats">
                 <h3>Vos stats</h3>
-                <p><b><?php echo $matches['total_matches'] ?? 0; ?></b> matchs joués</p>
-                <br>
-                <p><b>Top 3 des maps jouées :</b></p>
-                <?php if (empty($topMaps)): ?>
-                    <p class="no-data">Aucune donnée de map pour le moment.</p>
-                <?php else: ?>
-                    <ul class="stats-list">
-                        <?php foreach ($topMaps as $map): ?>
-                            <li class="flex space-between align-center">
-                                <span class="stat-label"><?= htmlspecialchars($map['map_name']) ?></span>
-                                <span class="stat-value"><?= $map['total'] ?> match(s)</span>
-                            </li>
-                        <?php endforeach; ?>
-                    </ul>
-                <?php endif; ?>
-                <br>
+
+                <div class="box-stats matches-played">
+                    <p><b><?php echo $matches['total_matches'] ?? 0; ?></b> matchs joués</p>
+                </div>
+
+                <div class="box-stats maps-played">
+                    <p><b>Top 3 des maps jouées :</b></p>
+                    <?php if (empty($topMaps)): ?>
+                        <p class="no-data">Aucune donnée de map pour le moment.</p>
+                    <?php else: ?>
+                        <ul class="stats-list">
+                            <?php foreach ($topMaps as $map): ?>
+                                <li class="flex space-between align-center">
+                                    <span class="stat-label"><?= htmlspecialchars($map['map_name']) ?></span>
+                                    <span class="stat-value"><?= $map['total'] ?> match(s)</span>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif; ?>
+                </div>
+
+                <div class="box-stats classes-played">
                 <p><b>Classes jouées :</b></p>
-                <?php if (empty($classesPlayed)): ?>
-                    <p class="no-data">Aucune donnée de classe pour le moment.</p>
-                <?php else: ?>
-                    <ul class="stats-list">
-                        <?php foreach ($classesPlayed as $class): ?>
-                            <?php
+                    <?php if (empty($classesPlayed)): ?>
+                        <p class="no-data">Aucune donnée de classe pour le moment.</p>
+                    <?php else: ?>
+                        <ul class="stats-list">
+                            <?php foreach ($classesPlayed as $class): ?>
+                                <?php
                             $classNameBrut = htmlspecialchars($class['class_played']);
                             $iconPath = "/_img/classes/" . $classNameBrut . ".png";
                             ?>
@@ -250,39 +256,42 @@ $recentMatches = $stmtRecent->fetchAll(PDO::FETCH_ASSOC);
                                         class="class-icon" 
                                         title="<?= ucfirst($classNameBrut) ?>">
                                 </div>
-                                <span class="stat-value"><?= $class['total'] ?> match(s)</span>
+                                <span class="stat-value"><?= $class['total'] ?></span>
                             </li>
                         <?php endforeach; ?>
                     </ul>
-                <?php endif; ?>
-                <br>
-                <h3>Matchs Récents</h3>
-                <?php if (empty($recentMatches)): ?>
-                    <p class="no-data">Aucun match enregistré pour le moment.</p>
-                <?php else: ?>
-                    <ul class="matches-list">
-                        <?php foreach ($recentMatches as $match): ?>
-                            <?php 
-                            $mId = htmlspecialchars($match['match_id']);
-                            $cPlayed = htmlspecialchars($match['class_played']);
-                            ?>
-                            <li class="flex space-between align-center match-item">
-                                <div class="flex align-center gap-15">
-                                    <img src="/_img/classes/<?= $cPlayed ?>.png" 
-                                        alt="<?= ucfirst($cPlayed) ?>" 
-                                        class="class-icon" 
-                                        title="Joué en <?= ucfirst($cPlayed) ?>">
+                    <?php endif; ?>
+                </div>                    
+                
+                <div class="recent-matches">
+                    <h3>Matchs Récents</h3>
+                    <?php if (empty($recentMatches)): ?>
+                        <p class="no-data">Aucun match enregistré pour le moment.</p>
+                    <?php else: ?>
+                        <ul class="matches-list">
+                            <?php foreach ($recentMatches as $match): ?>
+                                <?php 
+                                $mId = htmlspecialchars($match['match_id']);
+                                $cPlayed = htmlspecialchars($match['class_played']);
+                                ?>
+                                <li class="flex space-between align-center match-item">
+                                    <div class="flex align-center gap-15">
+                                        <img src="/_img/classes/<?= $cPlayed ?>.png" 
+                                            alt="<?= ucfirst($cPlayed) ?>" 
+                                            class="class-icon" 
+                                            title="Joué en <?= ucfirst($cPlayed) ?>">
+                                        
+                                        <span class="match-map"><?= htmlspecialchars($match['map_name']) ?></span>
+                                    </div>
                                     
-                                    <span class="match-map"><?= htmlspecialchars($match['map_name']) ?></span>
-                                </div>
-                                
-                                <a href="https://logs.tf/<?= $mId ?>" target="_blank" class="btn-log">
-                                    <i class="fa-solid fa-file-lines"></i> Log #<?= $mId ?>
-                                </a>
-                            </li>
-                        <?php endforeach; ?>
-                    </ul>
-                <?php endif; ?>
+                                    <a href="https://logs.tf/<?= $mId ?>" target="_blank" class="btn-log">
+                                        <i class="fa-solid fa-file-lines"></i> Log #<?= $mId ?>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif; ?>
+                </div>
             </div>
             <!--
             <?php if (isset($_GET['success'])): ?>

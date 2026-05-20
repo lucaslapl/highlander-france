@@ -28,8 +28,8 @@ $stmt = $db->prepare("SELECT * FROM players_info WHERE steamid = ?");
 $stmt->execute([$steamid3]);
 $player = $stmt->fetch();
 
-$date_brute = $player['created_at'];
-$date_formatee = $date_brute ? date('d/m/Y', strtotime($date_brute)) : "n/c";
+$date_brute = $player['created_at'] ?? null;
+$date_formatee = !empty($date_brute) ? date("d/m/Y", strtotime($date_brute)) : false;
 
 $country = $player['country'] ?? null;
 
@@ -158,7 +158,9 @@ if (!$player) {
                             <?php echo htmlspecialchars($player['display_name'] ?? 'Joueur'); ?> 
                             <img src="/_img/flags/<?= htmlspecialchars($country) ?>.gif" alt="<?= $countries[$country] ?? $country ?>" class="flag-icon">
                         </h2>
-                        <span>inscrit le <?php echo $date_formatee; ?></span>
+                        <?php if ($date_formatee): ?>
+                        <span>inscrit le <?= $date_formatee; ?></span>
+                        <?php endif; ?>
                     </div>
                 </div>
                 <!--<p>SteamID : <?php echo $steamid3; ?></p>-->
@@ -176,7 +178,7 @@ if (!$player) {
                     <p><b><?php echo $matches['total_matches'] ?? 0; ?></b> matchs joués</p>
                 </div>
 
-                <div class="box-stats">
+                <div class="box-stats maps-played">
                     <p><b>Top 3 des maps jouées :</b></p>
                     <?php if (empty($topMaps)): ?>
                         <p class="no-data">Aucune donnée de map pour le moment.</p>
@@ -192,8 +194,8 @@ if (!$player) {
                     <?php endif; ?>
                 </div>
 
+                <div class="box-stats classes-played">
                 <p><b>Classes jouées :</b></p>
-                <div class="box-stats">
                     <?php if (empty($classesPlayed)): ?>
                         <p class="no-data">Aucune donnée de classe pour le moment.</p>
                     <?php else: ?>
@@ -210,41 +212,42 @@ if (!$player) {
                                         class="class-icon" 
                                         title="<?= ucfirst($classNameBrut) ?>">
                                 </div>
-                                <span class="stat-value"><?= $class['total'] ?> match(s)</span>
+                                <span class="stat-value"><?= $class['total'] ?></span>
                             </li>
                         <?php endforeach; ?>
                     </ul>
                     <?php endif; ?>
                 </div>                    
-
-                <br>
-                <h3>Matchs Récents</h3>
-                <?php if (empty($recentMatches)): ?>
-                    <p class="no-data">Aucun match enregistré pour le moment.</p>
-                <?php else: ?>
-                    <ul class="matches-list">
-                        <?php foreach ($recentMatches as $match): ?>
-                            <?php 
-                            $mId = htmlspecialchars($match['match_id']);
-                            $cPlayed = htmlspecialchars($match['class_played']);
-                            ?>
-                            <li class="flex space-between align-center match-item">
-                                <div class="flex align-center gap-15">
-                                    <img src="/_img/classes/<?= $cPlayed ?>.png" 
-                                        alt="<?= ucfirst($cPlayed) ?>" 
-                                        class="class-icon" 
-                                        title="Joué en <?= ucfirst($cPlayed) ?>">
+                
+                <div class="recent-matches">
+                    <h3>Matchs Récents</h3>
+                    <?php if (empty($recentMatches)): ?>
+                        <p class="no-data">Aucun match enregistré pour le moment.</p>
+                    <?php else: ?>
+                        <ul class="matches-list">
+                            <?php foreach ($recentMatches as $match): ?>
+                                <?php 
+                                $mId = htmlspecialchars($match['match_id']);
+                                $cPlayed = htmlspecialchars($match['class_played']);
+                                ?>
+                                <li class="flex space-between align-center match-item">
+                                    <div class="flex align-center gap-15">
+                                        <img src="/_img/classes/<?= $cPlayed ?>.png" 
+                                            alt="<?= ucfirst($cPlayed) ?>" 
+                                            class="class-icon" 
+                                            title="Joué en <?= ucfirst($cPlayed) ?>">
+                                        
+                                        <span class="match-map"><?= htmlspecialchars($match['map_name']) ?></span>
+                                    </div>
                                     
-                                    <span class="match-map"><?= htmlspecialchars($match['map_name']) ?></span>
-                                </div>
-                                
-                                <a href="https://logs.tf/<?= $mId ?>" target="_blank" class="btn-log">
-                                    <i class="fa-solid fa-file-lines"></i> Log #<?= $mId ?>
-                                </a>
-                            </li>
-                        <?php endforeach; ?>
-                    </ul>
-                <?php endif; ?>
+                                    <a href="https://logs.tf/<?= $mId ?>" target="_blank" class="btn-log">
+                                        <i class="fa-solid fa-file-lines"></i> Log #<?= $mId ?>
+                                    </a>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif; ?>
+                </div>
             </div>
 
         </section>

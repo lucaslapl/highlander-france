@@ -1,3 +1,5 @@
+@import '../_scss/theme.scss';
+
 body {
 
     #header {
@@ -39,6 +41,115 @@ body {
                     text-decoration: none;
                 }
             }
+            .player-stats {
+                h3 {
+                    font-size: 2.5em;
+                    margin: 15px 0;
+                }
+                .box-stats {
+                    background-color: rgba(255, 255, 255, 0.1);
+                    padding: 15px 25px;
+                    border-radius: 8px;
+                    margin-bottom: 15px;
+
+                    &.matches-played {
+                        background-color: rgba(255, 255, 255, 0.2);
+                        p {
+                            font-size: 1.5em;
+                            margin: 0;
+                            b {
+                                font-size: 2em;
+                            }
+                        }
+                    }
+                    &.maps-played {
+                        .stats-list {
+                            list-style-type: none;
+                            padding-left: 0;
+
+                            li {
+                                display: flex;
+                                align-items: center;
+                                gap: 10px;
+                                margin-bottom: 10px;
+
+                                .stat-value {
+                                    font-size: 1.2em;
+                                    color: #ccc;
+                                    font-weight: bold;
+                                }
+                            }
+                        }
+                    }
+                    &.classes-played {
+                        .stats-list {
+                            display: flex;
+                            flex-wrap: wrap;
+                            gap: 25px;
+
+                            li {
+                                flex-direction: column;
+
+                                .stat-value {
+                                    margin-top: 5px;
+                                    font-size: 1.2em;
+                                    color: #ccc;
+                                    font-weight: bold;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                .stats-list {
+                    list-style-type: none;
+                    padding-left: 0;
+
+                    li {
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                        margin-bottom: 10px;
+                    }
+                }
+
+                .no-data {
+                    font-style: italic;
+                    color: #ccc;
+                }
+                
+                .recent-matches {
+                    .matches-list {
+                        list-style-type: none;
+                        padding-left: 0;
+
+                        li {
+                            display: flex;
+                            align-items: center;
+                            gap: 15px;
+                            margin-bottom: 10px;
+
+                            .match-map {
+                                font-size: 1.2em;
+                                color: #ccc;
+                                font-weight: bold;
+                            }
+                            .btn-log {
+                                background-color: $box-border;
+                                color: #fff;
+                                padding: 5px 10px;
+                                border-radius: 4px;
+                                text-decoration: none;
+                                font-size: 0.9em;
+
+                                &:hover {
+                                    background-color: $box-border-hover;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     }   
 }
@@ -52,6 +163,9 @@ body {
 }
 .gap-10 {
     gap: 10px;
+}
+.gap-15 {
+    gap: 15px;
 }
 .align-center {
     align-items: center;

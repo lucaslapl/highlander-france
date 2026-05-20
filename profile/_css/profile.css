@@ -29,6 +29,95 @@ body #main #content .personnal-info .steam-profile-link {
   color: #fff;
   text-decoration: none;
 }
+body #main #content .player-stats h3 {
+  font-size: 2.5em;
+  margin: 15px 0;
+}
+body #main #content .player-stats .box-stats {
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 15px 25px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+}
+body #main #content .player-stats .box-stats.matches-played {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+body #main #content .player-stats .box-stats.matches-played p {
+  font-size: 1.5em;
+  margin: 0;
+}
+body #main #content .player-stats .box-stats.matches-played p b {
+  font-size: 2em;
+}
+body #main #content .player-stats .box-stats.maps-played .stats-list {
+  list-style-type: none;
+  padding-left: 0;
+}
+body #main #content .player-stats .box-stats.maps-played .stats-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+body #main #content .player-stats .box-stats.maps-played .stats-list li .stat-value {
+  font-size: 1.2em;
+  color: #ccc;
+  font-weight: bold;
+}
+body #main #content .player-stats .box-stats.classes-played .stats-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+}
+body #main #content .player-stats .box-stats.classes-played .stats-list li {
+  flex-direction: column;
+}
+body #main #content .player-stats .box-stats.classes-played .stats-list li .stat-value {
+  margin-top: 5px;
+  font-size: 1.2em;
+  color: #ccc;
+  font-weight: bold;
+}
+body #main #content .player-stats .stats-list {
+  list-style-type: none;
+  padding-left: 0;
+}
+body #main #content .player-stats .stats-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+body #main #content .player-stats .no-data {
+  font-style: italic;
+  color: #ccc;
+}
+body #main #content .player-stats .recent-matches .matches-list {
+  list-style-type: none;
+  padding-left: 0;
+}
+body #main #content .player-stats .recent-matches .matches-list li {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+body #main #content .player-stats .recent-matches .matches-list li .match-map {
+  font-size: 1.2em;
+  color: #ccc;
+  font-weight: bold;
+}
+body #main #content .player-stats .recent-matches .matches-list li .btn-log {
+  background-color: #007bff;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: 0.9em;
+}
+body #main #content .player-stats .recent-matches .matches-list li .btn-log:hover {
+  background-color: #0056b3;
+}
 
 /* --- Styles pour les icônes de classe --- */
 .class-icon {
@@ -41,6 +130,10 @@ body #main #content .personnal-info .steam-profile-link {
 
 .gap-10 {
   gap: 10px;
+}
+
+.gap-15 {
+  gap: 15px;
 }
 
 .align-center {
