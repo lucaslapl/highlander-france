@@ -58,14 +58,13 @@ require_once "_inc/functions.php";
 </head>
 <body>
 
-    
-
     <?php include("_inc/header.php"); ?>
-
-    
 
     <main id="main">
         <section id="content">
+
+            <?php include("_inc/upcoming_matches.php"); ?>
+
             <div id="questions">
                 <ul>
                     <li>Tu joues à Team Fortress 2 et tu parles français ?</li>
