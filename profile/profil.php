@@ -118,6 +118,7 @@ if (!$player) {
     <link rel="manifest" href="../site.webmanifest">
 
     <link rel="stylesheet" href="../_css/main.css">
+    <link rel="stylesheet" href="_css/profile.css">
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-30553SX3GJ"></script>
@@ -142,52 +143,6 @@ if (!$player) {
         }
     }
     </script>
-    <style>
-        body #header {
-            height: 425px;
-            position: relative;
-        }
-
-        body #main {
-            min-height: 500px;
-            position: relative;
-        }
-        body #main #content .personnal-info .profile-header {
-            gap: 20px;
-        }
-        body #main #content .personnal-info .profile-header .profile-avatar {
-            width: 125px;
-            border-radius: 50%;
-        }
-        body #main #content .personnal-info .profile-header h2 {
-            font-size: 3em;
-        }
-        body #main #content .personnal-info .profile-header h2 .flag-icon {
-            width: auto;
-        }
-        body #main #content .personnal-info .profile-header span {
-            font-size: 0.7em;
-            font-weight: normal;
-        }
-        body #main #content .personnal-info .steam-profile-link {
-            color: #fff;
-            text-decoration: none;
-        }
-
-        /* --- Styles pour les icônes de classe --- */
-        .class-icon {
-            width: 1.5em;
-            height: 1.5em;
-            display: block;
-            object-fit: contain;
-        }
-        .gap-10 {
-            gap: 10px;
-        }
-        .align-center {
-            align-items: center;
-        }
-    </style>
 </head>
 <body>
 
@@ -206,7 +161,7 @@ if (!$player) {
                         <span>inscrit le <?php echo $date_formatee; ?></span>
                     </div>
                 </div>
-                <p>SteamID : <?php echo $steamid3; ?></p>
+                <!--<p>SteamID : <?php echo $steamid3; ?></p>-->
                 <a href="https://steamcommunity.com/profiles/<?php echo $steamid; ?>" target="_blank" class="steam-profile-link">
                     <i class="fab fa-steam"></i> Profil Steam
                 </a>
@@ -216,29 +171,35 @@ if (!$player) {
 
             <div class="player-stats">
                 <h3>Stats</h3>
-                <p><b><?php echo $matches['total_matches'] ?? 0; ?></b> matchs joués</p>
-                <br>
-                <p><b>Top 3 des maps jouées :</b></p>
-                <?php if (empty($topMaps)): ?>
-                    <p class="no-data">Aucune donnée de map pour le moment.</p>
-                <?php else: ?>
-                    <ul class="stats-list">
-                        <?php foreach ($topMaps as $map): ?>
-                            <li class="flex space-between align-center">
-                                <span class="stat-label"><?= htmlspecialchars($map['map_name']) ?></span>
-                                <span class="stat-value"><?= $map['total'] ?> match(s)</span>
-                            </li>
-                        <?php endforeach; ?>
-                    </ul>
-                <?php endif; ?>
-                <br>
+
+                <div class="box-stats matches-played">
+                    <p><b><?php echo $matches['total_matches'] ?? 0; ?></b> matchs joués</p>
+                </div>
+
+                <div class="box-stats">
+                    <p><b>Top 3 des maps jouées :</b></p>
+                    <?php if (empty($topMaps)): ?>
+                        <p class="no-data">Aucune donnée de map pour le moment.</p>
+                    <?php else: ?>
+                        <ul class="stats-list">
+                            <?php foreach ($topMaps as $map): ?>
+                                <li class="flex space-between align-center">
+                                    <span class="stat-label"><?= htmlspecialchars($map['map_name']) ?></span>
+                                    <span class="stat-value"><?= $map['total'] ?> match(s)</span>
+                                </li>
+                            <?php endforeach; ?>
+                        </ul>
+                    <?php endif; ?>
+                </div>
+
                 <p><b>Classes jouées :</b></p>
-                <?php if (empty($classesPlayed)): ?>
-                    <p class="no-data">Aucune donnée de classe pour le moment.</p>
-                <?php else: ?>
-                    <ul class="stats-list">
-                        <?php foreach ($classesPlayed as $class): ?>
-                            <?php
+                <div class="box-stats">
+                    <?php if (empty($classesPlayed)): ?>
+                        <p class="no-data">Aucune donnée de classe pour le moment.</p>
+                    <?php else: ?>
+                        <ul class="stats-list">
+                            <?php foreach ($classesPlayed as $class): ?>
+                                <?php
                             $classNameBrut = htmlspecialchars($class['class_played']);
                             $iconPath = "/_img/classes/" . $classNameBrut . ".png";
                             ?>
@@ -253,7 +214,9 @@ if (!$player) {
                             </li>
                         <?php endforeach; ?>
                     </ul>
-                <?php endif; ?>
+                    <?php endif; ?>
+                </div>                    
+
                 <br>
                 <h3>Matchs Récents</h3>
                 <?php if (empty($recentMatches)): ?>

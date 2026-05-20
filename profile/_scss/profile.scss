@@ -1,0 +1,58 @@
+body {
+
+    #header {
+            height: 425px;
+            position: relative;
+        }
+
+    #main {
+        min-height: 500px;
+        position: relative;
+
+        #content {
+
+            .personnal-info {
+
+                .profile-header {
+                    gap: 20px;
+
+                    .profile-avatar {
+                        width: 125px;
+                        border-radius: 50%;
+                    }
+                    h2 {
+                        font-size: 3em;
+
+                        .flag-icon {
+                            width: auto;
+                            height: auto;
+                        }
+                    }
+
+                    span {
+                        font-size: 0.7em;
+                        font-weight: normal;
+                    }
+                }
+                .steam-profile-link {
+                    color: #fff;
+                    text-decoration: none;
+                }
+            }
+        }
+    }   
+}
+
+/* --- Styles pour les icônes de classe --- */
+.class-icon {
+    width: 45px;
+    height: 45px;
+    display: block;
+    object-fit: contain;
+}
+.gap-10 {
+    gap: 10px;
+}
+.align-center {
+    align-items: center;
+}

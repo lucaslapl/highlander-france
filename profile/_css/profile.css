@@ -1,0 +1,48 @@
+@charset "UTF-8";
+body #header {
+  height: 425px;
+  position: relative;
+}
+body #main {
+  min-height: 500px;
+  position: relative;
+}
+body #main #content .personnal-info .profile-header {
+  gap: 20px;
+}
+body #main #content .personnal-info .profile-header .profile-avatar {
+  width: 125px;
+  border-radius: 50%;
+}
+body #main #content .personnal-info .profile-header h2 {
+  font-size: 3em;
+}
+body #main #content .personnal-info .profile-header h2 .flag-icon {
+  width: auto;
+  height: auto;
+}
+body #main #content .personnal-info .profile-header span {
+  font-size: 0.7em;
+  font-weight: normal;
+}
+body #main #content .personnal-info .steam-profile-link {
+  color: #fff;
+  text-decoration: none;
+}
+
+/* --- Styles pour les icônes de classe --- */
+.class-icon {
+  width: 45px;
+  height: 45px;
+  display: block;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+
+.gap-10 {
+  gap: 10px;
+}
+
+.align-center {
+  align-items: center;
+}/*# sourceMappingURL=profile.css.map */

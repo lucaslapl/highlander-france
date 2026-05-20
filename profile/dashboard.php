@@ -147,45 +147,7 @@ $recentMatches = $stmtRecent->fetchAll(PDO::FETCH_ASSOC);
     <link rel="manifest" href="/site.webmanifest">
 
     <link rel="stylesheet" href="../_css/main.css">
-    <style>
-        body #header {
-            height: 425px;
-            position: relative;
-        }
-
-        body #main {
-            min-height: 500px;
-            position: relative;
-        }
-        body #main #content .personnal-info .profile-header {
-            gap: 20px;
-        }
-        body #main #content .personnal-info .profile-header img {
-            width: 125px;
-            border-radius: 50%;
-        }
-        body #main #content .personnal-info .profile-header h2 {
-            font-size: 3em;
-        }
-        body #main #content .personnal-info .profile-header h2 span {
-            font-size: 0.25em;
-            font-weight: normal;
-        }
-
-        /* --- Styles pour les icônes de classe --- */
-        .class-icon {
-            width: 1.5em;
-            height: 1.5em;
-            display: block;
-            object-fit: contain;
-        }
-        .gap-10 {
-            gap: 10px;
-        }
-        .align-center {
-            align-items: center;
-        }
-    </style>
+    <link rel="stylesheet" href="_css/profile.css">
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-30553SX3GJ"></script>
