@@ -269,6 +269,33 @@ body #header nav .nav-content .nav-right #session-profile a:hover {
 body #header nav .nav-content .nav-right #session-profile .active {
   border-bottom: 3px solid rgba(255, 98, 194, 0.431372549);
 }
+body #header nav .nav-content .nav-right #session-profile .btn-steam-login {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: linear-gradient(135deg, #171a21 0%, #212836 100%);
+  color: #fff;
+  text-decoration: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-family: "Motiva Sans", Sans-Serif, Arial;
+  font-weight: 600;
+  font-size: 0.95em;
+  letter-spacing: 0.3px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: all 0.25s ease-in-out;
+}
+body #header nav .nav-content .nav-right #session-profile .btn-steam-login:hover {
+  background: linear-gradient(135deg, #1c212c 0%, #293244 100%);
+  border-color: rgba(102, 192, 244, 0.4);
+  color: #fff;
+}
+body #header nav .nav-content .nav-right #session-profile .btn-steam-login:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
 body #header nav .nav-discord {
   text-decoration: none;
   font-weight: bold;

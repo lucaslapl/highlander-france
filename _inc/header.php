@@ -38,8 +38,12 @@
                                 <a href="/profile/dashboard" class="<?= ($page_actuelle == 'dashboard.php') ? 'active' : '' ?>">Mon Profil</a>
                                 <a href="/logout">Déconnexion</a>
                             <?php else: ?>
-                                <a href="/login">
+                                <a href="/login" class="btn-steam-login">
+                                    <i class="fa-brands fa-steam"></i>
+                                    <span>Connexion via Steam</span>
+                                    <!--
                                     <img class="steamlogin" src="/_img/sits_01.png" alt="Connexion via Steam" aria-label="Se connecter via Steam">
+                                    -->
                                 </a>
                             <?php endif; ?>
                         </div>
