@@ -658,15 +658,16 @@ body #main #content #join a:hover {
   width: 50px;
   height: 50px;
 }
-#staff #sous-staff #mentors h4, #staff #sous-staff #mixers h4 {
+#staff #sous-staff #mentors a, #staff #sous-staff #mixers a {
+  text-decoration: none;
+  color: inherit;
+  transition: 0.3s;
+}
+#staff #sous-staff #mentors a h4, #staff #sous-staff #mixers a h4 {
   margin: 5px 10px;
 }
-#staff #sous-staff #mentors .staff-links a, #staff #sous-staff #mixers .staff-links a {
-  margin: 0 2px;
-}
-#staff #sous-staff #mentors .staff-links a img, #staff #sous-staff #mixers .staff-links a img {
-  width: 25px;
-  height: 25px;
+#staff #sous-staff #mentors a:hover, #staff #sous-staff #mixers a:hover {
+  color: #fbb7fb;
 }
 #staff h3 {
   text-align: center;
@@ -689,34 +690,22 @@ body #main #content #join a:hover {
 #staff .staff-role .staff-member {
   margin: 15px;
 }
-#staff .staff-role .staff-member h4 {
-  margin: 5px 0;
-  font-size: 1.3em;
+#staff .staff-role .staff-member a {
+  text-decoration: none;
+  color: inherit;
+  transition: 0.3s;
+}
+#staff .staff-role .staff-member a h4 {
+  margin: 5px 10px;
+}
+#staff .staff-role .staff-member a:hover {
+  color: #fbb7fb;
 }
 #staff .staff-role .staff-member img {
   width: 65px;
   height: 65px;
   border-radius: 50%;
   border: 1px solid rgba(250, 87, 255, 0.5882352941);
-}
-#staff .staff-role .staff-member .staff-links a {
-  margin: 0 5px;
-}
-#staff .staff-role .staff-member .staff-links a img {
-  border-radius: 0;
-  border: none;
-}
-#staff .staff-role .staff-member .staff-links a .steam-img {
-  width: 25px;
-  height: 25px;
-}
-#staff .staff-role .staff-member .staff-links a .etf2l-img {
-  width: 32px;
-  height: 32px;
-}
-#staff .staff-role .staff-member .staff-links a .logstf-img {
-  width: 45px;
-  height: 45px;
 }
 
 /** HALL OF FAME **/
