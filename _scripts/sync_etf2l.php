@@ -63,21 +63,27 @@ foreach ($matches as $m) {
     // Si le match concerne la France d'une manière ou d'une info
     if ($isFr1 || $isFr2 || $isWhitelisted1 || $isWhitelisted2) {
         
+        // Ajout des colonnes dans la requête
         $stmt = $db->prepare("
-            INSERT OR REPLACE INTO etf2l_matches (match_id, team1_name, team2_name, match_date, competition_name)
-            VALUES (?, ?, ?, ?, ?)
+            INSERT OR REPLACE INTO etf2l_matches (match_id, team1_name, team2_name, match_date, competition_name, team1_country, team2_country)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
         ");
         
-        // On récupère le nom de la compétition (ex: "Highlander Season 35...")
         $competitionName = $m['competition']['name'] ?? 'Compétition ETF2L';
         $matchTimestamp = (int)($m['time'] ?? time());
+        
+        // On passe les pays en minuscules pour faciliter les comparaisons plus tard
+        $country1 = isset($t1['country']) ? strtolower($t1['country']) : 'unknown';
+        $country2 = isset($t2['country']) ? strtolower($t2['country']) : 'unknown';
         
         $stmt->execute([
             $m['id'] ?? null,
             $t1['name'] ?? 'TBD',
             $t2['name'] ?? 'TBD',
             $matchTimestamp,
-            $competitionName
+            $competitionName,
+            $country1,
+            $country2
         ]);
         
         $insertedCount++;
