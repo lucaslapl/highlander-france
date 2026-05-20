@@ -31,6 +31,8 @@ $player = $stmt->fetch();
 $date_brute = $player['created_at'];
 $date_formatee = $date_brute ? date('d/m/Y', strtotime($date_brute)) : "n/c";
 
+$country = $player['country'] ?? null;
+
 /** GET STATS **/
 
 $stmt_matches = $db->prepare("SELECT count as total_matches FROM player_stats WHERE steamid = ?");
@@ -153,15 +155,18 @@ if (!$player) {
         body #main #content .personnal-info .profile-header {
             gap: 20px;
         }
-        body #main #content .personnal-info .profile-header img {
+        body #main #content .personnal-info .profile-header .profile-avatar {
             width: 125px;
             border-radius: 50%;
         }
         body #main #content .personnal-info .profile-header h2 {
             font-size: 3em;
         }
-        body #main #content .personnal-info .profile-header h2 span {
-            font-size: 0.25em;
+        body #main #content .personnal-info .profile-header h2 .flag-icon {
+            width: auto;
+        }
+        body #main #content .personnal-info .profile-header span {
+            font-size: 0.7em;
             font-weight: normal;
         }
         body #main #content .personnal-info .steam-profile-link {
@@ -193,7 +198,13 @@ if (!$player) {
             <div class="personnal-info">
                 <div class="profile-header flex align-center">
                     <img src="<?php echo htmlspecialchars($player['avatar']); ?>" alt="Avatar de <?php echo htmlspecialchars($player['display_name']); ?>" class="profile-avatar">
-                    <h2><?php echo htmlspecialchars($player['display_name'] ?? 'Joueur'); ?> <span>inscrit le <?php echo $date_formatee; ?></span></h2>
+                    <div class="flex justify-center align-center gap-10">
+                        <h2 class="flex justify-center align-center gap-10">
+                            <?php echo htmlspecialchars($player['display_name'] ?? 'Joueur'); ?> 
+                            <img src="/_img/flags/<?= htmlspecialchars($country) ?>.gif" alt="<?= $countries[$country] ?? $country ?>" class="flag-icon">
+                        </h2>
+                        <span>inscrit le <?php echo $date_formatee; ?></span>
+                    </div>
                 </div>
                 <p>SteamID : <?php echo $steamid3; ?></p>
                 <a href="https://steamcommunity.com/profiles/<?php echo $steamid; ?>" target="_blank" class="steam-profile-link">

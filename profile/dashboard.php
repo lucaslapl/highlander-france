@@ -55,6 +55,22 @@ if (empty($user['name']) || ($last_update < time() - 86400)) {
 $date_brute = $user['created_at'];
 $date_formatee = $date_brute ? date('d/m/Y', strtotime($date_brute)) : "n/c";
 
+$country = $user['country'] ?? null;
+$isLocked = (int)($user['country_locked'] ?? 0);
+
+$countries = [
+    'fr' => 'France',
+    'be' => 'Belgique',
+    'sw' => 'Suisse',
+    'lu' => 'Luxembourg',
+    'uk' => 'Royaume-Uni',
+    'eu' => 'Europe',
+    'al' => 'Algérie',
+    'mo' => 'Maroc'
+];
+
+// GET STATS
+
 $stmt_matches = $db->prepare("SELECT count as total_matches FROM player_stats WHERE steamid = ?");
 $stmt_matches->execute([$steamid3]);
 $matches = $stmt_matches->fetch();
@@ -194,6 +210,45 @@ $recentMatches = $stmtRecent->fetchAll(PDO::FETCH_ASSOC);
                 </div>
                 <h3>Informations personnelles</h3>
                 <p>SteamID : <?php echo $steamid3; ?></p>
+                <br>
+                <h3>Nationalité</h3>
+    
+                <?php if ($isLocked && !empty($country)): ?>
+                    <div class="flex align-center gap-10">
+                        <img src="/_img/flags/<?= htmlspecialchars($country) ?>.gif" alt="<?= $countries[$country] ?? $country ?>" class="flag-icon">
+                        <span>Nationalité enregistrée : <strong><?= $countries[$country] ?? strtoupper($country) ?></strong></span>
+                    </div>
+                    <!--
+                    <p class="text-muted"><i class="fa-solid fa-lock"></i> Cette option est verrouillée. Contactez un administrateur pour la modifier.</p>-->
+
+                <?php if (isset($_SESSION['flash_success'])): ?>
+                    <div style="background: #4CAF50; color: white; padding: 10px; margin-bottom: 15px; border-radius: 4px;">
+                        <?= $_SESSION['flash_success']; unset($_SESSION['flash_success']); ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (isset($_SESSION['flash_error'])): ?>
+                    <div style="background: #f44336; color: white; padding: 10px; margin-bottom: 15px; border-radius: 4px;">
+                        <?= $_SESSION['flash_error']; unset($_SESSION['flash_error']); ?>
+                    </div>
+                <?php endif; ?>
+                    
+                <?php else: ?>
+                    <form action="update_country.php" method="POST" class="country-form">
+                        <p>Sélectionnez votre nationalité (ce choix sera <strong>définitif</strong>) :</p>
+                        
+                        <div class="flex align-center gap-10">
+                            <select name="country" required class="select-country">
+                                <option value="" disabled selected>Choisir un pays...</option>
+                                <?php foreach ($countries as $code => $name): ?>
+                                    <option value="<?= $code ?>"><?= $name ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                            
+                            <button type="submit" class="btn-submit-country">Confirmer</button>
+                        </div>
+                    </form>
+                <?php endif; ?>
             </div>
 
             <br>
