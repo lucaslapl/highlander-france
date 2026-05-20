@@ -137,6 +137,12 @@ require_once "_inc/functions.php";
                                 </a>
                             </div>
                             <div class="staff-member flex align-center">
+                                <img class="staff-pic" src="_img/ca$h.jpg" alt="Avatar de Ca$h">
+                                <a href="/profile/profil?steamid=76561199236525199">
+                                    <h4>Ca$h</h4>
+                                </a>
+                            </div>
+                            <div class="staff-member flex align-center">
                                 <img class="staff-pic" src="_img/kaylus.jpg" alt="Avatar de Kaylus">
                                 <a href="/profile/profil?steamid=76561198051084840">
                                     <h4>Kaylus</h4>
