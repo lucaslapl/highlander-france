@@ -58,6 +58,16 @@ $stmtClasses = $db->prepare("
 $stmtClasses->execute([':steamid' => $steamid3]);
 $classesPlayed = $stmtClasses->fetchAll(PDO::FETCH_ASSOC);
 
+$stmtRecent = $db->prepare("
+    SELECT match_id, map_name, class_played 
+    FROM player_matches 
+    WHERE steamid = :steamid 
+    ORDER BY match_id DESC 
+    LIMIT 5
+");
+$stmtRecent->execute([':steamid' => $steamid3]);
+$recentMatches = $stmtRecent->fetchAll(PDO::FETCH_ASSOC);
+
 // 5. Si le joueur n'existe pas en base
 if (!$player) {
     http_response_code(404);
@@ -233,7 +243,34 @@ if (!$player) {
                         <?php endforeach; ?>
                     </ul>
                 <?php endif; ?>
-                <p><b>D'autres stats à venir !</b></p>
+                <br>
+                <h3>Matchs Récents</h3>
+                <?php if (empty($recentMatches)): ?>
+                    <p class="no-data">Aucun match enregistré pour le moment.</p>
+                <?php else: ?>
+                    <ul class="matches-list">
+                        <?php foreach ($recentMatches as $match): ?>
+                            <?php 
+                            $mId = htmlspecialchars($match['match_id']);
+                            $cPlayed = htmlspecialchars($match['class_played']);
+                            ?>
+                            <li class="flex space-between align-center match-item">
+                                <div class="flex align-center gap-15">
+                                    <img src="/_img/classes/<?= $cPlayed ?>.png" 
+                                        alt="<?= ucfirst($cPlayed) ?>" 
+                                        class="class-icon" 
+                                        title="Joué en <?= ucfirst($cPlayed) ?>">
+                                    
+                                    <span class="match-map"><?= htmlspecialchars($match['map_name']) ?></span>
+                                </div>
+                                
+                                <a href="https://logs.tf/<?= $mId ?>" target="_blank" class="btn-log">
+                                    <i class="fa-solid fa-file-lines"></i> Log #<?= $mId ?>
+                                </a>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                <?php endif; ?>
             </div>
 
         </section>
