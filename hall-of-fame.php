@@ -90,7 +90,7 @@ require_once "_inc/functions.php";
     window.addEventListener("load", function () {
 
     const content = document.querySelector("#content");
-    const offset = -92; // ajuste comme tu veux
+    const offset = -115; // ajuste comme tu veux
 
     if (!content) return;
 
