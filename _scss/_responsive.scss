@@ -18,6 +18,9 @@
 }
 
 @media all and (max-width: 870px) {
+    body #header nav {
+        padding: 25px 35px;
+    }
     body #header nav .nav-content {
         .burger-menu {
             display: flex;
