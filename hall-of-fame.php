@@ -62,7 +62,12 @@ require_once "_inc/functions.php";
 
     <main id="main">
         <section id="content">
-
+            <!--
+            <div class="leaderboard-tabs">
+                <button class="tab-btn active" onclick="switchLeaderboard(this, '9v9')">Highlander (9v9)</button>
+                <button class="tab-btn" onclick="switchLeaderboard(this, '6s')">Sixes (6v6)</button>
+            </div>
+            -->
             <div class="leaderboard-container">
                 <table id="leaderboard-table">
                     <thead>
@@ -125,7 +130,15 @@ require_once "_inc/functions.php";
 });
 
 // Lancement au chargement de la page
-loadLeaderboard();
+loadLeaderboard('9v9');
+
+function switchLeaderboard(button, mode) {
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    
+    button.classList.add('active');
+    
+    loadLeaderboard(mode);
+}
 </script>
 </body>
 </html>
