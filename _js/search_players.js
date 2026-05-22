@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Fermer le dropdown si on clique en dehors de la barre de recherche
     document.addEventListener('click', (e) => {
         if (!searchInput.contains(e.target) && !resultsDropdown.contains(e.target)) {
-            resultsDropdown.style.style.display = 'none';
+            resultsDropdown.style.display = 'none';
         }
     });
 });
