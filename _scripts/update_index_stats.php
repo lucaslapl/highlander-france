@@ -34,21 +34,43 @@ function getJson($url) {
 }
 
 $blacklist = [4040598];
-$url_api_list = "https://logs.tf/api/v1/log?title=Highlander%20France";
+$url_old = "https://logs.tf/api/v1/log?title=Highlander%20France";
+$url_new = "https://logs.tf/api/v1/log?title=highlanderfrance.tf";
+
+$responseOld = getJson($url_old);
+$responseNew = getJson($url_new);
 
 // get logs from logs.tf
-$response = getJson($url_api_list);
-if (!$response) die("Erreur : Impossible de contacter logs.tf");
+if (!$responseOld && !$responseNew) {
+    die("Erreur : Impossible de contacter logs.tf pour les deux requêtes.");
+}
 
-$logs = $response["logs"];
+$logsOld = $responseOld["logs"] ?? [];
+$logsNew = $responseNew["logs"] ?? [];
 
-// filter
-$logs = array_filter($logs, function($log) use ($blacklist) {
+$mergedLogs = [];
+foreach (array_merge($logsOld, $logsNew) as $l) {
+    if (isset($l['id'])) {
+        $mergedLogs[$l['id']] = $l;
+    }
+}
+
+// Filtrage de la Blacklist
+$filteredLogs = array_filter($mergedLogs, function($log) use ($blacklist) {
     return !in_array($log["id"], $blacklist);
 });
-$logs = array_slice($logs, 0, -4); // On retire les 4 plus anciens
 
-foreach ($logs as $log) {
+// Tri par ID décroissant pour s'assurer de retirer les 4 plus anciens à la fin
+usort($filteredLogs, function($a, $b) {
+    return $b['id'] <=> $a['id'];
+});
+
+// Retrait des 4 plus anciens de la liste
+if (count($filteredLogs) > 4) {
+    $filteredLogs = array_slice($filteredLogs, 0, -4);
+}
+
+foreach ($filteredLogs as $log) {
     $match_id = $log["id"];
 
     $stmt = $db->prepare("SELECT length FROM matches_cache WHERE match_id = ?");
@@ -72,8 +94,8 @@ foreach ($logs as $log) {
     }
 }
 
-$placeholders = implode(',', array_fill(0, count($logs), '?'));
-$ids_filtres = array_column($logs, 'id');
+$placeholders = implode(',', array_fill(0, count($filteredLogs), '?'));
+$ids_filtres = array_column($filteredLogs, 'id');
 
 $stmt_final = $db->prepare("SELECT COUNT(*) as nb, SUM(length) as total FROM matches_cache WHERE match_id IN ($placeholders)");
 $stmt_final->execute($ids_filtres);

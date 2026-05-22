@@ -35,11 +35,25 @@ function getJson($url) {
     return json_decode($response, true);
 }
 
-$data = getJson("https://logs.tf/api/v1/log?title=Highlander%20France");
-$allLogs = $data["logs"] ?? [];
+$dataOld = getJson("https://logs.tf/api/v1/log?title=Highlander%20France");
+$dataNew = getJson("https://logs.tf/api/v1/log?title=highlanderfrance.tf");
+
+$logsOld = $dataOld["logs"] ?? [];
+$logsNew = $dataNew["logs"] ?? [];
+
+$mergedLogs = array_merge($logsOld, $logsNew);
+
+// Nettoyage des doublons éventuels
+$allLogs = [];
+foreach ($mergedLogs as $l) {
+    if (isset($l['id'])) {
+        $allLogs[$l['id']] = $l;
+    }
+}
 
 foreach ($allLogs as $log) {
     $logId = $log['id'];
+    $title = $log['title'] ?? '';
     
     $stmt = $db->prepare("SELECT 1 FROM processed_logs WHERE id = ?");
     $stmt->execute([$logId]);
@@ -53,6 +67,16 @@ foreach ($allLogs as $log) {
             continue;
         }
 
+        // get game mode
+        $titleLower = strtolower($title);
+        $gameMode = '9v9'; // Mode par défaut pour l'historique
+        
+        if (strpos($titleLower, "[6s]") !== false) {
+            $gameMode = '6s';
+        } elseif (strpos($titleLower, "[9v9]") !== false) {
+            $gameMode = '9v9';
+        }
+
         $rawMap = $details['info']['map'] ?? 'unknown';
         $mapName = preg_replace('/_(v|rc|f)\d+.*?$/i', '', $rawMap);
 
@@ -60,17 +84,17 @@ foreach ($allLogs as $log) {
             foreach ($details['players'] as $steamid => $pData) {
 
                 // update stats
-                $db->prepare("INSERT INTO player_stats (steamid, count) VALUES (?, 1) 
-                              ON CONFLICT(steamid) DO UPDATE SET count = count + 1")
-                   ->execute([$steamid]);
+                $db->prepare("INSERT INTO player_stats (steamid, count, game_mode) VALUES (?, 1, ?) 
+                              ON CONFLICT(steamid, game_mode) DO UPDATE SET count = count + 1")
+                   ->execute([$steamid, $gameMode]);
 
                 $classPlayed = 'unknown';
                 if (!empty($pData['class_stats']) && isset($pData['class_stats'][0]['type'])) {
                     $classPlayed = $pData['class_stats'][0]['type'];
                 }
-                $db->prepare("INSERT OR IGNORE INTO player_matches (steamid, match_id, map_name, class_played) 
-                              VALUES (?, ?, ?, ?)")
-                   ->execute([$steamid, $logId, $mapName, $classPlayed]);
+                $db->prepare("INSERT OR IGNORE INTO player_matches (steamid, match_id, map_name, class_played, game_mode) 
+                              VALUES (?, ?, ?, ?, ?)")
+                   ->execute([$steamid, $logId, $mapName, $classPlayed, $gameMode]);
 
                 // check if player info exists
                 $stmtCheck = $db->prepare("SELECT 1 FROM players_info WHERE steamid = ?");

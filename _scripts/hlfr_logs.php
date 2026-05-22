@@ -1,8 +1,14 @@
 <?php
 header('Content-Type: application/json');
 
-$url = "https://logs.tf/api/v1/log?title=Highlander%20France";
-$data = json_decode(file_get_contents($url), true);
+$url_old = "https://logs.tf/api/v1/log?title=Highlander%20France";
+$url_new = "https://logs.tf/api/v1/log?title=highlanderfrance.tf";
+
+$data_old = json_decode(@file_get_contents($url_old), true);
+$data_new = json_decode(@file_get_contents($url_new), true);
+
+$logs_old = $data_old["logs"] ?? [];
+$logs_new = $data_new["logs"] ?? [];
 
 // Liste des logs à exclure
 $blacklist = [
@@ -11,13 +17,18 @@ $blacklist = [
 
 $filtered = [];
 
-foreach ($data["logs"] as $log) {
+foreach (array_merge($logs_old, $logs_new) as $log) {
+    $log_id = $log["id"] ?? null;
 
-    if (in_array($log["id"], $blacklist)) {
+    if (!$log_id || in_array($log_id, $blacklist)) {
         continue;
     }
 
-    $filtered[] = $log;
+    $filtered[$log_id] = $log;
 }
 
-echo json_encode($filtered);
+usort($filtered, function($a, $b) {
+    return $b['id'] <=> $a['id'];
+});
+
+echo json_encode(array_values($filtered));
