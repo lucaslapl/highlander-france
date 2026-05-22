@@ -53,6 +53,70 @@ require_once "_inc/functions.php";
 
     gtag('config', 'G-30553SX3GJ');
     </script>
+
+    <style>
+        .search-container {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+}
+
+#player-search-input {
+    width: 100%;
+    padding: 10px 15px;
+    background: #1e1e1e;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    border-radius: 6px;
+    font-size: 0.95em;
+}
+
+/* Le menu déroulant qui flotte au-dessus du reste */
+.search-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #1a1a1a;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-top: none;
+    border-radius: 0 0 6px 6px;
+    z-index: 1000;
+    max-height: 300px;
+    overflow-y: auto;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.5);
+}
+
+/* Une ligne de résultat */
+.search-result-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 15px;
+    color: #eee;
+    text-decoration: none;
+    transition: background 0.2s;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+}
+
+.search-result-item:hover {
+    background: rgba(255, 87, 34, 0.15); /* Orange TF2 discret */
+    color: #fff;
+}
+
+.search-result-item img {
+    width: 28px;
+    height: 28px;
+    border-radius: 4px;
+}
+
+.search-no-result {
+    padding: 12px 15px;
+    color: #666;
+    font-style: italic;
+    font-size: 0.9em;
+}
+    </style>
 </head>
 <body>
 
@@ -62,12 +126,20 @@ require_once "_inc/functions.php";
 
     <main id="main">
         <section id="content">
-            <!--
-            <div class="leaderboard-tabs">
-                <button class="tab-btn active" onclick="switchLeaderboard(this, '9v9')">Highlander (9v9)</button>
-                <button class="tab-btn" onclick="switchLeaderboard(this, '6s')">Sixes (6v6)</button>
+            
+            <div class="leaderboard-filter flex space-around align-center">
+                <div class="leaderboard-tabs">
+                    <button class="tab-btn active" onclick="switchLeaderboard(this, '9v9')">Highlander (9v9)</button>
+                    <button class="tab-btn" onclick="switchLeaderboard(this, '6s')">Sixes (6v6)</button>
+                </div>
+
+                <div class="search-container">
+                    <input type="text" id="player-search-input" placeholder="Rechercher un joueur..." autocomplete="off">
+                    <div id="search-results-dropdown" class="search-dropdown" style="display: none;"></div>
+                </div>
             </div>
-            -->
+            
+    
             <div class="leaderboard-container">
                 <table id="leaderboard-table">
                     <thead>
@@ -92,6 +164,7 @@ require_once "_inc/functions.php";
 <script src="https://kit.fontawesome.com/2f306d349c.js" crossorigin="anonymous"></script>
 <script src="_js/main.js"></script>
 <script src="_js/leaderboard.js"></script>
+<script src="_js/search_players.js"></script>
 <script>
     window.addEventListener("load", function () {
 
