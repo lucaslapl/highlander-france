@@ -155,7 +155,7 @@ if (!$player) {
                     <img src="<?php echo htmlspecialchars($player['avatar']); ?>" alt="Avatar de <?php echo htmlspecialchars($player['display_name']); ?>" class="profile-avatar">
                     <div class="flex justify-center align-center gap-10">
                         <h2 class="flex justify-center align-center gap-10">
-                            <?php echo htmlspecialchars($player['display_name'] ?? 'Joueur'); ?> 
+                            <?php echo htmlspecialchars($player['display_name'] ?? $player['name']); ?> 
                             <img src="/_img/flags/<?= htmlspecialchars($country) ?>.gif" alt="<?= $countries[$country] ?? $country ?>" class="flag-icon">
                         </h2>
                         <?php if ($date_formatee): ?>
