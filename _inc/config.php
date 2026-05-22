@@ -1,19 +1,23 @@
 <?php
-$durations_session = 30 * 24 * 60; // 30 jours en secondes
-session_set_cookie_params([
-    'lifetime' => $durations_session,
-    'path' => '/',
-    'domain' => $_SERVER['HTTP_HOST'],
-    'secure' => true,
-    'httponly' => true,
-    'samesite' => 'Lax'
-]); 
-ini_set('session.gc_maxlifetime', $durations_session);
-
+// EXCLUDE CLI
 if (php_sapi_name() !== 'cli') {
+
+    $durations_session = 30 * 24 * 3600; // 30 jours en secondes
+    session_set_cookie_params([
+        'lifetime' => $durations_session,
+        'path' => '/',
+        'domain' => $_SERVER['HTTP_HOST'] ?? 'highlanderfrance.tf',
+        'secure' => true,
+        'httponly' => true,
+        'samesite' => 'Lax'
+    ]); 
+    ini_set('session.gc_maxlifetime', $durations_session);
+
+
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
+
 }
 
 $db_path = __DIR__ . '/../_scripts/stats.db';
