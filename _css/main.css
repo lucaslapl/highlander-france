@@ -709,6 +709,94 @@ body #main #content #join a:hover {
 }
 
 /** HALL OF FAME **/
+.leaderboard-filter .leaderboard-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
+  background: #141414;
+  padding: 6px;
+  border-radius: 8px;
+  width: -moz-fit-content;
+  width: fit-content;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+.leaderboard-filter .leaderboard-tabs .tab-btn {
+  background: transparent;
+  border: none;
+  color: #888;
+  padding: 10px 24px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.25s ease-in-out;
+}
+.leaderboard-filter .leaderboard-tabs .tab-btn:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.03);
+  color: #fff;
+}
+.leaderboard-filter .leaderboard-tabs .tab-btn.active {
+  background: #72227d;
+  color: #fff;
+  box-shadow: 0 4px 12px rgb(55, 34, 58);
+}
+.leaderboard-filter .search-container {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+}
+.leaderboard-filter .search-container #player-search-input {
+  width: 100%;
+  padding: 10px 15px;
+  background: #1e1e1e;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  border-radius: 6px;
+  font-size: 0.95em;
+}
+.leaderboard-filter .search-container .search-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #1a1a1a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: none;
+  border-radius: 0 0 6px 6px;
+  z-index: 1000;
+  max-height: 300px;
+  overflow-y: auto;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+}
+.leaderboard-filter .search-container .search-dropdown .search-result-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 15px;
+  color: #eee;
+  text-decoration: none;
+  transition: background 0.2s;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+}
+.leaderboard-filter .search-container .search-dropdown .search-result-item:hover {
+  background: rgb(55, 34, 58);
+  color: #fff;
+}
+.leaderboard-filter .search-container .search-dropdown .search-result-item img {
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+}
+.leaderboard-filter .search-container .search-dropdown .search-no-result {
+  padding: 12px 15px;
+  color: #666;
+  font-style: italic;
+  font-size: 0.9em;
+}
+
 .leaderboard-container {
   width: 100%;
 }
