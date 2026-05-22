@@ -13,14 +13,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-async function loadLeaderboard() {
+async function loadLeaderboard(mode = '9v9') {
     const tbody = document.getElementById('leaderboard-body');
+    if (!tbody) return;
+
+    tbody.innerHTML = '<tr><td colspan="3">Chargement...</td></tr>';
     
     try {
-        const response = await fetch('_scripts/leaderboard_cache.json?v=' + new Date().getTime()); // Le ?v=... évite le cache navigateur
+        const filename = `_scripts/leaderboard_${mode}_cache.json`;
+        const response = await fetch(filename + '?v=' + new Date().getTime()); // Le ?v=... évite le cache navigateur
+        if (!response.ok) {
+            throw new Error('Fichier introuvable: ' + filename);
+        }
         const players = await response.json();
         
-        tbody.innerHTML = ''; // Nettoyer avant affichage
+        tbody.innerHTML = ''; // clean loading message
         
         players.forEach((player, index) => {
             const row = document.createElement('tr');
