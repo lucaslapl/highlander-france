@@ -150,6 +150,41 @@ body {
                     }
                 }
             }
+
+            .profile-tabs {
+                display: flex;
+                gap: 10px;
+                margin: 20px 0;
+                background: #141414;
+                padding: 6px;
+                border-radius: 8px;
+                width: fit-content;
+                border: 1px solid rgba(255, 255, 255, 0.05);
+
+                .profile-tab-btn {
+                    background: transparent;
+                    border: none;
+                    color: #888;
+                    padding: 8px 20px;
+                    font-size: 0.85rem;
+                    font-weight: 600;
+                    text-transform: uppercase;
+                    cursor: pointer;
+                    border-radius: 6px;
+                    text-decoration: none;
+                    transition: all 0.25s ease-in-out;
+
+                    &:hover:not(.active) {
+                        background: rgba(255, 255, 255, 0.03);
+                        color: #fff;
+                    }
+                    &.active {
+                        background: #ff5722;
+                        color: #fff;
+                        box-shadow: 0 4px 12px rgba(255, 87, 34, 0.3);
+                    }
+                }
+            }
         }
     }   
 }

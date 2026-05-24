@@ -22,6 +22,11 @@ if (!$steamid) {
     exit();
 }
 
+$currentMode = $_GET['mode'] ?? '9v9';
+if (!in_array($currentMode, ['6s', '9v9'])) {
+    $currentMode = '9v9';
+}
+
 // 4. On cherche le joueur dans la base de données
 $steamid3 = steamID64ToSteamID3($steamid);
 $stmt = $db->prepare("SELECT * FROM players_info WHERE steamid = ?");
@@ -35,39 +40,39 @@ $country = $player['country'] ?? null;
 
 /** GET STATS **/
 
-$stmt_matches = $db->prepare("SELECT count as total_matches FROM player_stats WHERE steamid = ?");
-$stmt_matches->execute([$steamid3]);
+$stmt_matches = $db->prepare("SELECT count as total_matches FROM player_stats WHERE steamid = ? AND game_mode = ?");
+$stmt_matches->execute([$steamid3, $currentMode]);
 $matches = $stmt_matches->fetch();
 
 $stmtMaps = $db->prepare("
     SELECT map_name, COUNT(map_name) as total 
     FROM player_matches 
-    WHERE steamid = :steamid 
+    WHERE steamid = :steamid AND game_mode = :mode
     GROUP BY map_name 
     ORDER BY total DESC 
     LIMIT 3
 ");
-$stmtMaps->execute([':steamid' => $steamid3]); // Remplace par ta variable de SteamID
+$stmtMaps->execute([':steamid' => $steamid3, ':mode' => $currentMode]); // Remplace par ta variable de SteamID
 $topMaps = $stmtMaps->fetchAll(PDO::FETCH_ASSOC);
 
 $stmtClasses = $db->prepare("
     SELECT class_played, COUNT(class_played) as total 
     FROM player_matches 
-    WHERE steamid = :steamid 
+    WHERE steamid = :steamid AND game_mode = :mode
     GROUP BY class_played 
     ORDER BY total DESC
 ");
-$stmtClasses->execute([':steamid' => $steamid3]);
+$stmtClasses->execute([':steamid' => $steamid3, ':mode' => $currentMode]);
 $classesPlayed = $stmtClasses->fetchAll(PDO::FETCH_ASSOC);
 
 $stmtRecent = $db->prepare("
     SELECT match_id, map_name, class_played 
     FROM player_matches 
-    WHERE steamid = :steamid 
+    WHERE steamid = :steamid AND game_mode = :mode
     ORDER BY match_id DESC 
     LIMIT 5
 ");
-$stmtRecent->execute([':steamid' => $steamid3]);
+$stmtRecent->execute([':steamid' => $steamid3, ':mode' => $currentMode]);
 $recentMatches = $stmtRecent->fetchAll(PDO::FETCH_ASSOC);
 
 // 5. Si le joueur n'existe pas en base
@@ -169,10 +174,15 @@ if (!$player) {
                 </a>
             </div>
 
+            <div class="profile-tabs">
+                <a href="?steamid=<?= $steamid ?>&mode=9v9" class="profile-tab-btn js-profile-tab <?= $currentMode === '9v9' ? 'active' : '' ?>">Highlander (9v9)</a>
+                <a href="?steamid=<?= $steamid ?>&mode=6s" class="profile-tab-btn js-profile-tab <?= $currentMode === '6s' ? 'active' : '' ?>">Sixes (6v6)</a>
+            </div>
+
             <br>
 
             <div class="player-stats">
-                <h3>Stats</h3>
+                <h3>Stats - <?= $currentMode === '6s' ? '6v6' : 'Highlander' ?></h3>
 
                 <div class="box-stats matches-played">
                     <p><b><?php echo $matches['total_matches'] ?? 0; ?></b> matchs joués</p>
@@ -220,7 +230,7 @@ if (!$player) {
                 </div>                    
                 
                 <div class="recent-matches">
-                    <h3>Matchs Récents</h3>
+                    <h3>Matchs Récents (<?= $currentMode === '6s' ? '6v6' : '9v9' ?>)</h3>
                     <?php if (empty($recentMatches)): ?>
                         <p class="no-data">Aucun match enregistré pour le moment.</p>
                     <?php else: ?>
@@ -256,5 +266,6 @@ if (!$player) {
 
     <script src="https://kit.fontawesome.com/2f306d349c.js" crossorigin="anonymous"></script>
     <script src="../_js/main.js"></script>
+    <script src="../_js/profil.js"></script>
 </body>
 </html>
