@@ -1,4 +1,6 @@
 <?php
+//ini_set('display_errors', 1);
+//error_reporting(E_ALL);
 // EXCLUDE CLI
 if (php_sapi_name() !== 'cli') {
 
@@ -6,16 +8,20 @@ if (php_sapi_name() !== 'cli') {
     $session_save_path = __DIR__ . '/../_sessions';
 
     if (!file_exists($session_save_path)) {
-        mkdir($session_save_path, 0700, true);
+        mkdir($session_save_path, 0755, true);
     }
-    ini_set('session.save_path', $session_save_path);
 
+    ini_set('session.save_path', $session_save_path);
     ini_set('session.gc_maxlifetime', $session_lifetime);
+    ini_set('session.use_cookies', 1);
+    ini_set('session.use_only_cookies', 1);
+
+    session_name('HLFR_SESSION');
 
     session_set_cookie_params([
         'lifetime' => $session_lifetime,
         'path' => '/',
-        'domain' => $_SERVER['HTTP_HOST'] ?? 'highlanderfrance.tf',
+        // 'domain' => $_SERVER['HTTP_HOST'] ?? 'highlanderfrance.tf',
         'secure' => true,
         'httponly' => true,
         'samesite' => 'Lax'
