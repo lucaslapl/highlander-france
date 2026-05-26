@@ -46,9 +46,9 @@ $success = $stmtUpdate->execute([
 
 // 4. Redirection vers le dashboard avec un message de succès
 if ($success) {
-    $_SESSION['flash_success'] = "Votre nationalité a été enregistrée avec succès !";
+    $_SESSION['success'] = "Votre nationalité a été enregistrée avec succès !";
 } else {
-    $_SESSION['flash_error'] = "Une erreur est survenue lors de l'enregistrement.";
+    $_SESSION['error'] = "Une erreur est survenue lors de l'enregistrement.";
 }
 
 header("Location: /profile/dashboard");
