@@ -65,10 +65,10 @@ try {
                             <h4 style="margin: 0 0 10px 0; color: #ff4444;"><i class="fa-solid fa-users-gear"></i> Modération des joueurs</h4>
                             <p style="font-size: 14px; color: #ccc; margin: 0 0 15px 0;">Rechercher un profil, attribuer/retirer des rôles à l'équipe (Fondateurs, Mentors, Mixers), ou réinitialiser le droit au changement de pseudo unique.</p>
                         </div>
-                        <form action="manage_player.php" method="GET" style="display: flex; gap: 5px;">
-                            <input type="text" name="steamid" placeholder="SteamID64 du joueur" required style="background: #2b2b2b; border: 1px solid #444; color: #fff; padding: 8px; border-radius: 4px; flex-grow: 1; font-size: 13px;">
-                            <button type="submit" style="background: #ff4444; color: #fff; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer;"><i class="fa-solid fa-magnifying-glass"></i></button>
-                        </form>
+                        <div class="search-container">
+                            <input type="text" id="player-search-input" placeholder="Rechercher un joueur..." autocomplete="off">
+                            <div id="search-results-dropdown" class="search-dropdown" style="display: none;"></div>
+                        </div>
                     </div>
 
                     <div style="background: #1a1a1a; border: 1px solid #333; padding: 20px; border-radius: 6px;">
@@ -128,5 +128,7 @@ try {
     <?php include("../_inc/footer.php"); ?>
 
     <script src="https://kit.fontawesome.com/2f306d349c.js" crossorigin="anonymous"></script>
+    <script src="../_js/main.js"></script>
+    <script src="_scripts/admin_player_search.js"></script>
 </body>
 </html>
