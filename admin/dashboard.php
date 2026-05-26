@@ -10,6 +10,7 @@ try {
     $tech_team = getTechnicalTeam($db);
     $totalPlayers = $db->query("SELECT COUNT(*) FROM players_info")->fetchColumn();
     $totalStaff = $db->query("SELECT COUNT(*) FROM players_info WHERE is_admin = 1 OR is_founder = 1 OR is_moderator = 1 OR is_mentor = 1 OR is_mixer = 1")->fetchColumn();
+    $totalRegistered = $db->query("SELECT COUNT(*) FROM players_info WHERE created_at IS NOT NULL")->fetchColumn();
     
     // Récupération des 5 derniers inscrits sur le site
     $stmtRecent = $db->query("SELECT steamid, name, display_name, created_at FROM players_info ORDER BY created_at DESC LIMIT 5");
@@ -41,16 +42,16 @@ try {
 
         <div class="admin-stats-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 40px;">
             <div style="background: #1e1e24; border-left: 4px solid #ff4444; padding: 20px; border-radius: 4px;">
-                <span style="color: #aaa; font-size: 14px; text-transform: uppercase;">Joueurs enregistrés</span>
+                <span style="color: #aaa; font-size: 14px; text-transform: uppercase;">Nombre de joueurs dans la base de données</span>
                 <h3 style="margin: 10px 0 0 0; font-size: 28px;"><?= $totalPlayers ?></h3>
             </div>
-            <div style="background: #1e1e24; border-left: 4px solid #00bc8c; padding: 20px; border-radius: 4px;">
-                <span style="color: #aaa; font-size: 14px; text-transform: uppercase;">Membres de l'équipe</span>
-                <h3 style="margin: 10px 0 0 0; font-size: 28px;"><?= $totalStaff ?></h3>
-            </div>
             <div style="background: #1e1e24; border-left: 4px solid #3498db; padding: 20px; border-radius: 4px;">
-                <span style="color: #aaa; font-size: 14px; text-transform: uppercase;">Version BDD</span>
-                <h3 style="margin: 10px 0 0 0; font-size: 18px; padding-top: 8px;">SQLite v3</h3>
+                <span style="color: #aaa; font-size: 14px; text-transform: uppercase;">Joueurs enregistrés (web)</span>
+                <h3 style="margin: 10px 0 0 0; font-size: 28px;"><?= $totalRegistered ?></h3>
+            </div>
+            <div style="background: #1e1e24; border-left: 4px solid #00bc8c; padding: 20px; border-radius: 4px;">
+                <span style="color: #aaa; font-size: 14px; text-transform: uppercase;">Membres du staff</span>
+                <h3 style="margin: 10px 0 0 0; font-size: 28px;"><?= $totalStaff ?></h3>
             </div>
         </div>
 
@@ -86,7 +87,7 @@ try {
 
                     <div style="background: #1a1a1a; border: 1px solid #333; padding: 20px; border-radius: 6px;">
                         <h4 style="margin: 0 0 10px 0; color: #3498db;"><i class="fa-solid fa-database"></i> Logs du site</h4>
-                        <p style="font-size: 14px; color: #ccc; margin: 0 0 20px 0;">Visualiser les journaux d'erreurs générés par le serveur ou surveiller le fichier `cron_debug.log` que nous avons configuré pour attraper les pannes silencieuses.</p>
+                        <p style="font-size: 14px; color: #ccc; margin: 0 0 20px 0;">(Indisponible pour le moment)</p>
                         <a href="view_logs.php" style="background: #3498db; color: #fff; text-decoration: none; padding: 8px 12px; border-radius: 4px; display: inline-block; font-size: 14px;">Ouvrir l'inspecteur log</a>
                     </div>
 
