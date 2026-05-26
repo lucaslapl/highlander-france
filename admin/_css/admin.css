@@ -5,4 +5,330 @@ body #header {
 body #main {
   min-height: 500px;
   position: relative;
+  /********************************/
+  /** PLAYER MANAGEMENT PAGE **/
+  /********************************/
+}
+body #main .player-profile-header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: #141419;
+  padding: 15px;
+  border-radius: 4px;
+  border-left: 4px solid #ff4444;
+  margin-bottom: 25px;
+}
+body #main .player-profile-header .player-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 6px;
+  border: 2px solid #333;
+}
+body #main .admin-card {
+  background: #1a1a1a;
+  border: 1px solid #2b2b2b;
+  border-radius: 6px;
+  padding: 25px;
+  margin-top: 20px;
+}
+body #main .admin-card .form-section {
+  margin-bottom: 30px;
+}
+body #main .admin-card .form-section .form-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+body #main .admin-card .form-section h3 {
+  color: #fff;
+  border-bottom: 1px solid #2b2b2b;
+  padding-bottom: 8px;
+  margin-bottom: 15px;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+body #main .admin-card .form-section .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+body #main .admin-card .form-section .form-group label {
+  font-size: 14px;
+  font-weight: bold;
+  color: #ccc;
+}
+body #main .admin-card .form-section .form-group .form-control {
+  background: #222;
+  border: 1px solid #444;
+  color: #fff;
+  padding: 10px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: border-color 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+}
+body #main .admin-card .form-section .form-group .form-control:focus {
+  border-color: #ff4444;
+  outline: none;
+}
+body #main .admin-card .form-section .checkbox-group {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+body #main .admin-card .form-section .checkbox-group .admin-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #222;
+  padding: 12px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  transition: background 0.2s, border-color 0.2s;
+  border: 1px solid transparent;
+  font-size: 14px;
+}
+body #main .admin-card .form-section .checkbox-group .admin-label:hover {
+  background: #2b2b2b;
+  border-color: #444;
+}
+body #main .admin-card .form-section .checkbox-group .admin-label input[type=checkbox] {
+  width: 16px;
+  height: 16px;
+  accent-color: #ff4444;
+  cursor: pointer;
+}
+body #main .admin-card .form-section .checkbox-group .admin-label .badge-status {
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-weight: bold;
+}
+body #main .admin-card .form-section .checkbox-group .admin-label .status-locked {
+  background: #d9534f;
+  color: #fff;
+}
+body #main .admin-card .form-section .checkbox-group .admin-label .status-free {
+  background: #5cb85c;
+  color: #fff;
+}
+body #main .admin-card .form-section .checkbox-group .btn-admin-submit {
+  background: #ff4444;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.2s;
+}
+body #main .admin-card .form-section .checkbox-group .btn-admin-submit:hover {
+  background: #cc2424;
+}
+body #main {
+  /********************************/
+  /** LIST STAFF PAGE **/
+  /********************************/
+}
+body #main .admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background: #1a1a1a;
+  border-radius: 6px;
+  overflow: hidden;
+}
+body #main .admin-table th,
+body #main .admin-table td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #2b2b2b;
+}
+body #main .admin-table th {
+  background-color: #222;
+  color: #ff4444;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 13px;
+}
+body #main .admin-table tr:hover {
+  background-color: #222;
+}
+body #main .admin-table .staff-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  vertical-align: middle;
+  margin-right: 10px;
+}
+body #main .admin-table .badge {
+  display: inline-block;
+  padding: 3px 8px;
+  font-size: 11px;
+  font-weight: bold;
+  border-radius: 3px;
+  margin-right: 4px;
+  color: #fff;
+  background: #444;
+}
+body #main .admin-table .badge-admin {
+  background-color: #d9534f;
+}
+body #main .admin-table {
+  /* Rouge */
+}
+body #main .admin-table .badge-founder {
+  background-color: #f0ad4e;
+}
+body #main .admin-table {
+  /* Orange */
+}
+body #main .admin-table .badge-moderator {
+  background-color: #5bc0de;
+}
+body #main .admin-table {
+  /* Bleu ciel */
+}
+body #main .admin-table .badge-mentor {
+  background-color: #5cb85c;
+}
+body #main .admin-table {
+  /* Vert */
+}
+body #main .admin-table .badge-mixer {
+  background-color: #9b59b6;
+}
+body #main .admin-table {
+  /* Violet */
+}
+body #main .admin-table .badge-disabled {
+  background-color: #2b2b2b;
+  color: #555;
+  text-decoration: line-through;
+  font-weight: normal;
+}
+body #main {
+  /********************************/
+  /** CRON SCRIPTS PAGE **/
+  /********************************/
+}
+body #main .terminal-box {
+  background-color: #0c0c0f;
+  border: 1px solid #333;
+  border-left: 4px solid #f39c12;
+  color: #00ff66;
+  font-family: "Courier New", Courier, monospace;
+  padding: 15px;
+  border-radius: 4px;
+  white-space: pre-wrap;
+  word-break: break-all;
+  max-height: 500px;
+  overflow-y: auto;
+  margin-top: 20px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+body #main .cron-select {
+  background: #2b2b2b;
+  border: 1px solid #444;
+  color: #fff;
+  padding: 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  width: 100%;
+  max-width: 400px;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+body #main .btn-run {
+  background-color: #f39c12;
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: background 0.2s;
+}
+body #main .btn-run:hover {
+  background-color: #e67e22;
+}
+body #main .status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: bold;
+  margin-top: 15px;
+}
+body #main .status-success {
+  background-color: #27ae60;
+  color: #fff;
+}
+body #main .status-error {
+  background-color: #c0392b;
+  color: #fff;
+}
+body #main {
+  /********************************/
+  /** WEBSERVER LOGS PAGE **/
+  /********************************/
+}
+body #main .log-meta-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #1a1a1a;
+  border: 1px solid #2b2b2b;
+  padding: 15px 20px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+}
+body #main .log-viewer {
+  background-color: #09090b;
+  border: 1px solid #222;
+  border-top: 4px solid #3498db;
+  color: #e4e4e7;
+  font-family: "Consolas", "Courier New", monospace;
+  padding: 20px;
+  border-radius: 4px;
+  white-space: pre-wrap;
+  word-break: break-all;
+  max-height: 600px;
+  overflow-y: auto;
+  font-size: 13px;
+  line-height: 1.6;
+}
+body #main .btn-clear {
+  background-color: #2b2b2b;
+  border: 1px solid #444;
+  color: #f35f5f;
+  padding: 8px 15px;
+  font-size: 13px;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+body #main .btn-clear:hover {
+  background-color: #381e1e;
+  border-color: #f35f5f;
 }/*# sourceMappingURL=admin.css.map */

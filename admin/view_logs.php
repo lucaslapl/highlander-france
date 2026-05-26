@@ -14,7 +14,7 @@ $bytes = 0;
 
 if (file_exists($log_file_path)) {
     $file_exists = true;
-    
+
     // Calcul de la taille du fichier pour le résumé
     $bytes = filesize($log_file_path);
     if ($bytes >= 1048576) {
@@ -27,17 +27,17 @@ if (file_exists($log_file_path)) {
 
     // Lecture sécurisée du fichier
     $file_lines = file($log_file_path);
-    
+
     if ($file_lines !== false) {
         // On récupère uniquement les 100 dernières lignes pour la performance
         $last_lines = array_slice($file_lines, -100);
-        
+
         // On les inverse pour afficher le PLUS RÉCENT en tout premier (haut de page)
         $last_lines = array_reverse($last_lines);
-        
+
         $log_content = implode("", $last_lines);
     }
-    
+
     if (empty($log_content)) {
         $log_content = "Le fichier de log existe mais il est actuellement vide.";
     }
@@ -58,64 +58,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['clear_logs'])) {
 ?>
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Journaux Système</title>
     <link rel="stylesheet" href="../_css/main.css">
     <link rel="stylesheet" href="_css/admin.css">
-    <style>
-        .log-meta-box {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #1a1a1a;
-            border: 1px solid #2b2b2b;
-            padding: 15px 20px;
-            border-radius: 4px;
-            margin-bottom: 20px;
-        }
-        .log-viewer {
-            background-color: #09090b;
-            border: 1px solid #222;
-            border-top: 4px solid #3498db;
-            color: #e4e4e7;
-            font-family: 'Consolas', 'Courier New', monospace;
-            padding: 20px;
-            border-radius: 4px;
-            white-space: pre-wrap;
-            word-break: break-all;
-            max-height: 600px;
-            overflow-y: auto;
-            font-size: 13px;
-            line-height: 1.6;
-        }
-        .btn-clear {
-            background-color: #2b2b2b;
-            border: 1px solid #444;
-            color: #f35f5f;
-            padding: 8px 15px;
-            font-size: 13px;
-            font-weight: bold;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .btn-clear:hover {
-            background-color: #381e1e;
-            border-color: #f35f5f;
-        }
-    </style>
 </head>
+
 <body>
 
     <?php include("../_inc/header.php"); ?>
 
     <main id="main" style="max-width: 1200px; margin: 40px auto; padding: 0 20px;">
-        
+
         <div style="margin-bottom: 20px;">
             <a href="dashboard" style="color: #aaa; text-decoration: none; font-size: 14px;">
                 <i class="fa-solid fa-arrow-left"></i> Retour au Panel Admin
@@ -124,7 +81,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['clear_logs'])) {
 
         <?php if (isset($_SESSION['success'])): ?>
             <div class="alert alert-success" style="background: #1c3d27; color: #2ecc71; padding: 15px; border-radius: 4px; margin-bottom: 20px; font-size: 14px;">
-                <i class="fa-solid fa-circle-check"></i> <?= $_SESSION['success']; unset($_SESSION['success']); ?>
+                <i class="fa-solid fa-circle-check"></i> <?= $_SESSION['success'];
+                                                            unset($_SESSION['success']); ?>
             </div>
         <?php endif; ?>
 
@@ -135,11 +93,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['clear_logs'])) {
 
         <div class="log-meta-box">
             <div style="font-size: 14px; color: #ccc;">
-                Fichier ciblé : <strong style="color: #fff; font-family: monospace;">cron_debug.log</strong> 
-                <span style="color: #555; margin: 0 10px;">|</span> 
+                Fichier ciblé : <strong style="color: #fff; font-family: monospace;">cron_debug.log</strong>
+                <span style="color: #555; margin: 0 10px;">|</span>
                 Taille actuelle : <strong style="color: #3498db;"><?= $file_size ?></strong>
             </div>
-            
+
             <?php if ($file_exists && $bytes > 0): ?>
                 <form action="" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir vider l\'intégralité des logs ? Cette action est irréversible.');">
                     <button type="submit" name="clear_logs" class="btn-clear">
@@ -152,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['clear_logs'])) {
         <h3 style="font-size: 15px; color: #aaa; text-transform: uppercase; margin-bottom: 10px; letter-spacing: 0.5px;">
             <i class="fa-solid fa-terminal"></i> 100 derniers événements (du plus récent au plus ancien)
         </h3>
-        
+
         <div class="log-viewer"><?= htmlspecialchars($log_content) ?></div>
 
     </main>
@@ -161,4 +119,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['clear_logs'])) {
 
     <script src="https://kit.fontawesome.com/2f306d349c.js" crossorigin="anonymous"></script>
 </body>
+
 </html>

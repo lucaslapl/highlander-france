@@ -78,63 +78,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['trigger_cron'])) {
     <title>Admin - Tâches Multi-CRON</title>
     <link rel="stylesheet" href="../_css/main.css">
     <link rel="stylesheet" href="_css/admin.css">
-    <style>
-        .terminal-box {
-            background-color: #0c0c0f;
-            border: 1px solid #333;
-            border-left: 4px solid #f39c12;
-            color: #00ff66;
-            font-family: 'Courier New', Courier, monospace;
-            padding: 15px;
-            border-radius: 4px;
-            white-space: pre-wrap;
-            word-break: break-all;
-            max-height: 500px;
-            overflow-y: auto;
-            margin-top: 20px;
-            font-size: 13px;
-            line-height: 1.5;
-        }
-        .cron-select {
-            background: #2b2b2b;
-            border: 1px solid #444;
-            color: #fff;
-            padding: 12px;
-            border-radius: 4px;
-            font-size: 14px;
-            width: 100%;
-            max-width: 400px;
-            cursor: pointer;
-            margin-bottom: 15px;
-        }
-        .btn-run {
-            background-color: #f39c12;
-            color: #fff;
-            border: none;
-            padding: 12px 20px;
-            font-size: 14px;
-            font-weight: bold;
-            border-radius: 4px;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            transition: background 0.2s;
-        }
-        .btn-run:hover {
-            background-color: #e67e22;
-        }
-        .status-badge {
-            display: inline-block;
-            padding: 4px 10px;
-            border-radius: 3px;
-            font-size: 12px;
-            font-weight: bold;
-            margin-top: 15px;
-        }
-        .status-success { background-color: #27ae60; color: #fff; }
-        .status-error { background-color: #c0392b; color: #fff; }
-    </style>
 </head>
 <body>
 

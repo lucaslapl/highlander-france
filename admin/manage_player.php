@@ -48,140 +48,21 @@ $current_country = !empty($target_player['country']) ? strtolower($target_player
 ?>
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Gérer <?= htmlspecialchars($final_name) ?></title>
     <link rel="stylesheet" href="../_css/main.css">
     <link rel="stylesheet" href="_css/admin.css">
-    <style>
-        .admin-card {
-            background: #1a1a1a;
-            border: 1px solid #2b2b2b;
-            border-radius: 6px;
-            padding: 25px;
-            margin-top: 20px;
-        }
-        .player-profile-header {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            background: #141419;
-            padding: 15px;
-            border-radius: 4px;
-            border-left: 4px solid #ff4444;
-            margin-bottom: 25px;
-        }
-        .player-avatar {
-            width: 64px;
-            height: 64px;
-            border-radius: 6px;
-            border: 2px solid #333;
-        }
-        .form-section {
-            margin-bottom: 30px;
-        }
-        .form-section h3 {
-            color: #fff;
-            border-bottom: 1px solid #2b2b2b;
-            padding-bottom: 8px;
-            margin-bottom: 15px;
-            font-size: 16px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-        .form-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-bottom: 15px;
-        }
-        .form-group label {
-            font-size: 14px;
-            font-weight: bold;
-            color: #ccc;
-        }
-        .form-control {
-            background: #222;
-            border: 1px solid #444;
-            color: #fff;
-            padding: 10px 12px;
-            border-radius: 4px;
-            font-size: 14px;
-            transition: border-color 0.2s;
-            width: 100%;
-            box-sizing: border-box;
-        }
-        .form-control:focus {
-            border-color: #ff4444;
-            outline: none;
-        }
-        .form-grid-2 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
-        .checkbox-group {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 12px;
-        }
-        .admin-label {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            background: #222;
-            padding: 12px 15px;
-            border-radius: 4px;
-            cursor: pointer;
-            user-select: none;
-            transition: background 0.2s, border-color 0.2s;
-            border: 1px solid transparent;
-            font-size: 14px;
-        }
-        .admin-label:hover {
-            background: #2b2b2b;
-            border-color: #444;
-        }
-        .admin-label input[type="checkbox"] {
-            width: 16px;
-            height: 16px;
-            accent-color: #ff4444;
-            cursor: pointer;
-        }
-        .btn-admin-submit {
-            background: #ff4444;
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 4px;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: background 0.2s;
-        }
-        .btn-admin-submit:hover {
-            background: #cc2424;
-        }
-        .badge-status {
-            font-size: 12px;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-weight: bold;
-        }
-        .status-locked { background: #d9534f; color: #fff; }
-        .status-free { background: #5cb85c; color: #fff; }
-    </style>
 </head>
+
 <body>
-    
+
     <?php include("../_inc/header.php"); ?>
 
     <main id="main" style="max-width: 900px; margin: 40px auto; padding: 0 20px;">
-        
+
         <div style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
             <a href="dashboard" style="color: #aaa; text-decoration: none; font-size: 14px;">
                 <i class="fa-solid fa-arrow-left"></i> Retour au Panel Admin
@@ -205,28 +86,30 @@ $current_country = !empty($target_player['country']) ? strtolower($target_player
 
         <?php if (isset($_SESSION['success'])): ?>
             <div style="background: #1c3d27; color: #2ecc71; border: 1px solid #27ae60; padding: 12px 15px; border-radius: 4px; margin-bottom: 20px; font-size: 14px;">
-                <i class="fa-solid fa-circle-check"></i> <?= $_SESSION['success']; unset($_SESSION['success']); ?>
+                <i class="fa-solid fa-circle-check"></i> <?= $_SESSION['success'];
+                                                            unset($_SESSION['success']); ?>
             </div>
         <?php endif; ?>
 
         <?php if (isset($_SESSION['error'])): ?>
             <div style="background: #3d1c1c; color: #e74c3c; border: 1px solid #c0392b; padding: 12px 15px; border-radius: 4px; margin-bottom: 20px; font-size: 14px;">
-                <i class="fa-solid fa-circle-xmark"></i> <?= $_SESSION['error']; unset($_SESSION['error']); ?>
+                <i class="fa-solid fa-circle-xmark"></i> <?= $_SESSION['error'];
+                                                            unset($_SESSION['error']); ?>
             </div>
         <?php endif; ?>
 
         <div class="admin-card">
             <form action="_scripts/admin_player_update.php" method="POST">
                 <input type="hidden" name="target_steamid" value="<?= htmlspecialchars($target_steamid) ?>">
-                
+
                 <div class="form-section">
                     <h3><i class="fa-solid fa-id-card"></i> Informations du Profil</h3>
                     <div class="form-grid-2">
-                        
+
                         <div class="form-group">
                             <label for="display_name">Pseudo d'affichage sur le site :</label>
-                            <input type="text" name="display_name" id="display_name" class="form-control" 
-                                   value="<?= htmlspecialchars($target_player['display_name'] ?? '') ?>" required>
+                            <input type="text" name="display_name" id="display_name" class="form-control"
+                                value="<?= htmlspecialchars($target_player['display_name'] ?? '') ?>" required>
                         </div>
 
                         <div class="form-group">
@@ -236,8 +119,9 @@ $current_country = !empty($target_player['country']) ? strtolower($target_player
                                     <option value="<?= htmlspecialchars($value) ?>" <?= $current_country === $value ? 'selected' : '' ?>>
                                         <?= htmlspecialchars($label) ?>
                                     </option>
-                                <?php array_key_exists($current_country, $countries_list) ? '' : ''; endforeach; ?>
-                                
+                                <?php array_key_exists($current_country, $countries_list) ? '' : '';
+                                endforeach; ?>
+
                                 <?php if (!array_key_exists($current_country, $countries_list) && !empty($target_player['country'])): ?>
                                     <option value="<?= htmlspecialchars($current_country) ?>" selected>
                                         <?= htmlspecialchars(ucfirst($target_player['country'])) ?> (Actuel)
@@ -256,17 +140,17 @@ $current_country = !empty($target_player['country']) ? strtolower($target_player
                             <input type="checkbox" name="is_founder" value="1" <?= (int)$target_player['is_founder'] === 1 ? 'checked' : '' ?>>
                             <span>Fondateur</span>
                         </label>
-                        
+
                         <label class="admin-label">
                             <input type="checkbox" name="is_moderator" value="1" <?= (int)$target_player['is_moderator'] === 1 ? 'checked' : '' ?>>
                             <span>Modérateur</span>
                         </label>
-                        
+
                         <label class="admin-label">
                             <input type="checkbox" name="is_mentor" value="1" <?= (int)$target_player['is_mentor'] === 1 ? 'checked' : '' ?>>
                             <span>Mentor</span>
                         </label>
-                        
+
                         <label class="admin-label">
                             <input type="checkbox" name="is_mixer" value="1" <?= (int)$target_player['is_mixer'] === 1 ? 'checked' : '' ?>>
                             <span>Lanceur de Mix</span>
@@ -277,7 +161,7 @@ $current_country = !empty($target_player['country']) ? strtolower($target_player
                 <div class="form-section">
                     <h3><i class="fa-solid fa-shield-halved"></i> Modération avancée</h3>
                     <div style="display: flex; flex-direction: column; gap: 12px;">
-                        
+
                         <label class="admin-label" style="justify-content: space-between; width: 100%; box-sizing: border-box;">
                             <div style="display: flex; align-items: center; gap: 10px;">
                                 <input type="checkbox" name="reset_name_change" value="1">
@@ -329,4 +213,5 @@ $current_country = !empty($target_player['country']) ? strtolower($target_player
 
     <script src="https://kit.fontawesome.com/2f306d349c.js" crossorigin="anonymous"></script>
 </body>
+
 </html>

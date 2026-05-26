@@ -20,74 +20,21 @@ try {
 ?>
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Liste de l'équipe</title>
     <link rel="stylesheet" href="../_css/main.css">
     <link rel="stylesheet" href="_css/admin.css">
-    <style>
-        /* Quelques styles rapides dédiés au tableau d'administration */
-        .admin-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-            background: #1a1a1a;
-            border-radius: 6px;
-            overflow: hidden;
-        }
-        .admin-table th, .admin-table td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid #2b2b2b;
-        }
-        .admin-table th {
-            background-color: #222;
-            color: #ff4444;
-            font-weight: bold;
-            text-transform: uppercase;
-            font-size: 13px;
-        }
-        .admin-table tr:hover {
-            background-color: #222;
-        }
-        .staff-avatar {
-            width: 32px;
-            height: 32px;
-            border-radius: 4px;
-            vertical-align: middle;
-            margin-right: 10px;
-        }
-        .badge {
-            display: inline-block;
-            padding: 3px 8px;
-            font-size: 11px;
-            font-weight: bold;
-            border-radius: 3px;
-            margin-right: 4px;
-            color: #fff;
-            background: #444;
-        }
-        .badge-admin     { background-color: #d9534f; } /* Rouge */
-        .badge-founder   { background-color: #f0ad4e; } /* Orange */
-        .badge-moderator { background-color: #5bc0de; } /* Bleu ciel */
-        .badge-mentor    { background-color: #5cb85c; } /* Vert */
-        .badge-mixer     { background-color: #9b59b6; } /* Violet */
-        
-        .badge-disabled {
-            background-color: #2b2b2b;
-            color: #555;
-            text-decoration: line-through;
-            font-weight: normal;
-        }
-    </style>
 </head>
+
 <body>
 
     <?php include("../_inc/header.php"); ?>
 
     <main id="main" style="max-width: 1200px; margin: 40px auto; padding: 0 20px;">
-        
+
         <div style="margin-bottom: 20px;">
             <a href="dashboard" style="color: #aaa; text-decoration: none; font-size: 14px;">
                 <i class="fa-solid fa-arrow-left"></i> Retour au Panel Admin
@@ -115,7 +62,7 @@ try {
                 </thead>
                 <tbody>
                     <?php foreach ($staff_members as $member): ?>
-                        <?php 
+                        <?php
                         $steamid64 = steamID3ToSteamID64($member['steamid']);
                         $final_name = !empty($member['display_name']) ? $member['display_name'] : $member['name'];
                         ?>
@@ -124,11 +71,11 @@ try {
                                 <img src="<?= htmlspecialchars($member['avatar']) ?>" alt="Avatar" class="staff-avatar">
                                 <strong style="color: #fff;"><?= htmlspecialchars($final_name) ?></strong>
                             </td>
-                            
+
                             <td style="font-family: monospace; color: #aaa; font-size: 13px;">
                                 <?= htmlspecialchars($steamid64) ?>
                             </td>
-                            
+
                             <td>
                                 <?= (int)$member['is_admin'] === 1 ? '<span class="badge badge-admin">ADMIN</span>' : '<span class="badge badge-disabled">ADMIN</span>' ?>
                                 <?= (int)$member['is_founder'] === 1 ? '<span class="badge badge-founder">FONDATEUR</span>' : '<span class="badge badge-disabled">FONDATEUR</span>' ?>
@@ -136,7 +83,7 @@ try {
                                 <?= (int)$member['is_mentor'] === 1 ? '<span class="badge badge-mentor">MENTOR</span>' : '<span class="badge badge-disabled">MENTOR</span>' ?>
                                 <?= (int)$member['is_mixer'] === 1 ? '<span class="badge badge-mixer">MIXER</span>' : '<span class="badge badge-disabled">MIXER</span>' ?>
                             </td>
-                            
+
                             <td style="text-align: center;">
                                 <a href="manage_player.php?steamid=<?= $steamid64 ?>" style="background: #222; border: 1px solid #444; color: #fff; text-decoration: none; padding: 5px 10px; border-radius: 4px; font-size: 12px; display: inline-block;">
                                     <i class="fa-solid fa-user-gear" style="color: #ff4444;"></i> Modifier les droits
@@ -152,5 +99,7 @@ try {
 
     <?php include("../_inc/footer.php"); ?>
 
-    <script src="https://kit.fontawesome.com/2f306d349c.js" crossorigin="anonymous"></script></body>
+    <script src="https://kit.fontawesome.com/2f306d349c.js" crossorigin="anonymous"></script>
+</body>
+
 </html>
