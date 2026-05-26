@@ -131,12 +131,6 @@ require_once "_inc/functions.php";
                         <p>Les joueurs qui organisent les mixs pour permettre à tous de jouer en compétitif dans une ambiance conviviale !</p>
                         <div class="staff-role">
                             <div class="staff-member flex align-center">
-                                <img class="staff-pic" src="_img/astrya.jpg" alt="Avatar de Astrya">
-                                <a href="/profile/profil?steamid=76561198091242337">
-                                    <h4>Astrya</h4>
-                                </a>
-                            </div>
-                            <div class="staff-member flex align-center">
                                 <img class="staff-pic" src="_img/ca$h.jpg" alt="Avatar de Ca$h">
                                 <a href="/profile/profil?steamid=76561199236525199">
                                     <h4>Ca$h</h4>
