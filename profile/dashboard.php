@@ -218,7 +218,7 @@ $recentMatches = $stmtRecent->fetchAll(PDO::FETCH_ASSOC);
                                 >
                             </div>
                             
-                            <button type="submit" name="action" value="update_name" class="btn-submit" onclick="return confirm('Êtes-vous sûr ? Ce changement est définitif et unique !');">
+                            <button type="submit" name="action" value="update_name" class="btn-submit" onclick="return confirm('Êtes-vous sûr ? Ce changement est définitif et unique !');" style="background: #525252; border: 1px solid #333; color: white; padding: 8px; border-radius: 4px;width: 190px;">
                                 <i class="fa-solid fa-floppy-disk"></i> Confirmer définitivement
                             </button>
                         </form>
@@ -255,8 +255,8 @@ $recentMatches = $stmtRecent->fetchAll(PDO::FETCH_ASSOC);
             <br>
 
             <div class="profile-tabs">
-                <button type="button" class="profile-tab-btn active" onclick="switchProfileMode(this, '9v9')">Highlander (9v9)</button>
-                <button type="button" class="profile-tab-btn" onclick="switchProfileMode(this, '6s')">Sixes (6v6)</button>
+                <button type="button" class="profile-tab-btn active" onclick="switchProfileMode(this, '9v9', '<?= $steamid64 ?>')">Highlander (9v9)</button>
+                <button type="button" class="profile-tab-btn" onclick="switchProfileMode(this, '6s', '<?= $steamid64 ?>')">Sixes (6v6)</button>
             </div>
 
             <div class="player-stats">
