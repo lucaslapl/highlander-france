@@ -9,7 +9,7 @@ try {
     // Quelques statistiques rapides pour donner de la vie au dashboard admin
     $tech_team = getTechnicalTeam($db);
     $totalPlayers = $db->query("SELECT COUNT(*) FROM players_info")->fetchColumn();
-    $totalStaff = $db->query("SELECT COUNT(*) FROM players_info WHERE is_founder = 1 OR is_moderator = 1 OR is_mentor = 1 OR is_mixer = 1")->fetchColumn();
+    $totalStaff = $db->query("SELECT COUNT(*) FROM players_info WHERE is_admin = 1 OR is_founder = 1 OR is_moderator = 1 OR is_mentor = 1 OR is_mixer = 1")->fetchColumn();
     
     // Récupération des 5 derniers inscrits sur le site
     $stmtRecent = $db->query("SELECT steamid, name, display_name, created_at FROM players_info ORDER BY created_at DESC LIMIT 5");
