@@ -73,7 +73,7 @@ foreach ($allLogs as $log) {
         
         if (strpos($titleLower, "[6s]") !== false) {
             $gameMode = '6s';
-        } elseif (strpos($titleLower, "[9v9]") !== false) {
+        } elseif (strpos($titleLower, "[9s]") !== false) {
             $gameMode = '9v9';
         }
 
