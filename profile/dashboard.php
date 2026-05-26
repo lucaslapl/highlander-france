@@ -153,6 +153,8 @@ $recentMatches = $stmtRecent->fetchAll(PDO::FETCH_ASSOC);
     <div id="main">
         <section id="content">
             <div class="personnal-info">
+
+                <!-- Affichage des messages de succès ou d'erreur -->
                 <?php if (isset($_SESSION['success'])): ?>
                     <div style="background: #4CAF50; color: white; padding: 10px; margin-bottom: 15px; border-radius: 4px;">
                         <?= $_SESSION['success']; unset($_SESSION['success']); ?>
@@ -164,6 +166,18 @@ $recentMatches = $stmtRecent->fetchAll(PDO::FETCH_ASSOC);
                         <?= $_SESSION['error']; unset($_SESSION['error']); ?>
                     </div>
                 <?php endif; ?>
+
+                <?php 
+                // Si le visiteur actuel est admin, on lui affiche les outils d'administration
+                if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true): 
+                ?>
+                    <div class="admin-profile-box" style="background: #2c1a1a; border: 1px solid #ff4444; padding: 15px; margin: 15px 0 15px 0; border-radius: 5px;">             
+                        <a href="/admin/dashboard.php" class="btn-admin" style="background: #ff4444; color: white; padding: 8px 12px; text-decoration: none; border-radius: 4px; display: inline-block;">
+                            <i class="fa-solid fa-user-gear"></i> Panel d'administration
+                        </a>
+                    </div>
+                <?php endif; ?>
+
                 <div class="profile-header flex align-center">
                     <img src="<?php echo htmlspecialchars($user['avatar']); ?>" alt="Avatar de <?php echo htmlspecialchars($user['display_name']); ?>" class="profile-avatar">
                     <h2><?php echo htmlspecialchars($user['display_name'] ?? 'Joueur'); ?></h2>

@@ -125,6 +125,22 @@ $recentMatches = $stmtRecent->fetchAll(PDO::FETCH_ASSOC);
     <div id="main">
         <section id="content">
             <div class="personnal-info">
+                <?php 
+                // Si le visiteur actuel est admin, on lui affiche les outils d'administration
+                if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true): 
+                ?>
+                    <div class="admin-profile-box" style="background: #2c1a1a; border: 1px solid #ff4444; padding: 15px; margin: 15px 0 15px 0; border-radius: 5px;">
+                        <h4 style="color: #ff4444; margin-top: 0;"><i class="fa-solid fa-screwdriver-wrench"></i> Outils d'administration</h4>
+                        <p>Vous visualisez le profil de : <strong><?= htmlspecialchars($player['display_name'] ?? $player['name']) ?></strong></p>
+                        <p>SteamID64 : <code><?= htmlspecialchars($steamid) ?></code></p>
+                        <p>SteamID3 : <code><?= htmlspecialchars($steamid3) ?></code></p>
+                        
+                        <a href="/admin/manage_player.php?steamid=<?= htmlspecialchars($steamid) ?>" class="btn-admin" style="background: #ff4444; color: white; padding: 8px 12px; text-decoration: none; border-radius: 4px; display: inline-block;">
+                            <i class="fa-solid fa-user-gear"></i> Gérer ce joueur
+                        </a>
+                    </div>
+                <?php endif; ?>
+
                 <div class="profile-header flex align-center">
                     <img src="<?php echo htmlspecialchars($player['avatar']); ?>" alt="Avatar de <?php echo htmlspecialchars($player['display_name']); ?>" class="profile-avatar">
                     <div class="flex justify-center align-center gap-10">
