@@ -172,9 +172,9 @@ $current_country = !empty($target_player['country']) ? strtolower($target_player
                             </div>
                             <div>
                                 <?php if ((int)$target_player['name_changed'] === 1): ?>
-                                    <span class="badge-status status-locked">Déjà utilisé</span>
+                                    <span class="badge-status" style="background: #d9534f; color: #fff;">Déjà utilisé</span>
                                 <?php else: ?>
-                                    <span class="badge-status status-free">Libre</span>
+                                    <span class="badge-status" style="background: #5cb85c; color: #fff;">Libre</span>
                                 <?php endif; ?>
                             </div>
                         </label>
@@ -189,9 +189,9 @@ $current_country = !empty($target_player['country']) ? strtolower($target_player
                             </div>
                             <div>
                                 <?php if (isset($target_player['country_locked']) && (int)$target_player['country_locked'] === 1): ?>
-                                    <span class="badge-status status-locked">Déjà utilisé</span>
+                                    <span class="badge-status" style="background: #d9534f; color: #fff;">Déjà utilisé</span>
                                 <?php else: ?>
-                                    <span class="badge-status status-free">Libre</span>
+                                    <span class="badge-status" style="background: #5cb85c; color: #fff;">Libre</span>
                                 <?php endif; ?>
                             </div>
                         </label>
