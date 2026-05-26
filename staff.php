@@ -1,6 +1,48 @@
 <?php
 require_once "_inc/config.php";
 require_once "_inc/functions.php";
+
+try {
+    // On récupère uniquement les joueurs qui ont au moins un rôle actif dans le staff
+    $stmt = $db->query("
+        SELECT steamid, name, display_name, avatar, is_founder, is_mentor, is_mixer, is_moderator 
+        FROM players_info 
+        WHERE is_founder = 1 OR is_mentor = 1 OR is_mixer = 1 OR is_moderator = 1
+        ORDER BY display_name ASC, name ASC
+    ");
+    $all_staff = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    $all_staff = [];
+}
+
+// Tableaux pour trier les membres par rôle
+$founders = [];
+$mentors = [];
+$mixers = [];
+$moderators = [];
+
+// Tri dynamique des membres (gère le multi-rôle à la perfection)
+foreach ($all_staff as $member) {
+    // Conversion de l'ID SQLite en SteamID64 pour le lien du profil
+    $steamid64 = steamID3ToSteamID64($member['steamid']); 
+    
+    // Priorité au display_name personnalisé, sinon nom Steam de base
+    $member['final_name'] = !empty($member['display_name']) ? $member['display_name'] : $member['name'];
+    $member['profile_url'] = "/profile/profil?steamid=" . $steamid64;
+
+    if ((int)$member['is_founder'] === 1) {
+        $founders[] = $member;
+    }
+    if ((int)$member['is_mentor'] === 1) {
+        $mentors[] = $member;
+    }
+    if ((int)$member['is_mixer'] === 1) {
+        $mixers[] = $member;
+    }
+    if ((int)$member['is_moderator'] === 1) {
+        $moderators[] = $member;
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -64,108 +106,84 @@ require_once "_inc/functions.php";
         <section id="content">
             <h2>L'équipe Highlander France</h2>
             <div id="staff">
+                
+                <?php if (!empty($founders)): ?>
                 <h3>Fondateurs</h3>
                 <hr>
                 <p>Les joueurs passionnés à l'initiative de ce projet !</p>
                 <div class="staff-role flex space-around align-center wrap">
+                    <?php foreach ($founders as $f): ?>
                     <div class="staff-member">
-                        <img src="_img/kaylus.jpg" alt="Avatar de Kaylus">
-                        <a href="/profile/profil?steamid=76561198051084840">
-                            <h4>Kaylus</h4>
+                        <img src="<?= htmlspecialchars($f['avatar']) ?>" alt="Avatar de <?= htmlspecialchars($f['final_name']) ?>">
+                        <a href="<?= htmlspecialchars($f['profile_url']) ?>">
+                            <h4><?= htmlspecialchars($f['final_name']) ?></h4>
                         </a>
                     </div>
-                    <div class="staff-member">
-                        <img src="_img/schmit.jpg" alt="Avatar de SchmitShot">
-                        <a href="/profile/profil?steamid=76561197974486633">
-                            <h4>SchmitShot</h4>
-                        </a>
-                    </div>
-                    <div class="staff-member">
-                        <img src="_img/zen.jpg" alt="Avatar de zen">
-                        <a href="/profile/profil?steamid=76561198158964214">
-                            <h4>zen</h4>
-                        </a>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
-                <!--
+                <?php endif; ?>
+
+                <?php if (!empty($moderators)): ?>
                 <h3>Modération</h3>
+                <hr>
+                <p>L'équipe en charge du respect des règles et de la bonne ambiance au sein de la communauté.</p>
                 <div class="staff-role flex space-around align-center wrap">
-                    (prévisionnel)
+                    <?php foreach ($moderators as $m): ?>
+                    <div class="staff-member">
+                        <img src="<?= htmlspecialchars($m['avatar']) ?>" alt="Avatar de <?= htmlspecialchars($m['final_name']) ?>">
+                        <a href="<?= htmlspecialchars($m['profile_url']) ?>">
+                            <h4><?= htmlspecialchars($m['final_name']) ?></h4>
+                        </a>
+                    </div>
+                    <?php endforeach; ?>
                 </div>
-                -->
+                <?php endif; ?>
+
                 <div id="sous-staff" class="flex space-around">
+                    
                     <div id="mentors">
                         <h3>Mentors</h3>
                         <hr>
                         <p>Les joueurs expérimentés qui accompagnent les nouveaux venus dans leur progression en compétitif !</p>
                         <div class="staff-role">
-                            <div class="staff-member flex align-center">
-                                <img class="staff-pic" src="_img/kaylus.jpg" alt="Avatar de Kaylus">
-                                <a href="/profile/profil?steamid=76561198051084840">
-                                    <h4>Kaylus</h4>
-                                </a>
-                            </div>
-                            <div class="staff-member flex align-center">
-                                <img class="staff-pic" src="_img/mathis.jpg" alt="Avatar de Mathis">
-                                <a href="/profile/profil?steamid=76561199353050656">
-                                    <h4>Mathis</h4>
-                                </a>
-                            </div>
-                            <div class="staff-member flex align-center">
-                                <img class="staff-pic" src="_img/nepal.jpg" alt="Avatar de Nepal">
-                                <a href="/profile/profil?steamid=76561198239974294">
-                                    <h4>Nepal</h4>
-                                </a>
-                            </div>
-                            <div class="staff-member flex align-center">
-                                <img class="staff-pic" src="_img/schmit.jpg" alt="Avatar de SchmitShot">
-                                <a href="/profile/profil?steamid=76561197974486633">
-                                    <h4>SchmitShot</h4>
-                                </a>
-                            </div>
+                            <?php if (empty($mentors)): ?>
+                                <p class="no-data">Aucun mentor enregistré pour le moment.</p>
+                            <?php else: ?>
+                                <?php foreach ($mentors as $me): ?>
+                                <div class="staff-member flex align-center">
+                                    <img class="staff-pic" src="<?= htmlspecialchars($me['avatar']) ?>" alt="Avatar de <?= htmlspecialchars($me['final_name']) ?>">
+                                    <a href="<?= htmlspecialchars($me['profile_url']) ?>">
+                                        <h4><?= htmlspecialchars($me['final_name']) ?></h4>
+                                    </a>
+                                </div>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
                         </div>
                     </div>
+
                     <div id="mixers">
                         <h3>Lanceurs de mix</h3>
                         <hr>
                         <p>Les joueurs qui organisent les mixs pour permettre à tous de jouer en compétitif dans une ambiance conviviale !</p>
                         <div class="staff-role">
-                            <div class="staff-member flex align-center">
-                                <img class="staff-pic" src="_img/ca$h.jpg" alt="Avatar de Ca$h">
-                                <a href="/profile/profil?steamid=76561199236525199">
-                                    <h4>Ca$h</h4>
-                                </a>
-                            </div>
-                            <div class="staff-member flex align-center">
-                                <img class="staff-pic" src="_img/kaylus.jpg" alt="Avatar de Kaylus">
-                                <a href="/profile/profil?steamid=76561198051084840">
-                                    <h4>Kaylus</h4>
-                                </a>
-                            </div>
-                            <div class="staff-member flex align-center">
-                                <img class="staff-pic" src="_img/schmit.jpg" alt="Avatar de SchmitShot">
-                                <a href="/profile/profil?steamid=76561197974486633">
-                                    <h4>SchmitShot</h4>
-                                </a>
-                            </div>
-                            <div class="staff-member flex align-center">
-                                <img class="staff-pic" src="_img/sossok.jpg" alt="Avatar de Sossok">
-                                <a href="/profile/profil?steamid=76561198253350195">
-                                    <h4>Sossok</h4>
-                                </a>
-                            </div>
-                            <div class="staff-member flex align-center">
-                                <img class="staff-pic" src="_img/zen.jpg" alt="Avatar de zen">
-                                <a href="/profile/profil?steamid=76561198158964214">
-                                    <h4>zen</h4>
-                                </a>
-                            </div>
+                            <?php if (empty($mixers)): ?>
+                                <p class="no-data">Aucun lanceur de mix enregistré pour le moment.</p>
+                            <?php else: ?>
+                                <?php foreach ($mixers as $mi): ?>
+                                <div class="staff-member flex align-center">
+                                    <img class="staff-pic" src="<?= htmlspecialchars($mi['avatar']) ?>" alt="Avatar de <?= htmlspecialchars($mi['final_name']) ?>">
+                                    <a href="<?= htmlspecialchars($mi['profile_url']) ?>">
+                                        <h4><?= htmlspecialchars($mi['final_name']) ?></h4>
+                                    </a>
+                                </div>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
                         </div>
                     </div>
+
                 </div>
             </div>
         </section>
-
     </main>
 
     <?php include("_inc/footer.php"); ?>
