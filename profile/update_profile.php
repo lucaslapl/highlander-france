@@ -2,9 +2,14 @@
 require_once __DIR__ . '/../_inc/config.php';
 require_once __DIR__ . '/../_inc/functions.php';
 
-if (!isset($_SESSION['steamid'])) {
-    header("Location: ../index.php");
-    exit();
+if (!isset($_SESSION['steamid'])) { 
+    
+    // On stocke le message d'erreur en session pour qu'il survive à la redirection
+    $_SESSION['error'] = "Action refusée : vous devez être connecté pour modifier votre nationalité.";
+    
+    // On redirige immédiatement vers la page d'accueil
+    header("Location: /index.php");
+    exit(); // Très important pour stopper l'exécution du reste du script PHP
 }
 
 $steamid3 = steamID64ToSteamID3($_SESSION['steamid']);

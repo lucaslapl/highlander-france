@@ -57,7 +57,11 @@ require_once "_inc/functions.php";
     </script>
 </head>
 <body>
-
+<?php if (isset($_SESSION['error'])): ?>
+    <div style="background: #3d1c1c; color: #e74c3c; border: 1px solid #c0392b; padding: 12px 15px; border-radius: 4px; margin: 20px auto; max-width: 1200px; font-size: 14px;">
+        <i class="fa-solid fa-circle-xmark"></i> <?= $_SESSION['error']; unset($_SESSION['error']); ?>
+    </div>
+<?php endif; ?>
     <?php include("_inc/header.php"); ?>
 
     <main id="main">

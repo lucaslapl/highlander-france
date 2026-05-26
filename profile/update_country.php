@@ -1,15 +1,17 @@
 <?php
-// Sécurité CRON/CLI non requise ici car c'est une action utilisateur (via navigateur)
-session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 require_once __DIR__ . '/../_inc/config.php'; // Ajuste le chemin selon ton projet
 require_once __DIR__ . '/../_inc/functions.php';
 
-// 1. Vérification de la session
-if (!isset($_SESSION['steamid'])) {
-    header('HTTP/1.0 403 Forbidden');
-    die("Vous devez être connecté.");
+if (!isset($_SESSION['steamid'])) { 
+    
+    // On stocke le message d'erreur en session pour qu'il survive à la redirection
+    $_SESSION['error'] = "Action refusée : vous devez être connecté pour modifier votre nationalité.";
+    
+    // On redirige immédiatement vers la page d'accueil
+    header("Location: /index.php");
+    exit(); // Très important pour stopper l'exécution du reste du script PHP
 }
 
 $steamid64 = $_SESSION['steamid'];
@@ -20,7 +22,9 @@ $chosenCountry = isset($_POST['country']) ? trim(strtolower($_POST['country'])) 
 $allowedCountries = ['fr', 'be', 'sw', 'lu', 'uk', 'eu', 'al', 'mo', 'tu', 'ca', 'breizh']; // Ajoute les codes de pays autorisés
 
 if (empty($chosenCountry) || !in_array($chosenCountry, $allowedCountries)) {
-    die("Pays invalide.");
+    $_SESSION['error'] = "Pays invalide.";
+    header("Location: /profile/dashboard");
+    exit();
 }
 
 // 2. Vérifier si le profil n'est pas déjà verrouillé
@@ -29,7 +33,9 @@ $stmtCheck->execute([$steamid3]);
 $playerInfo = $stmtCheck->fetch();
 
 if ($playerInfo && (int)$playerInfo['country_locked'] === 1) {
-    die("Votre nationalité a déjà été définie et est verrouillée.");
+    $_SESSION['error'] = "Votre nationalité est déjà verrouillée et ne peut plus être modifiée.";
+    header("Location: /profile/dashboard");
+    exit();
 }
 
 // 3. Mise à jour et Verrouillage permanent
