@@ -24,8 +24,27 @@ if (!$target_player) {
     die("Joueur introuvable en base de données.");
 }
 
-// Nom final pour l'affichage
+// Nom final pour l'affichage de l'en-tête
 $final_name = !empty($target_player['display_name']) ? $target_player['display_name'] : $target_player['name'];
+
+// Liste des pays pour le menu déroulant (Value ISO minuscule => Nom affiché)
+$countries_list = [
+    'fr' => 'France',
+    'be' => 'Belgique',
+    'sw' => 'Suisse',
+    'lu' => 'Luxembourg',
+    'uk' => 'Royaume-Uni',
+    'eu' => 'Europe',
+    'al' => 'Algérie',
+    'mo' => 'Maroc',
+    'tu' => 'Tunisie',
+    'ca' => 'Canada',
+    'breizh' => 'Bretagne',
+    'unknown'        => 'Non défini / Autre'
+];
+
+// On récupère la nationalité actuelle du joueur (mise en minuscule pour correspondre au tableau)
+$current_country = !empty($target_player['country']) ? strtolower($target_player['country']) : 'unknown';
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -34,8 +53,8 @@ $final_name = !empty($target_player['display_name']) ? $target_player['display_n
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Gérer <?= htmlspecialchars($final_name) ?></title>
     <link rel="stylesheet" href="../_css/main.css">
+    <link rel="stylesheet" href="_css/admin.css">
     <style>
-        /* Styles dédiés au formulaire d'administration */
         .admin-card {
             background: #1a1a1a;
             border: 1px solid #2b2b2b;
@@ -60,7 +79,7 @@ $final_name = !empty($target_player['display_name']) ? $target_player['display_n
             border: 2px solid #333;
         }
         .form-section {
-            margin-bottom: 25px;
+            margin-bottom: 30px;
         }
         .form-section h3 {
             color: #fff;
@@ -70,6 +89,37 @@ $final_name = !empty($target_player['display_name']) ? $target_player['display_n
             font-size: 16px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+        }
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            font-size: 14px;
+            font-weight: bold;
+            color: #ccc;
+        }
+        .form-control {
+            background: #222;
+            border: 1px solid #444;
+            color: #fff;
+            padding: 10px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: border-color 0.2s;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .form-control:focus {
+            border-color: #ff4444;
+            outline: none;
+        }
+        .form-grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
         }
         .checkbox-group {
             display: grid;
@@ -153,10 +203,52 @@ $final_name = !empty($target_player['display_name']) ? $target_player['display_n
             </div>
         </div>
 
+        <?php if (isset($_SESSION['success'])): ?>
+            <div style="background: #1c3d27; color: #2ecc71; border: 1px solid #27ae60; padding: 12px 15px; border-radius: 4px; margin-bottom: 20px; font-size: 14px;">
+                <i class="fa-solid fa-circle-check"></i> <?= $_SESSION['success']; unset($_SESSION['success']); ?>
+            </div>
+        <?php endif; ?>
+
+        <?php if (isset($_SESSION['error'])): ?>
+            <div style="background: #3d1c1c; color: #e74c3c; border: 1px solid #c0392b; padding: 12px 15px; border-radius: 4px; margin-bottom: 20px; font-size: 14px;">
+                <i class="fa-solid fa-circle-xmark"></i> <?= $_SESSION['error']; unset($_SESSION['error']); ?>
+            </div>
+        <?php endif; ?>
+
         <div class="admin-card">
-            <form action="_scripts/admin_process.php" method="POST" class="flex flex-column gap-10">
+            <form action="_scripts/admin_player_update.php" method="POST">
                 <input type="hidden" name="target_steamid" value="<?= htmlspecialchars($target_steamid) ?>">
                 
+                <div class="form-section">
+                    <h3><i class="fa-solid fa-id-card"></i> Informations du Profil</h3>
+                    <div class="form-grid-2">
+                        
+                        <div class="form-group">
+                            <label for="display_name">Pseudo d'affichage sur le site :</label>
+                            <input type="text" name="display_name" id="display_name" class="form-control" 
+                                   value="<?= htmlspecialchars($target_player['display_name'] ?? '') ?>" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="country">Nationalité (Drapeau) :</label>
+                            <select name="country" id="country" class="form-control">
+                                <?php foreach ($countries_list as $value => $label): ?>
+                                    <option value="<?= htmlspecialchars($value) ?>" <?= $current_country === $value ? 'selected' : '' ?>>
+                                        <?= htmlspecialchars($label) ?>
+                                    </option>
+                                <?php array_key_exists($current_country, $countries_list) ? '' : ''; endforeach; ?>
+                                
+                                <?php if (!array_key_exists($current_country, $countries_list) && !empty($target_player['country'])): ?>
+                                    <option value="<?= htmlspecialchars($current_country) ?>" selected>
+                                        <?= htmlspecialchars(ucfirst($target_player['country'])) ?> (Actuel)
+                                    </option>
+                                <?php endif; ?>
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+
                 <div class="form-section">
                     <h3><i class="fa-solid fa-users-viewfinder"></i> Gestion des rôles Staff</h3>
                     <div class="checkbox-group">
@@ -184,23 +276,42 @@ $final_name = !empty($target_player['display_name']) ? $target_player['display_n
 
                 <div class="form-section">
                     <h3><i class="fa-solid fa-shield-halved"></i> Modération avancée</h3>
-                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        
                         <label class="admin-label" style="justify-content: space-between; width: 100%; box-sizing: border-box;">
                             <div style="display: flex; align-items: center; gap: 10px;">
                                 <input type="checkbox" name="reset_name_change" value="1">
                                 <div>
-                                    <strong>Débloquer le nom d'affichage</strong><br>
-                                    <span style="font-size: 12px; color: #aaa;">Permet au joueur de modifier à nouveau son pseudo unique depuis son dashboard.</span>
+                                    <strong>Forcer la réinitialisation du changement de pseudo</strong><br>
+                                    <span style="font-size: 12px; color: #aaa;">Permet au joueur de modifier de lui-même à nouveau son pseudo depuis son profil.</span>
                                 </div>
                             </div>
                             <div>
                                 <?php if ((int)$target_player['name_changed'] === 1): ?>
-                                    <span class="badge-status status-locked">Utilisé / Bloqué</span>
+                                    <span class="badge-status status-locked">Déjà utilisé</span>
                                 <?php else: ?>
                                     <span class="badge-status status-free">Libre</span>
                                 <?php endif; ?>
                             </div>
                         </label>
+
+                        <label class="admin-label" style="justify-content: space-between; width: 100%; box-sizing: border-box;">
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <input type="checkbox" name="reset_country_change" value="1">
+                                <div>
+                                    <strong>Forcer la réinitialisation du changement de nationalité</strong><br>
+                                    <span style="font-size: 12px; color: #aaa;">Permet au joueur de modifier de lui-même à nouveau son drapeau/pays depuis son profil.</span>
+                                </div>
+                            </div>
+                            <div>
+                                <?php if (isset($target_player['country_locked']) && (int)$target_player['country_locked'] === 1): ?>
+                                    <span class="badge-status status-locked">Déjà utilisé</span>
+                                <?php else: ?>
+                                    <span class="badge-status status-free">Libre</span>
+                                <?php endif; ?>
+                            </div>
+                        </label>
+
                     </div>
                 </div>
 
