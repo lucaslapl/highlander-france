@@ -1,0 +1,8 @@
+body #header {
+  height: 425px;
+  position: relative;
+}
+body #main {
+  min-height: 500px;
+  position: relative;
+}/*# sourceMappingURL=admin.css.map */
