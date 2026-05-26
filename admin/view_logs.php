@@ -63,6 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['clear_logs'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Journaux Système</title>
     <link rel="stylesheet" href="../_css/main.css">
+    <link rel="stylesheet" href="_css/admin.css">
     <style>
         .log-meta-box {
             display: flex;
@@ -116,7 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['clear_logs'])) {
     <main id="main" style="max-width: 1200px; margin: 40px auto; padding: 0 20px;">
         
         <div style="margin-bottom: 20px;">
-            <a href="index.php" style="color: #aaa; text-decoration: none; font-size: 14px;">
+            <a href="dashboard" style="color: #aaa; text-decoration: none; font-size: 14px;">
                 <i class="fa-solid fa-arrow-left"></i> Retour au Panel Admin
             </a>
         </div>

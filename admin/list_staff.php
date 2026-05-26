@@ -25,6 +25,7 @@ try {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Liste de l'équipe</title>
     <link rel="stylesheet" href="../_css/main.css">
+    <link rel="stylesheet" href="_css/admin.css">
     <style>
         /* Quelques styles rapides dédiés au tableau d'administration */
         .admin-table {

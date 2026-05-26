@@ -77,6 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['trigger_cron'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Tâches Multi-CRON</title>
     <link rel="stylesheet" href="../_css/main.css">
+    <link rel="stylesheet" href="_css/admin.css">
     <style>
         .terminal-box {
             background-color: #0c0c0f;
@@ -195,5 +196,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['trigger_cron'])) {
 
     <?php include("../_inc/footer.php"); ?>
 
+    <script src="https://kit.fontawesome.com/2f306d349c.js" crossorigin="anonymous"></script>
 </body>
 </html>
