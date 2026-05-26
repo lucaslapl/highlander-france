@@ -1,13 +1,13 @@
 <?php
-if (php_sapi_name() !== 'cli') {
-    http_response_code(403);
-    die('Forbidden');
-}
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 require_once __DIR__ . '/../_inc/config.php';
 require_once __DIR__ . '/../_inc/functions.php';
+
+if (php_sapi_name() !== 'cli' && !isset($bypassing_cli_security)) {
+    checkAdminOrDie();
+}
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 
 $env = parse_ini_file(__DIR__ . '/.env');
 $STEAM_API_KEY = $env['STEAM_API_KEY'];
@@ -53,10 +53,11 @@ $missing = $query->fetchAll(PDO::FETCH_COLUMN);
 
 if (empty($missing)) {
     log_msg("Aucun nouveau profil à traiter.");
-    die("Aucun nouveau profil à traiter.");
+    echo "Aucun nouveau profil à traiter. \n";
 }
 
 log_msg("Nombre d'IDs à traiter : " . count($missing));
+echo "Nombre d'IDs à traiter : " . count($missing) . "\n";
 
 $chunks = array_chunk($missing, 100);
 
@@ -72,11 +73,13 @@ foreach ($chunks as $chunk) {
 
     if (!$data) {
         log_msg("Erreur API Steam pour chunk : $idsParam");
+        echo "Erreur API Steam pour chunk : $idsParam\n";
         continue;
     }
 
     if (!isset($data['response']['players'])) {
         log_msg("Réponse Steam invalide pour chunk : $idsParam");
+        echo "Réponse Steam invalide pour chunk : $idsParam\n";
         continue;
     }
 
@@ -87,6 +90,7 @@ foreach ($chunks as $chunk) {
         $stmt->execute([$originalId, $p['personaname'], $p['avatarfull'], time()]);
 
         log_msg("Ajouté : " . $p['personaname']);
+        echo "Ajouté : " . $p['personaname'] . "\n";
     }
 
     sleep(1);

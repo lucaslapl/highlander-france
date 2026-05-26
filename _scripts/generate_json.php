@@ -1,13 +1,13 @@
 <?php
-if (php_sapi_name() !== 'cli') {
-    http_response_code(403);
-    die('Forbidden');
+require_once __DIR__ . '/../_inc/config.php';
+require_once __DIR__ . '/../_inc/functions.php';
+
+if (php_sapi_name() !== 'cli' && !isset($bypassing_cli_security)) {
+    checkAdminOrDie();
 }
 ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
-require_once __DIR__ . '/../_inc/config.php';
-require_once __DIR__ . '/../_inc/functions.php';
 
 $modes = ['6s', '9v9'];
 
