@@ -2,22 +2,28 @@
 // EXCLUDE CLI
 if (php_sapi_name() !== 'cli') {
 
-    $durations_session = 30 * 24 * 3600; // 30 jours en secondes
+    $session_lifetime = 30 * 24 * 3600; // 30 jours en secondes
+    $session_save_path = __DIR__ . '/../_sessions';
+
+    if (!file_exists($session_save_path)) {
+        mkdir($session_save_path, 0700, true);
+    }
+    ini_set('session.save_path', $session_save_path);
+
+    ini_set('session.gc_maxlifetime', $session_lifetime);
+
     session_set_cookie_params([
-        'lifetime' => $durations_session,
+        'lifetime' => $session_lifetime,
         'path' => '/',
         'domain' => $_SERVER['HTTP_HOST'] ?? 'highlanderfrance.tf',
         'secure' => true,
         'httponly' => true,
         'samesite' => 'Lax'
-    ]); 
-    ini_set('session.gc_maxlifetime', $durations_session);
-
+    ]);
 
     if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
-
 }
 
 $db_path = __DIR__ . '/../_scripts/stats.db';
@@ -29,4 +35,3 @@ try {
 } catch (PDOException $e) {
     die("Erreur de connexion à la base de données : " . $e->getMessage());
 }
-?>
