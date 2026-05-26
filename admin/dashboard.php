@@ -7,6 +7,7 @@ checkAdminOrDie();
 
 try {
     // Quelques statistiques rapides pour donner de la vie au dashboard admin
+    $tech_team = getTechnicalTeam($db);
     $totalPlayers = $db->query("SELECT COUNT(*) FROM players_info")->fetchColumn();
     $totalStaff = $db->query("SELECT COUNT(*) FROM players_info WHERE is_founder = 1 OR is_moderator = 1 OR is_mentor = 1 OR is_mixer = 1")->fetchColumn();
     
@@ -89,6 +90,54 @@ try {
                         <a href="view_logs.php" style="background: #3498db; color: #fff; text-decoration: none; padding: 8px 12px; border-radius: 4px; display: inline-block; font-size: 14px;">Ouvrir l'inspecteur log</a>
                     </div>
 
+                </div>
+                <div class="admin-card" style="background: #1e1e24; border: 1px solid #2d2d35; border-radius: 6px; padding: 20px; margin-bottom: 20px;">
+                    <h3 style="margin-top: 0; color: #e74c3c; display: flex; align-items: center; gap: 10px; font-size: 18px; border-bottom: 1px solid #2d2d35; padding-bottom: 10px;">
+                        <i class="fa-solid fa-code font-awesome-icon"></i> Équipe Technique 
+                        <span style="background: #e74c3c; color: #fff; font-size: 12px; padding: 2px 8px; border-radius: 10px; margin-left: auto;">
+                            <?= count($tech_team) ?>
+                        </span>
+                    </h3>
+
+                    <?php if (empty($tech_team)): ?>
+                        <p style="color: #aaa; font-style: italic; font-size: 14px; margin: 0;">Aucun administrateur configuré (Bizarre !).</p>
+                    <?php else: ?>
+                        <div style="display: flex; flex-direction: column; gap: 10px; max-height: 300px; overflow-y: auto; padding-right: 5px;">
+                            <?php foreach ($tech_team as $admin): ?>
+                                <?php 
+                                    // Conversion inverse si nécessaire pour le lien de gestion (on repasse souvent en SteamID64)
+                                    // Si tes fonctions attendent déjà le SteamID3, tu passeras juste $admin['steamid']
+                                    $steamid64_link = steamID3ToSteamID64($admin['steamid']); 
+                                ?>
+                                <div style="display: flex; align-items: center; justify-content: space-between; background: #16161a; padding: 10px 12px; border-radius: 4px; border-left: 3px solid #e74c3c;">
+                                    
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <?php if (!empty($admin['country'])): ?>
+                                            <img src="/_img/flags/<?= htmlspecialchars($admin['country']) ?>.gif" 
+                                                alt="<?= strtoupper($admin['country']) ?>" 
+                                                style="width: 16px; height: 11px; border-radius: 2px;"
+                                            >
+                                        <?php else: ?>
+                                            <img src="/_img/flags/unknown.gif" style="width: 16px; height: 11px;">
+                                        <?php endif; ?>
+                                        
+                                        <strong style="color: #fff; font-size: 14px;">
+                                            <?= htmlspecialchars($admin['display_name']) ?>
+                                        </strong>
+                                    </div>
+
+                                    <a href="manage_player.php?steamid=<?= urlencode($steamid64_link) ?>" 
+                                    style="background: #2d2d35; color: #ccc; text-decoration: none; font-size: 12px; padding: 5px 10px; border-radius: 4px; transition: background 0.2s;"
+                                    onmouseover="this.style.background='#3e3e48'; this.style.color='#fff';"
+                                    onmouseout="this.style.background='#2d2d35'; this.style.color='#ccc';"
+                                    >
+                                        <i class="fa-solid fa-user-gear"></i> Gérer
+                                    </a>
+
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </section>
 

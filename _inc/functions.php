@@ -115,3 +115,25 @@ function checkAdminOrDie() {
         exit();
     }
 }
+
+/********************************/
+
+/**
+ * Récupère la liste de tous les membres de l'équipe technique (administrateurs)
+ */
+function getTechnicalTeam($db) {
+    try {
+        // On récupère le SteamID, le pseudo d'affichage et le pays des admins
+        $stmt = $db->prepare("
+            SELECT steamid, display_name, country 
+            FROM players_info 
+            WHERE is_admin = 1 
+            ORDER BY display_name ASC
+        ");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        // En cas d'erreur de base de données, on renvoie un tableau vide
+        return [];
+    }
+}
