@@ -1,13 +1,16 @@
-async function switchProfileMode(button, mode) {
+async function switchProfileMode(button, mode, steamidFallback = null) {
     // 1. Changement visuel de l'onglet actif
     document.querySelectorAll('.profile-tab-btn').forEach(btn => btn.classList.remove('active'));
     button.classList.add('active');
 
     // 2. Extraction du SteamID64 depuis l'URL de la page
     const urlParams = new URLSearchParams(window.location.search);
-    const steamid = urlParams.get('steamid');
+    const steamid = steamidFallback || urlParams.get('steamid');
 
-    if (!steamid) return;
+    if (!steamid) {
+        console.error("SteamID64 non trouvé dans l'URL.");
+        return;
+    }
 
     try {
         // Effet visuel de transition
