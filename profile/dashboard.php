@@ -153,6 +153,17 @@ $recentMatches = $stmtRecent->fetchAll(PDO::FETCH_ASSOC);
     <div id="main">
         <section id="content">
             <div class="personnal-info">
+                <?php if (isset($_SESSION['success'])): ?>
+                    <div style="background: #4CAF50; color: white; padding: 10px; margin-bottom: 15px; border-radius: 4px;">
+                        <?= $_SESSION['success']; unset($_SESSION['success']); ?>
+                    </div>
+                <?php endif; ?>
+
+                <?php if (isset($_SESSION['error'])): ?>
+                    <div style="background: #f44336; color: white; padding: 10px; margin-bottom: 15px; border-radius: 4px;">
+                        <?= $_SESSION['error']; unset($_SESSION['error']); ?>
+                    </div>
+                <?php endif; ?>
                 <div class="profile-header flex align-center">
                     <img src="<?php echo htmlspecialchars($user['avatar']); ?>" alt="Avatar de <?php echo htmlspecialchars($user['display_name']); ?>" class="profile-avatar">
                     <h2><?php echo htmlspecialchars($user['display_name'] ?? 'Joueur'); ?></h2>
@@ -162,7 +173,43 @@ $recentMatches = $stmtRecent->fetchAll(PDO::FETCH_ASSOC);
                 </div>
                 <h3>Informations personnelles</h3>
                 <p>SteamID : <?php echo $steamid3; ?></p>
+
                 <br>
+
+                <div class="dashboard-box">
+                    <h3>Votre pseudo</h3>
+                    
+                    <?php if (isset($user['name_changed']) && (int)$user['name_changed'] === 1): ?>
+                        <!--
+                        <div class="alert alert-info">
+                            <i class="fa-solid fa-lock"></i> Vous avez déjà personnalisé votre nom d'affichage. Ce changement est définitif et ne peut plus être modifié.
+                        </div>
+                        -->
+                        <p>Pseudo enregistré : <strong><?= htmlspecialchars($user['display_name']) ?></strong></p>
+                        
+                    <?php else: ?>
+                        <p class="info-text"><strong>Attention :</strong> Ce changement est <strong>unique et définitif</strong>. Vous ne pourrez plus le modifier par la suite.</p>
+                        
+                        <form action="update_profile.php" method="POST" class="flex flex-column gap-10">
+                            <div class="form-group">
+                                <label for="display_name">Nouveau pseudo :</label>
+                                <input 
+                                    type="text" 
+                                    id="display_name" 
+                                    name="display_name" 
+                                    value="<?= htmlspecialchars($user['display_name'] ?? $user['name']) ?>" 
+                                    maxlength="32" 
+                                    required 
+                                    class="form-control"
+                                >
+                            </div>
+                            
+                            <button type="submit" name="action" value="update_name" class="btn-submit" onclick="return confirm('Êtes-vous sûr ? Ce changement est définitif et unique !');">
+                                <i class="fa-solid fa-floppy-disk"></i> Confirmer définitivement
+                            </button>
+                        </form>
+                    <?php endif; ?>
+                </div>
                 <h3>Nationalité</h3>
     
                 <?php if ($isLocked && !empty($country)): ?>
@@ -172,18 +219,6 @@ $recentMatches = $stmtRecent->fetchAll(PDO::FETCH_ASSOC);
                     </div>
                     <!--
                     <p class="text-muted"><i class="fa-solid fa-lock"></i> Cette option est verrouillée. Contactez un administrateur pour la modifier.</p>-->
-
-                <?php if (isset($_SESSION['flash_success'])): ?>
-                    <div style="background: #4CAF50; color: white; padding: 10px; margin-bottom: 15px; border-radius: 4px;">
-                        <?= $_SESSION['flash_success']; unset($_SESSION['flash_success']); ?>
-                    </div>
-                <?php endif; ?>
-
-                <?php if (isset($_SESSION['flash_error'])): ?>
-                    <div style="background: #f44336; color: white; padding: 10px; margin-bottom: 15px; border-radius: 4px;">
-                        <?= $_SESSION['flash_error']; unset($_SESSION['flash_error']); ?>
-                    </div>
-                <?php endif; ?>
                     
                 <?php else: ?>
                     <form action="update_country.php" method="POST" class="country-form">
@@ -203,12 +238,12 @@ $recentMatches = $stmtRecent->fetchAll(PDO::FETCH_ASSOC);
                 <?php endif; ?>
             </div>
 
+            <br>
+
             <div class="profile-tabs">
                 <button type="button" class="profile-tab-btn active" onclick="switchProfileMode(this, '9v9')">Highlander (9v9)</button>
                 <button type="button" class="profile-tab-btn" onclick="switchProfileMode(this, '6s')">Sixes (6v6)</button>
             </div>
-
-            <br>
 
             <div class="player-stats">
                 <h3 id="stats-title">Stats - Highlander</h3>
@@ -286,24 +321,6 @@ $recentMatches = $stmtRecent->fetchAll(PDO::FETCH_ASSOC);
                     </div>
                 </div>
             </div>
-            <!--
-            <?php if (isset($_GET['success'])): ?>
-                <div style="color: green; margin-bottom: 10px;">
-                    Votre pseudo a bien été mis à jour !
-                </div>
-            <?php endif; ?>
-
-            <form action="update_profile.php" method="POST">
-                <label>Mon nom d'affichage :</label>
-                <?php
-                // On sécurise : si $user n'est pas un tableau (donc false), on met une chaîne vide
-                $valeur_nom = ($user !== false && isset($user['display_name'])) ? $user['display_name'] : '';
-                ?>
-
-                <input type="text" name="display_name" value="<?php echo htmlspecialchars($valeur_nom); ?>">
-                <button type="submit">Enregistrer</button>
-            </form>
-            -->
         </section>
     </div>
 
