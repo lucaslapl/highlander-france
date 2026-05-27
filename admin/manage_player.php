@@ -55,6 +55,33 @@ $current_country = !empty($target_player['country']) ? strtolower($target_player
     <title>Admin - Gérer <?= htmlspecialchars($final_name) ?></title>
     <link rel="stylesheet" href="../_css/main.css">
     <link rel="stylesheet" href="_css/admin.css">
+    <style>
+        .badge-status {
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: bold;
+        }
+
+        .btn-admin-submit {
+            background: #ff4444;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.2s;
+        }
+
+        .btn-admin-submit:hover {
+            background: #e03e3e;
+        }
+    </style>
 </head>
 
 <body>
@@ -73,14 +100,22 @@ $current_country = !empty($target_player['country']) ? strtolower($target_player
         </div>
 
         <div class="admin-header" style="border-bottom: 2px solid #ff4444; padding-bottom: 15px; margin-bottom: 30px;">
-            <h2 style="color: #ff4444; margin: 0;"><i class="fa-solid fa-user-gear"></i> Édition administrative du compte</h2>
+            <h2 style="color: #ff4444; margin: 0;"><i class="fa-solid fa-user-gear"></i> Panel d'édition de compte utilisateur</h2>
         </div>
 
         <div class="player-profile-header">
             <img src="<?= htmlspecialchars($target_player['avatar'] ?? '../_img/default_avatar.jpg') ?>" alt="Avatar" class="player-avatar">
             <div>
                 <h3 style="margin: 0 0 5px 0; color: #fff; font-size: 20px;"><?= htmlspecialchars($final_name) ?></h3>
-                <span style="font-family: monospace; color: #888; font-size: 13px;">SteamID64 : <?= htmlspecialchars($target_steamid) ?></span>
+                <p style="font-family: monospace; color: #888; font-size: 13px;">SteamID64 : <?= htmlspecialchars($target_steamid) ?></p>
+                <p style="font-family: monospace; color: #888; font-size: 13px;">SteamID3 : <?= htmlspecialchars($target_player['steamid']) ?></p>
+                <span style="display: block; margin-top: 5px; font-size: 12px; color: #aaa;">
+                    <?= (int)$target_player['is_admin'] === 1 ? '<span style="background: #e74c3c; color: #fff; padding: 2px 6px; border-radius: 4px;">Admin</span>' : '' ?>
+                    <?= (int)$target_player['is_founder'] === 1 ? '<span style="background: #d35400; color: #fff; padding: 2px 6px; border-radius: 4px;">Fondateur</span>' : '' ?>
+                    <?= (int)$target_player['is_moderator'] === 1 ? '<span style="background: #2980b9; color: #fff; padding: 2px 6px; border-radius: 4px;">Modérateur</span>' : '' ?>
+                    <?= (int)$target_player['is_mentor'] === 1 ? '<span style="background: #27ae60; color: #fff; padding: 2px 6px; border-radius: 4px;">Mentor</span>' : '' ?>
+                    <?= (int)$target_player['is_mixer'] === 1 ? '<span style="background: #8e44ad; color: #fff; padding: 2px 6px; border-radius: 4px;">Lanceur de Mix</span>' : '' ?>
+                </span>
             </div>
         </div>
 
@@ -107,13 +142,13 @@ $current_country = !empty($target_player['country']) ? strtolower($target_player
                     <div class="form-grid-2">
 
                         <div class="form-group">
-                            <label for="display_name">Pseudo d'affichage sur le site :</label>
+                            <label for="display_name">Pseudo enregistré sur le site :</label>
                             <input type="text" name="display_name" id="display_name" class="form-control"
                                 value="<?= htmlspecialchars($target_player['display_name'] ?? '') ?>" required>
                         </div>
 
                         <div class="form-group">
-                            <label for="country">Nationalité (Drapeau) :</label>
+                            <label for="country">Nationalité :</label>
                             <select name="country" id="country" class="form-control">
                                 <?php foreach ($countries_list as $value => $label): ?>
                                     <option value="<?= htmlspecialchars($value) ?>" <?= $current_country === $value ? 'selected' : '' ?>>
@@ -167,7 +202,7 @@ $current_country = !empty($target_player['country']) ? strtolower($target_player
                                 <input type="checkbox" name="reset_name_change" value="1">
                                 <div>
                                     <strong>Forcer la réinitialisation du changement de pseudo</strong><br>
-                                    <span style="font-size: 12px; color: #aaa;">Permet au joueur de modifier de lui-même à nouveau son pseudo depuis son profil.</span>
+                                    <span style="font-size: 12px; color: #aaa;">Cocher la case pour permettre au joueur de modifier de lui-même à nouveau son pseudo depuis son profil.</span>
                                 </div>
                             </div>
                             <div>
@@ -184,7 +219,7 @@ $current_country = !empty($target_player['country']) ? strtolower($target_player
                                 <input type="checkbox" name="reset_country_change" value="1">
                                 <div>
                                     <strong>Forcer la réinitialisation du changement de nationalité</strong><br>
-                                    <span style="font-size: 12px; color: #aaa;">Permet au joueur de modifier de lui-même à nouveau son drapeau/pays depuis son profil.</span>
+                                    <span style="font-size: 12px; color: #aaa;">Cocher la case pour permettre au joueur de modifier de lui-même à nouveau son drapeau/pays depuis son profil.</span>
                                 </div>
                             </div>
                             <div>

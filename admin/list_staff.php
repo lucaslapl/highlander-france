@@ -42,8 +42,8 @@ try {
         </div>
 
         <div class="admin-header" style="border-bottom: 2px solid #00bc8c; padding-bottom: 15px; margin-bottom: 30px;">
-            <h2 style="color: #00bc8c; margin: 0;"><i class="fa-solid fa-user-shield"></i> Gestion de l'équipe complète</h2>
-            <p style="margin: 5px 0 0 0; color: #aaa;">Vue d'ensemble de tous les comptes possédant des privilèges sur Highlander France.</p>
+            <h2 style="color: #00bc8c; margin: 0;"><i class="fa-solid fa-user-shield"></i> Gestion de l'équipe staff</h2>
+            <p style="margin: 5px 0 0 0; color: #aaa;">Vue d'ensemble de tous les comptes possédant un rang particulier sur Highlander France.</p>
         </div>
 
         <?php if (empty($staff_members)): ?>
@@ -86,7 +86,7 @@ try {
 
                             <td style="text-align: center;">
                                 <a href="manage_player.php?steamid=<?= $steamid64 ?>" style="background: #222; border: 1px solid #444; color: #fff; text-decoration: none; padding: 5px 10px; border-radius: 4px; font-size: 12px; display: inline-block;">
-                                    <i class="fa-solid fa-user-gear" style="color: #ff4444;"></i> Modifier les droits
+                                    <i class="fa-solid fa-user-gear" style="color: #ff4444;"></i> Modifier les rôles
                                 </a>
                             </td>
                         </tr>

@@ -176,42 +176,6 @@ body {
                             accent-color: #ff4444;
                             cursor: pointer;
                         }
-
-                        .badge-status {
-                            font-size: 12px;
-                            padding: 2px 6px;
-                            border-radius: 3px;
-                            font-weight: bold;
-                        }
-
-                        .status-locked {
-                            background: #d9534f;
-                            color: #fff;
-                        }
-
-                        .status-free {
-                            background: #5cb85c;
-                            color: #fff;
-                        }
-                    }
-
-                    .btn-admin-submit {
-                        background: #ff4444;
-                        color: white;
-                        padding: 12px 20px;
-                        border: none;
-                        border-radius: 4px;
-                        font-size: 14px;
-                        font-weight: bold;
-                        cursor: pointer;
-                        display: inline-flex;
-                        align-items: center;
-                        gap: 8px;
-                        transition: background 0.2s;
-
-                        &:hover {
-                            background: #cc2424;
-                        }
                     }
                 }
             }

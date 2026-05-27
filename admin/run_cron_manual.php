@@ -92,8 +92,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['trigger_cron'])) {
         </div>
 
         <div class="admin-header" style="border-bottom: 2px solid #f39c12; padding-bottom: 15px; margin-bottom: 30px;">
-            <h2 style="color: #f39c12; margin: 0;"><i class="fa-solid fa-gears"></i> Console d'Exécution des Tâches Planifiées</h2>
+            <h2 style="color: #f39c12; margin: 0;"><i class="fa-solid fa-gears"></i> Console d'Exécution des Tâches CRON</h2>
             <p style="margin: 5px 0 0 0; color: #aaa;">Sélectionnez et forcez l'exécution de l'un des scripts automatisés du serveur.</p>
+            <p style="margin: 5px 0 0 0; color: #aaa;"><b>NE PAS UTILISER SAUF URGENCE OU SANS Y AVOIR ÉTÉ INVITÉ.</b></p>
         </div>
 
         <div style="background: #1a1a1a; padding: 25px; border-radius: 6px; border: 1px solid #2b2b2b;">
@@ -105,12 +106,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['trigger_cron'])) {
                 
                 <select name="cron_action" id="cron_action" class="cron-select" required>
                     <option value="" disabled selected>-- Choisir un script --</option>
-                    <option value="etf2l_matches" <?= $selected_action === 'etf2l_matches' ? 'selected' : '' ?>>Récupération des matchs ETF2L FR</option>
-                    <option value="index_stats" <?= $selected_action === 'index_stats' ? 'selected' : '' ?>>Mise à jour des stats de la page d'accueil</option>
-                    <option value="match_stats" <?= $selected_action === 'match_stats' ? 'selected' : '' ?>>Mise à jour des stats de match pour les joueurs</option>
-                    <option value="sync_with_steam" <?= $selected_action === 'sync_with_steam' ? 'selected' : '' ?>>Synchronisation avec Steam</option>
-                    <option value="generate_json" <?= $selected_action === 'generate_json' ? 'selected' : '' ?>>Génération du fichier JSON (leaderboard)</option>
-                    <option value="sync_steam_avatars" <?= $selected_action === 'sync_steam_avatars' ? 'selected' : '' ?>>Synchronisation avec Steam (en cas de profils cassés)</option>
+                    <option value="etf2l_matches" <?= $selected_action === 'etf2l_matches' ? 'selected' : '' ?>>Récupération des matchs ETF2L FR (sync_etf2l.php)</option>
+                    <option value="index_stats" <?= $selected_action === 'index_stats' ? 'selected' : '' ?>>Mise à jour des stats de la page d'accueil (update_index_stats.php)</option>
+                    <option value="match_stats" <?= $selected_action === 'match_stats' ? 'selected' : '' ?>>Mise à jour des stats de match pour les joueurs (update_stats.php)</option>
+                    <option value="sync_with_steam" <?= $selected_action === 'sync_with_steam' ? 'selected' : '' ?>>Synchronisation avec Steam (sync_steam.php)</option>
+                    <option value="generate_json" <?= $selected_action === 'generate_json' ? 'selected' : '' ?>>Génération du fichier JSON (leaderboard) (generate_json.php)</option>
+                    <option value="sync_steam_avatars" <?= $selected_action === 'sync_steam_avatars' ? 'selected' : '' ?>>Synchronisation avec Steam (en cas de profils cassés) (sync_steam_avatars.php)</option>
                 </select>
 
                 <div>
