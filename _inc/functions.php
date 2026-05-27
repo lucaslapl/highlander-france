@@ -137,3 +137,69 @@ function getTechnicalTeam($db) {
         return [];
     }
 }
+
+
+/************************************/
+
+/**
+ * Enregistre et audite l'exécution des scripts avec gestion du statut (Début / Succès / Échec)
+ * @param string $scriptName Nom du script
+ * @param string|null $updateId Si fourni, met à jour le log existant avec ce token unique
+ * @param string $status Le statut à appliquer ('SUCCESS' ou une raison d'échec)
+ * @return string Le token unique du log généré
+ */
+function logScriptExecution($scriptName, $updateId = null, $status = 'STARTED') {
+    date_default_timezone_set('Europe/Paris');
+    $logFile = __DIR__ . '/../_scripts/cron_debug.log';
+
+    // 1. Si on est en mode MISE À JOUR (Fin du script)
+    if ($updateId !== null) {
+        if (file_exists($logFile)) {
+            $content = file_get_contents($logFile);
+            // On cherche la balise [TOKEN:xyz] [STATUS:STARTED] pour la remplacer
+            $search = "[TOKEN:{$updateId}] [STATUS:STARTED]";
+            $replace = "[TOKEN:{$updateId}] [STATUS:{$status}]";
+            
+            if (strpos($content, $search) !== false) {
+                $content = str_replace($search, $replace, $content);
+                file_put_contents($logFile, $content, LOCK_EX);
+                return $updateId;
+            }
+        }
+    }
+
+    // 2. Si on est en mode INITIALISATION (Début du script)
+    $token = uniqid('req_', true); // Génère un ID unique pour cette exécution
+
+    // Détection de l'utilisateur (Code précédent conservé et optimisé)
+    if (php_sapi_name() === 'cli') {
+        $user = "SERVER (CLI / CRON)";
+    } else {
+        //if (session_status() === PHP_SESSION_NONE) { session_start(); }
+        $steamid64 = $_SESSION['steamid'] ?? 'Pas de SteamID';
+        
+        $ip = $_SERVER['REMOTE_ADDR'] ?? 'IP Inconnue';
+        if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+            $ip = trim(explode(',', $_SERVER['HTTP_X_FORWARDED_FOR'])[0]);
+        }
+        
+        $pseudo = 'Inconnu';
+        if (isset($_SESSION['steamid'])) {
+            global $db;
+            try {
+                $stmt = $db->prepare("SELECT display_name FROM players_info WHERE steamid = ?");
+                $stmt->execute([steamID64ToSteamID3($steamid64)]);
+                $player = $stmt->fetch(PDO::FETCH_ASSOC);
+                if ($player) { $pseudo = $player['display_name']; }
+            } catch (Exception $e) { $pseudo = 'Erreur BDD'; }
+        }
+        $user = "Web User: {$pseudo} ({$steamid64}) - IP: {$ip}";
+    }
+
+    // Écriture de la ligne initiale
+    $date = date('Y-m-d H:i:s');
+    $logLine = "[{$date}] [TOKEN:{$token}] [STATUS:{$status}] [SCRIPT: {$scriptName}] [BY: {$user}]" . PHP_EOL;
+    file_put_contents($logFile, $logLine, FILE_APPEND | LOCK_EX);
+
+    return $token; // On renvoie le token pour pouvoir mettre à jour la ligne plus tard
+}
