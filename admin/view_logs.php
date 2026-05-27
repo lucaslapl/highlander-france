@@ -6,7 +6,7 @@ require_once __DIR__ . "/../_inc/functions.php";
 checkAdminOrDie();
 
 // Chemin vers ton fichier de log (à adapter si nécessaire)
-$log_file_path = __DIR__ . '/../cron_debug.log';
+$log_file_path = __DIR__ . '/../_scripts/cron_debug.log';
 $log_content = "";
 $file_exists = false;
 $file_size = "0 Octets";
