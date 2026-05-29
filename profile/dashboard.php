@@ -23,6 +23,7 @@ $steamid3 = steamID64ToSteamID3($steamid64);
 $stmt = $db->prepare("SELECT * FROM players_info WHERE steamid = ?");
 $stmt->execute([$steamid3]);
 $user = $stmt->fetch();
+
 //S'il n'existe pas, on l'ajoute
 if ($user === false) {
     try {
@@ -73,7 +74,6 @@ $countries = [
 ];
 
 // GET STATS
-
 $currentMode = '9v9';
 
 /** RECUPERATION INITIALE DES STATS (Pour le premier affichage en 9v9) **/
@@ -92,6 +92,15 @@ $classesPlayed = $stmtClasses->fetchAll(PDO::FETCH_ASSOC);
 $stmtRecent = $db->prepare("SELECT match_id, map_name, class_played FROM player_matches WHERE steamid = ? AND game_mode = ? ORDER BY match_id DESC LIMIT 5");
 $stmtRecent->execute([$steamid3, $currentMode]);
 $recentMatches = $stmtRecent->fetchAll(PDO::FETCH_ASSOC);
+
+// CONFIGURATION DES BADGES ROLES (Sans icônes)
+$rolesConfig = [
+    'is_founder'   => ['label' => 'Fondateur',   'class' => 'badge-founder'],
+    'is_admin'     => ['label' => 'Admin',       'class' => 'badge-admin'],
+    'is_moderator' => ['label' => 'Modérateur',  'class' => 'badge-moderator'],
+    'is_mentor'    => ['label' => 'Mentor',      'class' => 'badge-mentor'],
+    'is_mixer'     => ['label' => 'Mixer',       'class' => 'badge-mixer'],
+];
 ?>
 
 <!DOCTYPE html>
@@ -102,14 +111,12 @@ $recentMatches = $stmtRecent->fetchAll(PDO::FETCH_ASSOC);
     <title>Highlander France - Mon profil</title>
     <meta name="description" content="Highlander France est une communauté compétitive francophone de Team Fortress 2, offrant un espace pour les joueurs de tous niveaux pour apprendre, jouer et progresser ensemble.">
 
-    <!-- Facebook Meta Tags -->
     <meta property="og:url" content="https://highlanderfrance.tf/">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Highlander France - Communauté Compétitive de TF2">
     <meta property="og:description" content="Highlander France est une communauté compétitive francophone de Team Fortress 2, offrant un espace pour les joueurs de tous niveaux pour apprendre, jouer et progresser ensemble.">
     <meta property="og:image" content="https://highlanderfrance.tf/_img/meta-bg-hlfr.jpg">
 
-    <!-- Twitter Meta Tags -->
     <meta name="twitter:card" content="summary_large_image">
     <meta property="twitter:domain" content="highlanderfrance.tf">
     <meta property="twitter:url" content="https://highlanderfrance.tf/">
@@ -117,32 +124,50 @@ $recentMatches = $stmtRecent->fetchAll(PDO::FETCH_ASSOC);
     <meta name="twitter:description" content="Highlander France est une communauté compétitive francophone de Team Fortress 2, offrant un espace pour les joueurs de tous niveaux pour apprendre, jouer et progresser ensemble.">
     <meta name="twitter:image" content="https://highlanderfrance.tf/_img/meta-bg-hlfr.jpg">
 
-    <!-- Favicon standard -->
     <link rel="shortcut icon" href="https://highlanderfrance.tf/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="https://highlanderfrance.tf/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="https://highlanderfrance.tf/favicon-16x16.png">
     <link rel="icon" type="image/x-icon" href="https://highlanderfrance.tf/favicon.ico">
 
-    <!-- Apple Touch Icon (iPhone/iPad) -->
     <link rel="apple-touch-icon" href="https://highlanderfrance.tf/apple-touch-icon.png">
 
-    <!-- Android Chrome -->
     <link rel="icon" type="image/png" sizes="192x192" href="https://highlanderfrance.tf/android-chrome-192x192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="https://highlanderfrance.tf/android-chrome-512x512.png">
 
-    <!-- Web App Manifest -->
     <link rel="manifest" href="/site.webmanifest">
 
     <link rel="stylesheet" href="../_css/main.css">
     <link rel="stylesheet" href="_css/profile.css">
 
-    <!-- Google tag (gtag.js) -->
+    <style>
+        .staff-badges-container {
+            margin-top: 5px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .badge-staff {
+            display: inline-block;
+            padding: 4px 10px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-radius: 4px;
+            color: #fff;
+            line-height: 1;
+        }
+        .badge-admin { background-color: #d9534f; }
+        .badge-founder { background-color: #f0ad4e; }
+        .badge-moderator { background-color: #5bc0de; }
+        .badge-mentor { background-color: #5cb85c; }
+        .badge-mixer { background-color: #9b59b6; }
+    </style>
+
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-30553SX3GJ"></script>
     <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'G-30553SX3GJ');
     </script>
 </head>
@@ -154,7 +179,6 @@ $recentMatches = $stmtRecent->fetchAll(PDO::FETCH_ASSOC);
         <section id="content">
             <div class="personnal-info">
 
-                <!-- Affichage des messages de succès ou d'erreur -->
                 <?php if (isset($_SESSION['success'])): ?>
                     <div style="background: #4CAF50; color: white; padding: 10px; margin-bottom: 15px; border-radius: 4px;">
                         <?= $_SESSION['success']; unset($_SESSION['success']); ?>
@@ -180,11 +204,32 @@ $recentMatches = $stmtRecent->fetchAll(PDO::FETCH_ASSOC);
 
                 <div class="profile-header flex align-center">
                     <img src="<?php echo htmlspecialchars($user['avatar']); ?>" alt="Avatar de <?php echo htmlspecialchars($user['display_name']); ?>" class="profile-avatar">
-                    <h2><?php echo htmlspecialchars($user['display_name'] ?? 'Joueur'); ?></h2>
-                    <?php if ($date_formatee): ?>
-                        <span>inscrit le <?= $date_formatee; ?></span>
-                    <?php endif; ?>
+                    
+                    <div class="flex flex-column justify-center gap-5" style="align-items: flex-start;">
+                        <div class="flex align-center gap-10">
+                            <h2 style="margin: 0; display: flex; align-items: center; gap: 10px;">
+                                <?php echo htmlspecialchars($user['display_name'] ?? 'Joueur'); ?>
+                                <?php if (!empty($country)): ?>
+                                    <img src="/_img/flags/<?= htmlspecialchars($country) ?>.gif" alt="<?= $countries[$country] ?? $country ?>" class="flag-icon">
+                                <?php endif; ?>
+                            </h2>
+                            <?php if ($date_formatee): ?>
+                                <span style="font-size: 0.85rem; color: #888;">inscrit le <?= $date_formatee; ?></span>
+                            <?php endif; ?>
+                        </div>
+
+                        <div class="staff-badges-container">
+                            <?php foreach ($rolesConfig as $dbKey => $badgeInfo): ?>
+                                <?php if (isset($user[$dbKey]) && ($user[$dbKey] == 1 || $user[$dbKey] === true)): ?>
+                                    <span class="badge-staff <?= $badgeInfo['class'] ?>">
+                                        <?= htmlspecialchars($badgeInfo['label']) ?>
+                                    </span>
+                                <?php endif; ?>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
                 </div>
+                
                 <h3>Informations personnelles</h3>
                 <p>SteamID : <?php echo $steamid3; ?></p>
 
@@ -194,11 +239,6 @@ $recentMatches = $stmtRecent->fetchAll(PDO::FETCH_ASSOC);
                     <h3>Votre pseudo</h3>
                     
                     <?php if (isset($user['name_changed']) && (int)$user['name_changed'] === 1): ?>
-                        <!--
-                        <div class="alert alert-info">
-                            <i class="fa-solid fa-lock"></i> Vous avez déjà personnalisé votre nom d'affichage. Ce changement est définitif et ne peut plus être modifié.
-                        </div>
-                        -->
                         <p>Pseudo enregistré : <strong><?= htmlspecialchars($user['display_name']) ?></strong></p>
                         
                     <?php else: ?>
@@ -231,8 +271,6 @@ $recentMatches = $stmtRecent->fetchAll(PDO::FETCH_ASSOC);
                         <img src="/_img/flags/<?= htmlspecialchars($country) ?>.gif" alt="<?= $countries[$country] ?? $country ?>" class="flag-icon">
                         <span>Nationalité enregistrée : <strong><?= $countries[$country] ?? strtoupper($country) ?></strong></span>
                     </div>
-                    <!--
-                    <p class="text-muted"><i class="fa-solid fa-lock"></i> Cette option est verrouillée. Contactez un administrateur pour la modifier.</p>-->
                     
                 <?php else: ?>
                     <form action="update_country.php" method="POST" class="country-form">
