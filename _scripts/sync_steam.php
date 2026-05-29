@@ -65,7 +65,6 @@ try {
         
         // Fin précoce propre (0 profils à traiter, tout est à jour)
         logScriptExecution('sync_steam.php', $logToken, 'SUCCESS (Aucun profil à synchroniser)');
-        exit;
     }
 
     log_msg("Nombre d'IDs à traiter : " . count($missing));
