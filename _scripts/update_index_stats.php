@@ -38,7 +38,15 @@ function getJson($url) {
 
 // 2. On entoure le reste du script pour attraper les erreurs
 try {
-    $blacklist = [4040598];
+    $blacklist = [
+        4040598,
+        4062936,
+        4062933,
+        4062917,
+        4062908,
+        4062900,
+        4062895
+    ];
     $url_old = "https://logs.tf/api/v1/log?title=Highlander%20France";
     $url_new = "https://logs.tf/api/v1/log?title=highlanderfrance.tf";
 
