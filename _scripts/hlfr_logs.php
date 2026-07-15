@@ -12,7 +12,13 @@ $logs_new = $data_new["logs"] ?? [];
 
 // Liste des logs à exclure
 $blacklist = [
-    4040598
+    4040598,
+    4062936,
+    4062933,
+    4062917,
+    4062908,
+    4062900,
+    4062895
 ];
 
 $filtered = [];
