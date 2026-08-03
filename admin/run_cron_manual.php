@@ -14,7 +14,8 @@ $available_scripts = [
     'match_stats' => 'update_stats.php',
     'sync_with_steam' => 'sync_steam.php',
     'generate_json' => 'generate_json.php',
-    'sync_steam_avatars' => 'sync_steam_avatars.php'
+    'sync_steam_avatars' => 'sync_steam_avatars.php',
+    'backfill_log_dates' => 'backfill_log_dates.php'
 ];
 
 $output = "";
@@ -28,22 +29,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['trigger_cron'])) {
 
     // 🔥 SÉCURITÉ : On vérifie STRICTEMENT que l'action demandée fait partie de notre liste blanche
     if (array_key_exists($selected_action, $available_scripts)) {
-        
+
         $script_name = $available_scripts[$selected_action];
         $cron_script_path = __DIR__ . '/../_scripts/' . $script_name;
-        
+
         if (file_exists($cron_script_path)) {
-            
+
             // 💡 ASTUCE DE CONTOURNEMENT : On démarre un "tampon de sortie" (Output Buffering)
             // Cela va capturer tous les "echo" ou textes que le script va générer
             ob_start();
-            
+
             try {
                 $bypassing_cli_security = true; // Permet de contourner la vérification CLI dans les scripts
                 // On exécute le script directement dans le même processus PHP
                 // (Pas besoin d'avoir les droits système exec() !)
                 include $cron_script_path;
-                
+
                 // On récupère tout ce que le script a affiché et on ferme le tampon
                 $output = ob_get_clean();
                 $return_status = 0; // Tout s'est bien passé
@@ -53,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['trigger_cron'])) {
                 $output = "[ERREUR FATALE LORS DE L'EXÉCUTION] :\n" . $e->getMessage();
                 $return_status = 1;
             }
-            
+
             if (empty($output)) {
                 $output = "Le script s'est exécuté avec succès mais n'a renvoyé aucun texte.";
             }
@@ -72,6 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['trigger_cron'])) {
 ?>
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -79,12 +81,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['trigger_cron'])) {
     <link rel="stylesheet" href="../_css/main.css">
     <link rel="stylesheet" href="_css/admin.css">
 </head>
+
 <body>
 
     <?php include("../_inc/header.php"); ?>
 
     <main id="main" style="max-width: 1000px; margin: 40px auto; padding: 0 20px;">
-        
+
         <div style="margin-bottom: 20px;">
             <a href="dashboard" style="color: #aaa; text-decoration: none; font-size: 14px;">
                 <i class="fa-solid fa-arrow-left"></i> Retour au Panel Admin
@@ -99,11 +102,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['trigger_cron'])) {
 
         <div style="background: #1a1a1a; padding: 25px; border-radius: 6px; border: 1px solid #2b2b2b;">
             <form action="" method="POST" class="flex flex-column">
-                
+
                 <label for="cron_action" style="display: block; margin-bottom: 8px; font-weight: bold; color: #fff;">
                     Sélectionner l'opération à lancer :
                 </label>
-                
+
                 <select name="cron_action" id="cron_action" class="cron-select" required>
                     <option value="" disabled selected>-- Choisir un script --</option>
                     <option value="etf2l_matches" <?= $selected_action === 'etf2l_matches' ? 'selected' : '' ?>>Récupération des matchs ETF2L FR (sync_etf2l.php)</option>
@@ -112,6 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['trigger_cron'])) {
                     <option value="sync_with_steam" <?= $selected_action === 'sync_with_steam' ? 'selected' : '' ?>>Synchronisation avec Steam (sync_steam.php)</option>
                     <option value="generate_json" <?= $selected_action === 'generate_json' ? 'selected' : '' ?>>Génération du fichier JSON (leaderboard) (generate_json.php)</option>
                     <option value="sync_steam_avatars" <?= $selected_action === 'sync_steam_avatars' ? 'selected' : '' ?>>Synchronisation avec Steam (en cas de profils cassés) (sync_steam_avatars.php)</option>
+                    <option value="backfill_log_dates" <?= $selected_action === 'backfill_log_dates' ? 'selected' : '' ?>>Backfill des dates de matchs (backfill_log_dates.php)</option>
                 </select>
 
                 <div>
@@ -123,9 +127,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['trigger_cron'])) {
 
             <?php if ($executed): ?>
                 <hr style="border: 0; border-top: 1px solid #333; margin: 30px 0 20px 0;">
-                
+
                 <h3>Résultat d'exécution : <span style="font-family: monospace; color: #f39c12;"><?= htmlspecialchars($available_scripts[$selected_action] ?? '') ?></span></h3>
-                
+
                 <?php if ($return_status === 0): ?>
                     <span class="status-badge status-success"><i class="fa-solid fa-check"></i> SUCCÈS (Code 0)</span>
                 <?php else: ?>
@@ -142,4 +146,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['trigger_cron'])) {
 
     <script src="https://kit.fontawesome.com/2f306d349c.js" crossorigin="anonymous"></script>
 </body>
+
 </html>

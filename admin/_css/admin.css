@@ -61,6 +61,35 @@ body #main .search-container .search-dropdown .search-no-result {
 }
 body #main {
   /********************************/
+  /** DASHBOARD CHARTS **/
+  /********************************/
+}
+body #main .dashboard-charts .chart-toggles {
+  display: flex;
+  gap: 4px;
+}
+body #main .dashboard-charts .chart-toggles .chart-toggle {
+  background: #222;
+  border: 1px solid #333;
+  color: #aaa;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+body #main .dashboard-charts .chart-toggles .chart-toggle:hover {
+  background: #2b2b2b;
+  color: #fff;
+}
+body #main .dashboard-charts .chart-toggles .chart-toggle.active {
+  background: #ff4444;
+  border-color: #ff4444;
+  color: #fff;
+  font-weight: bold;
+}
+body #main {
+  /********************************/
   /** PLAYER MANAGEMENT PAGE **/
   /********************************/
 }

@@ -66,5 +66,11 @@ $db->exec("CREATE TABLE IF NOT EXISTS log_length_cache (
     length INTEGER
 )");
 
+// Cache des dates de logs logs.tf (utilisé par les graphiques du dashboard admin)
+$db->exec("CREATE TABLE IF NOT EXISTS log_dates (
+    log_id INTEGER PRIMARY KEY,
+    date   INTEGER
+)");
+
 // Durée minimale d'un log (en secondes) : en dessous, blacklist automatique (5 minutes)
 define('MIN_MATCH_LENGTH', 300);

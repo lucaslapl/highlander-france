@@ -70,6 +70,40 @@ body {
         }
 
         /********************************/
+        /** DASHBOARD CHARTS **/
+        /********************************/
+
+        .dashboard-charts {
+            .chart-toggles {
+                display: flex;
+                gap: 4px;
+
+                .chart-toggle {
+                    background: #222;
+                    border: 1px solid #333;
+                    color: #aaa;
+                    font-size: 12px;
+                    padding: 4px 10px;
+                    border-radius: 4px;
+                    cursor: pointer;
+                    transition: all 0.2s;
+
+                    &:hover {
+                        background: #2b2b2b;
+                        color: #fff;
+                    }
+
+                    &.active {
+                        background: #ff4444;
+                        border-color: #ff4444;
+                        color: #fff;
+                        font-weight: bold;
+                    }
+                }
+            }
+        }
+
+        /********************************/
         /** PLAYER MANAGEMENT PAGE **/
         /********************************/
 

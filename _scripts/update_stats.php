@@ -63,6 +63,12 @@ try {
         }
     }
 
+    // Cache des dates logs.tf (utilisé par les graphiques du dashboard admin)
+    $stmtDateCache = $db->prepare("INSERT OR IGNORE INTO log_dates (log_id, date) VALUES (?, ?)");
+    foreach ($allLogs as $log) {
+        $stmtDateCache->execute([$log['id'], $log['date'] ?? 0]);
+    }
+
     $processedCount = 0;
 
     $blacklistedLogIds = getBlacklistedLogIds($db);

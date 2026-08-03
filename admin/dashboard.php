@@ -14,10 +14,37 @@ try {
 
     // Récupération des 5 derniers inscrits sur le site
     $stmtRecent = $db->query("SELECT steamid, name, display_name, created_at FROM players_info ORDER BY created_at DESC LIMIT 5");
+    // ---- Données pour les graphiques du dashboard ----
+    // Inscriptions : comptage par jour (12 derniers mois)
+    $stmtReg = $db->query("SELECT date(created_at) AS d, COUNT(*) AS nb
+        FROM players_info
+        WHERE created_at IS NOT NULL AND created_at >= date('now', '-12 months')
+        GROUP BY date(created_at)
+        ORDER BY d ASC");
+    $registrations = $stmtReg->fetchAll(PDO::FETCH_ASSOC);
+
+    // Matchs joués : comptage par jour (les logs blacklistés sont déjà purgés de player_matches)
+    $stmtMatches = $db->prepare("SELECT date(ld.date, 'unixepoch') AS d, COUNT(DISTINCT pm.match_id) AS nb
+        FROM player_matches pm
+        JOIN log_dates ld ON ld.log_id = pm.match_id
+        WHERE ld.date IS NOT NULL AND ld.date >= ?
+        GROUP BY date(ld.date, 'unixepoch')
+        ORDER BY d ASC");
+    $stmtMatches->execute([strtotime('-12 months')]);
+    $matchesPerDay = $stmtMatches->fetchAll(PDO::FETCH_ASSOC);
+
+    // Modes de jeu : nombre de matchs distincts par mode
+    $modes = [];
+    foreach ($db->query("SELECT game_mode, COUNT(DISTINCT match_id) AS nb FROM player_matches GROUP BY game_mode")->fetchAll(PDO::FETCH_ASSOC) as $row) {
+        $modes[$row['game_mode']] = (int)$row['nb'];
+    }
     $recentUsers = $stmtRecent->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
     $totalPlayers = 0;
     $totalStaff = 0;
+    $registrations = [];
+    $matchesPerDay = [];
+    $modes = [];
     $recentUsers = [];
 }
 ?>
@@ -55,6 +82,56 @@ try {
             <div style="background: #1e1e24; border-left: 4px solid #00bc8c; padding: 20px; border-radius: 4px;">
                 <span style="color: #aaa; font-size: 14px; text-transform: uppercase;">Membres du staff</span>
                 <h3 style="margin: 10px 0 0 0; font-size: 28px;"><?= $totalStaff ?></h3>
+            </div>
+        </div>
+
+        <div class="dashboard-charts" style="margin-bottom: 40px;">
+            <h3 style="margin-top: 0; color: #fff; border-bottom: 1px solid #333; padding-bottom: 10px;">
+                <i class="fa-solid fa-chart-line"></i> Statistiques
+            </h3>
+
+            <div class="charts-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; margin-top: 20px;">
+
+                <div class="chart-card" style="background: #1a1a1a; border: 1px solid #2b2b2b; border-radius: 6px; padding: 20px;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 15px;">
+                        <h4 style="margin: 0; font-size: 14px; color: #ccc; text-transform: uppercase; letter-spacing: 0.5px;">
+                            <i class="fa-solid fa-user-plus" style="color: #ff4444; margin-right: 6px;"></i> Inscriptions
+                        </h4>
+                        <div class="chart-toggles" data-target="registrations" style="display: flex; gap: 4px;">
+                            <button type="button" class="chart-toggle" data-period="week">Semaine</button>
+                            <button type="button" class="chart-toggle active" data-period="month">Mois</button>
+                        </div>
+                    </div>
+                    <div style="position: relative; height: 220px;">
+                        <canvas id="chart-registrations"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-card" style="background: #1a1a1a; border: 1px solid #2b2b2b; border-radius: 6px; padding: 20px;">
+                    <div style="display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 15px;">
+                        <h4 style="margin: 0; font-size: 14px; color: #ccc; text-transform: uppercase; letter-spacing: 0.5px;">
+                            <i class="fa-solid fa-clock-rotate-left" style="color: #ff4444; margin-right: 6px;"></i> Matchs joués
+                        </h4>
+                        <div class="chart-toggles" data-target="matches" style="display: flex; gap: 4px;">
+                            <button type="button" class="chart-toggle" data-period="day">Jour</button>
+                            <button type="button" class="chart-toggle active" data-period="week">Semaine</button>
+                            <button type="button" class="chart-toggle" data-period="month">Mois</button>
+                        </div>
+                    </div>
+                    <div style="position: relative; height: 220px;">
+                        <canvas id="chart-matches"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-card" style="background: #1a1a1a; border: 1px solid #2b2b2b; border-radius: 6px; padding: 20px;">
+                    <h4 style="margin: 0 0 15px 0; font-size: 14px; color: #ccc; text-transform: uppercase; letter-spacing: 0.5px;">
+                        <i class="fa-solid fa-scale-balanced" style="color: #ff4444; margin-right: 6px;"></i> Répartition 6s / 9v9
+                    </h4>
+                    <div style="position: relative; height: 260px;">
+                        <canvas id="chart-modes"></canvas>
+                    </div>
+                </div>
+
             </div>
         </div>
 
@@ -191,9 +268,18 @@ try {
 
     <?php include("../_inc/footer.php"); ?>
 
+    <script>
+        window.__dashboardData = {
+            registrations: <?= json_encode($registrations) ?>,
+            matchesPerDay: <?= json_encode($matchesPerDay) ?>,
+            modes: <?= json_encode($modes) ?>
+        };
+    </script>
     <script src="https://kit.fontawesome.com/2f306d349c.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
     <script src="../_js/main.js"></script>
     <script src="_scripts/admin_player_search.js"></script>
+    <script src="_scripts/admin_charts.js"></script>
 </body>
 
 </html>
