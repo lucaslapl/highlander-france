@@ -1,4 +1,7 @@
 <?php
+require_once __DIR__ . '/../_inc/config.php';
+require_once __DIR__ . '/../_inc/functions.php';
+
 header('Content-Type: application/json');
 
 $url_old = "https://logs.tf/api/v1/log?title=Highlander%20France";
@@ -10,16 +13,7 @@ $data_new = json_decode(@file_get_contents($url_new), true);
 $logs_old = $data_old["logs"] ?? [];
 $logs_new = $data_new["logs"] ?? [];
 
-// Liste des logs à exclure
-$blacklist = [
-    4040598,
-    4062936,
-    4062933,
-    4062917,
-    4062908,
-    4062900,
-    4062895
-];
+$blacklist = getBlacklistedLogIds($db);
 
 $filtered = [];
 

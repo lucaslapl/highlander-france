@@ -1,9 +1,11 @@
 <?php
 require_once "_inc/config.php";
 require_once "_inc/functions.php";
+$isAdmin = (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true);
 ?>
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -47,16 +49,20 @@ require_once "_inc/functions.php";
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-30553SX3GJ"></script>
     <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+        window.dataLayer = window.dataLayer || [];
 
-    gtag('config', 'G-30553SX3GJ');
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+
+        gtag('config', 'G-30553SX3GJ');
     </script>
 </head>
+
 <body>
 
-    
+
 
     <?php include("_inc/header.php"); ?>
 
@@ -75,11 +81,11 @@ require_once "_inc/functions.php";
                     <tr>
                         <th>Date</th>
                         <th>Carte</th>
-                        <th>Titre</th> 
+                        <th>Titre</th>
                     </tr>
                 </thead>
                 <tbody id="logs">
-                    
+
                 </tbody>
             </table>
 
@@ -91,102 +97,122 @@ require_once "_inc/functions.php";
 
     <?php include("_inc/footer.php"); ?>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="https://kit.fontawesome.com/2f306d349c.js" crossorigin="anonymous"></script>
-<script src="../_js/main.js"></script>
-<script>
-    window.addEventListener("load", function () {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://kit.fontawesome.com/2f306d349c.js" crossorigin="anonymous"></script>
+    <script src="../_js/main.js"></script>
+    <script>
+        window.addEventListener("load", function() {
 
-    const content = document.querySelector("#content");
-    const offset = -115; // ajuste comme tu veux
+            const content = document.querySelector("#content");
+            const offset = -115; // ajuste comme tu veux
 
-    if (!content) return;
+            if (!content) return;
 
-    // Attendre 1 seconde avant de démarrer l'animation
-    setTimeout(() => {
+            // Attendre 1 seconde avant de démarrer l'animation
+            setTimeout(() => {
 
-        const target = content.getBoundingClientRect().top + window.scrollY + offset;
-        const duration = 1000; // durée de l'animation
-        const start = window.scrollY;
-        const distance = target - start;
-        const startTime = performance.now();
+                const target = content.getBoundingClientRect().top + window.scrollY + offset;
+                const duration = 1000; // durée de l'animation
+                const start = window.scrollY;
+                const distance = target - start;
+                const startTime = performance.now();
 
-        function easeOutQuad(t) {
-            return t * (2 - t);
-        }
+                function easeOutQuad(t) {
+                    return t * (2 - t);
+                }
 
-        function animateScroll(currentTime) {
-            const elapsed = currentTime - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            const eased = easeOutQuad(progress);
+                function animateScroll(currentTime) {
+                    const elapsed = currentTime - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    const eased = easeOutQuad(progress);
 
-            window.scrollTo(0, start + distance * eased);
+                    window.scrollTo(0, start + distance * eased);
 
-            if (progress < 1) {
+                    if (progress < 1) {
+                        requestAnimationFrame(animateScroll);
+                    }
+                }
+
                 requestAnimationFrame(animateScroll);
-            }
-        }
 
-        requestAnimationFrame(animateScroll);
-
-    }, 300);
-});
-
-$.getJSON("./_scripts/hlfr_logs.php", function(logs) {
-
-    // Supprimer les 4 plus anciennes logs
-    logs = logs.slice(0, logs.length - 4);
-
-    const logsPerPage = 10;
-    let currentPage = 1;
-
-    let filteredLogs = [...logs];
-
-    function applyFilters() {
-        const dateFilter = $("#filter-date").val().trim().toLowerCase();
-        const mapFilter = $("#filter-map").val().trim().toLowerCase();
-
-        filteredLogs = logs.filter(log => {
-            const dateStr = new Date(log.date * 1000).toLocaleString("fr-FR", {
-                year: "numeric",
-                month: "2-digit",
-                day: "2-digit",
-                hour: "2-digit",
-                minute: "2-digit"
-            }).toLowerCase();
-
-            const mapStr = log.map.toLowerCase();
-            const titleStr = log.title.toLowerCase();
-
-            if (dateFilter && !dateStr.includes(dateFilter)) return false;
-            if (mapFilter && !mapStr.includes(mapFilter)) return false;
-            // if (titleFilter && !titleStr.includes(titleFilter)) return false;
-
-            return true;
+            }, 300);
         });
 
-        currentPage = 1;
-        renderTable(currentPage);
-        renderPagination();
-    }
+        const HLFR_IS_ADMIN = <?= $isAdmin ? 'true' : 'false' ?>;
 
-    function renderTable(page) {
-        const start = (page - 1) * logsPerPage;
-        const end = start + logsPerPage;
-        const pageLogs = filteredLogs.slice(start, end);
+        $.getJSON("./_scripts/hlfr_logs.php", function(logs) {
 
-        let rows = "";
+            // Supprimer les 4 plus anciennes logs
+            logs = logs.slice(0, logs.length - 4);
 
-        pageLogs.forEach((log, index) => {
-            const date = new Date(log.date * 1000).toLocaleString("fr-FR", {
-                year: "numeric",
-                month: "2-digit",
-                day: "2-digit",
-                hour: "2-digit",
-                minute: "2-digit"
-            });
+            if (HLFR_IS_ADMIN) {
+                $("#logsTable thead tr").append('<th style="text-align:center;">Action</th>');
+            }
 
-            rows += `
+            const logsPerPage = 10;
+            let currentPage = 1;
+
+            let filteredLogs = [...logs];
+
+            function applyFilters() {
+                const dateFilter = $("#filter-date").val().trim().toLowerCase();
+                const mapFilter = $("#filter-map").val().trim().toLowerCase();
+
+                filteredLogs = logs.filter(log => {
+                    const dateStr = new Date(log.date * 1000).toLocaleString("fr-FR", {
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit",
+                        hour: "2-digit",
+                        minute: "2-digit"
+                    }).toLowerCase();
+
+                    const mapStr = log.map.toLowerCase();
+                    const titleStr = log.title.toLowerCase();
+
+                    if (dateFilter && !dateStr.includes(dateFilter)) return false;
+                    if (mapFilter && !mapStr.includes(mapFilter)) return false;
+                    // if (titleFilter && !titleStr.includes(titleFilter)) return false;
+
+                    return true;
+                });
+
+                currentPage = 1;
+                renderTable(currentPage);
+                renderPagination();
+            }
+
+            function escapeAttr(text) {
+                return (text || '').toString().replace(/"/g, '&quot;');
+            }
+
+            function renderTable(page) {
+                const start = (page - 1) * logsPerPage;
+                const end = start + logsPerPage;
+                const pageLogs = filteredLogs.slice(start, end);
+
+                let rows = "";
+
+                pageLogs.forEach((log, index) => {
+                    const date = new Date(log.date * 1000).toLocaleString("fr-FR", {
+                        year: "numeric",
+                        month: "2-digit",
+                        day: "2-digit",
+                        hour: "2-digit",
+                        minute: "2-digit"
+                    });
+
+                    let actionsCell = "";
+                    if (HLFR_IS_ADMIN) {
+                        actionsCell = `
+                    <td style="text-align:center;">
+                        <button type="button" class="btn-blacklist" data-log-id="${log.id}" data-log-title="${escapeAttr(log.title)}" title="Exclure ce log des statistiques">
+                            <i class="fa-solid fa-ban"></i>
+                        </button>
+                    </td>`;
+                    }
+
+                    rows += `
                 <tr class="log-row" data-index="${index}">
                     <td>${date}</td>
                     <td>${log.map}</td>
@@ -195,46 +221,83 @@ $.getJSON("./_scripts/hlfr_logs.php", function(logs) {
                             ${log.title}
                         </a>
                     </td>
+                    ${actionsCell}
                 </tr>
             `;
-        });
+                });
 
-        $("#logsTable tbody").html(rows);
+                $("#logsTable tbody").html(rows);
 
-        $(".log-row").each(function(i) {
-            setTimeout(() => $(this).addClass("visible"), i * 80);
-        });
-    }
+                $(".log-row").each(function(i) {
+                    setTimeout(() => $(this).addClass("visible"), i * 80);
+                });
 
-    function renderPagination() {
-        const totalPages = Math.ceil(filteredLogs.length / logsPerPage);
-        let buttons = "";
+                if (HLFR_IS_ADMIN) {
+                    $(".btn-blacklist").off("click").on("click", function() {
+                        const logId = $(this).data("log-id");
+                        const logTitle = $(this).data("log-title");
 
-        for (let i = 1; i <= totalPages; i++) {
-            buttons += `
+                        if (!confirm(`Blacklister le log #${logId} (« ${logTitle} ») ?\nIl sera exclu des Match Stats et des statistiques.`)) {
+                            return;
+                        }
+
+                        $.ajax({
+                            type: "POST",
+                            url: "/admin/_scripts/admin_blacklist.php",
+                            data: {
+                                action: "add",
+                                log_id: logId
+                            },
+                            headers: {
+                                "X-Requested-With": "XMLHttpRequest"
+                            },
+                            dataType: "json"
+                        }).done(function(res) {
+                            if (res.success) {
+                                $(`.btn-blacklist[data-log-id="${logId}"]`).closest("tr").remove();
+                                if ($("#logsTable tbody tr").length === 0) {
+                                    $("#logsTable tbody").html('<tr><td colspan="4">Aucun log à afficher.</td></tr>');
+                                }
+                            } else {
+                                alert(res.message);
+                            }
+                        }).fail(function() {
+                            alert("Erreur lors du blacklisting du log.");
+                        });
+                    });
+                }
+            }
+
+            function renderPagination() {
+                const totalPages = Math.ceil(filteredLogs.length / logsPerPage);
+                let buttons = "";
+
+                for (let i = 1; i <= totalPages; i++) {
+                    buttons += `
                 <button class="page-btn ${i === currentPage ? 'active' : ''}" data-page="${i}">
                     ${i}
                 </button>
             `;
-        }
+                }
 
-        $("#pagination").html(buttons);
+                $("#pagination").html(buttons);
 
-        $(".page-btn").on("click", function() {
-            currentPage = parseInt($(this).data("page"));
-            renderTable(currentPage);
-            renderPagination();
+                $(".page-btn").on("click", function() {
+                    currentPage = parseInt($(this).data("page"));
+                    renderTable(currentPage);
+                    renderPagination();
+                });
+            }
+
+            // Événements des filtres
+            $("#filter-date").on("input", applyFilters);
+            $("#filter-map").on("input", applyFilters);
+
+
+            // Affichage initial
+            applyFilters();
         });
-    }
-
-    // Événements des filtres
-    $("#filter-date").on("input", applyFilters);
-    $("#filter-map").on("input", applyFilters);
-    
-
-    // Affichage initial
-    applyFilters();
-});
-</script>
+    </script>
 </body>
+
 </html>

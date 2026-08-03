@@ -203,3 +203,56 @@ function logScriptExecution($scriptName, $updateId = null, $status = 'STARTED') 
 
     return $token; // On renvoie le token pour pouvoir mettre à jour la ligne plus tard
 }
+
+
+/**
+ * Retourne la liste des IDs de logs blacklistés (entiers).
+ */
+function getBlacklistedLogIds($db) {
+    try {
+        $rows = $db->query("SELECT log_id FROM log_blacklist")->fetchAll(PDO::FETCH_COLUMN);
+        return array_map('intval', $rows);
+    } catch (PDOException $e) {
+        return [];
+    }
+}
+
+/**
+ * Retourne la liste complète de la blacklist (id, raison, auteur, date).
+ */
+function getBlacklist($db) {
+    try {
+        $stmt = $db->query("SELECT log_id, reason, added_by, created_at FROM log_blacklist ORDER BY created_at DESC, log_id DESC");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        return [];
+    }
+}
+
+/**
+ * Ajoute un log à la blacklist (idempotent).
+ * @return bool true si le log vient d'être ajouté, false s'il y était déjà.
+ */
+function blacklistLog($db, $logId, $reason, $addedBy) {
+    $stmt = $db->prepare("INSERT OR IGNORE INTO log_blacklist (log_id, reason, added_by) VALUES (?, ?, ?)");
+    $stmt->execute([(int)$logId, $reason, $addedBy]);
+    return $stmt->rowCount() > 0;
+}
+
+/**
+ * Résout le pseudo d'un admin à partir du SteamID64 stocké en base.
+ * Les valeurs non-SteamID ('legacy', 'auto', 'Inconnu') sont retournées telles quelles.
+ */
+function getAdminDisplayName($db, $addedBy) {
+    if (empty($addedBy) || !preg_match('/^\d{17}$/', $addedBy)) {
+        return $addedBy;
+    }
+    $steamid3 = steamID64ToSteamID3($addedBy);
+    $stmt = $db->prepare("SELECT display_name, name FROM players_info WHERE steamid = ?");
+    $stmt->execute([$steamid3]);
+    $p = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($p) {
+        return !empty($p['display_name']) ? $p['display_name'] : $p['name'];
+    }
+    return $addedBy; // joueur introuvable en BDD : on retombe sur le SteamID64
+}

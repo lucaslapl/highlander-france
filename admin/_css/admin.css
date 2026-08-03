@@ -160,37 +160,6 @@ body #main .admin-card .form-section .checkbox-group .admin-label input[type=che
   accent-color: #ff4444;
   cursor: pointer;
 }
-body #main .admin-card .form-section .checkbox-group .admin-label .badge-status {
-  font-size: 12px;
-  padding: 2px 6px;
-  border-radius: 3px;
-  font-weight: bold;
-}
-body #main .admin-card .form-section .checkbox-group .admin-label .status-locked {
-  background: #d9534f;
-  color: #fff;
-}
-body #main .admin-card .form-section .checkbox-group .admin-label .status-free {
-  background: #5cb85c;
-  color: #fff;
-}
-body #main .admin-card .form-section .checkbox-group .btn-admin-submit {
-  background: #ff4444;
-  color: white;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 4px;
-  font-size: 14px;
-  font-weight: bold;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  transition: background 0.2s;
-}
-body #main .admin-card .form-section .checkbox-group .btn-admin-submit:hover {
-  background: #cc2424;
-}
 body #main {
   /********************************/
   /** LIST STAFF PAGE **/

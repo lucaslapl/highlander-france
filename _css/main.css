@@ -901,7 +901,8 @@ body #main #content #join a:hover {
   width: 100%;
   border-collapse: collapse;
 }
-#logsTable th, #logsTable td {
+#logsTable th,
+#logsTable td {
   padding: 10px;
   text-align: left;
 }
@@ -922,6 +923,20 @@ body #main #content #join a:hover {
 #logsTable .log-row.visible {
   opacity: 1;
   transform: translateX(0);
+}
+#logsTable .btn-blacklist {
+  background: #2b2b2b;
+  border: 1px solid #444;
+  color: #f35f5f;
+  border-radius: 4px;
+  padding: 5px 9px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+#logsTable .btn-blacklist:hover {
+  background: #381e1e;
+  border-color: #f35f5f;
 }
 
 .pagination {

@@ -17,13 +17,14 @@ $STEAM_API_KEY = $env['STEAM_API_KEY'];
 /**
  * Fonction robuste pour récupérer du JSON via cURL
  */
-function getJson($url) {
+function getJson($url)
+{
     $ch = curl_init($url);
     curl_setopt_array($ch, [
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_TIMEOUT => 10,
-        CURLOPT_SSL_VERIFYPEER => true, 
+        CURLOPT_SSL_VERIFYPEER => true,
         CURLOPT_USERAGENT => 'Mozilla/5.0',
     ]);
 
@@ -64,13 +65,37 @@ try {
 
     $processedCount = 0;
 
+    $blacklistedLogIds = getBlacklistedLogIds($db);
+    // Purge rétroactive : les logs blacklistés déjà traités sont retirés des stats joueurs
+    $purgedCount = 0;
+    if (!empty($blacklistedLogIds)) {
+        $ph = implode(',', array_fill(0, count($blacklistedLogIds), '?'));
+        $stmtList = $db->prepare("SELECT match_id, steamid, game_mode FROM player_matches WHERE match_id IN ($ph)");
+        $stmtList->execute($blacklistedLogIds);
+        $matchesToPurge = $stmtList->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($matchesToPurge as $m) {
+            $db->prepare("UPDATE player_stats SET count = count - 1 WHERE steamid = ? AND game_mode = ?")
+                ->execute([$m['steamid'], $m['game_mode']]);
+        }
+        $db->exec("DELETE FROM player_stats WHERE count <= 0");
+
+        $stmtDel = $db->prepare("DELETE FROM player_matches WHERE match_id IN ($ph)");
+        $stmtDel->execute($blacklistedLogIds);
+        $purgedCount = $stmtDel->rowCount();
+    }
+
     foreach ($allLogs as $log) {
         $logId = $log['id'];
+        // Log blacklisté : exclu de toutes les statistiques
+        if (in_array($logId, $blacklistedLogIds)) {
+            continue;
+        }
         $title = $log['title'] ?? '';
-        
+
         $stmt = $db->prepare("SELECT 1 FROM processed_logs WHERE id = ?");
         $stmt->execute([$logId]);
-        
+
         if (!$stmt->fetch()) {
 
             // get log details
@@ -80,10 +105,18 @@ try {
                 continue;
             }
 
+            // Auto-blacklist : un log de moins de 5 minutes est exclu de toutes les stats
+            $logLength = (int)($details['length'] ?? 0);
+            if ($logLength > 0 && $logLength < MIN_MATCH_LENGTH) {
+                blacklistLog($db, $logId, 'Durée inférieure à 5 minutes (blacklist automatique)', 'auto');
+                $db->prepare("INSERT OR IGNORE INTO processed_logs (id) VALUES (?)")->execute([$logId]);
+                continue;
+            }
+
             // get game mode
             $titleLower = strtolower($title);
-            $gameMode = '9v9'; 
-            
+            $gameMode = '9v9';
+
             if (strpos($titleLower, "[6s]") !== false) {
                 $gameMode = '6s';
             } elseif (strpos($titleLower, "[9s]") !== false) {
@@ -99,7 +132,7 @@ try {
                     // update stats
                     $db->prepare("INSERT INTO player_stats (steamid, count, game_mode) VALUES (?, 1, ?) 
                                   ON CONFLICT(steamid, game_mode) DO UPDATE SET count = count + 1")
-                       ->execute([$steamid, $gameMode]);
+                        ->execute([$steamid, $gameMode]);
 
                     $classPlayed = 'unknown';
                     if (!empty($pData['class_stats']) && isset($pData['class_stats'][0]['type'])) {
@@ -107,7 +140,7 @@ try {
                     }
                     $db->prepare("INSERT OR IGNORE INTO player_matches (steamid, match_id, map_name, class_played, game_mode) 
                                   VALUES (?, ?, ?, ?, ?)")
-                       ->execute([$steamid, $logId, $mapName, $classPlayed, $gameMode]);
+                        ->execute([$steamid, $logId, $mapName, $classPlayed, $gameMode]);
 
                     // check if player info exists
                     $stmtCheck = $db->prepare("SELECT 1 FROM players_info WHERE steamid = ?");
@@ -122,7 +155,7 @@ try {
                         if (isset($sData['response']['players'][0])) {
                             $p = $sData['response']['players'][0];
                             $db->prepare("INSERT INTO players_info (steamid, name, avatar, last_updated) VALUES (?, ?, ?, ?)")
-                               ->execute([$steamid, $p['personaname'], $p['avatarfull'], time()]);
+                                ->execute([$steamid, $p['personaname'], $p['avatarfull'], time()]);
                         }
 
                         usleep(500000);
@@ -143,11 +176,10 @@ try {
     // Ton fichier de log d'historique classique
     file_put_contents(__DIR__ . '/log_update_stats.txt', date('Y-m-d H:i:s') . " OK\n", FILE_APPEND);
     echo "Mise à jour des stats terminée. Nouveaux logs traités : " . $processedCount;
-
 } catch (Exception $e) {
-    
+
     // 4. ÉCHEC : On intercepte l'erreur critique et on ferme la ligne d'audit sur un FAILED
     logScriptExecution('update_stats.php', $logToken, 'FAILED: ' . $e->getMessage());
-    
+
     die("Erreur critique durant la génération des statistiques : " . $e->getMessage());
 }

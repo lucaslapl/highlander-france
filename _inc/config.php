@@ -41,3 +41,24 @@ try {
 } catch (PDOException $e) {
     die("Erreur de connexion à la base de données : " . $e->getMessage());
 }
+
+// Table de blacklist des logs logs.tf (gérée depuis le panel admin et la page Match Stats)
+$db->exec("CREATE TABLE IF NOT EXISTS log_blacklist (
+    log_id     INTEGER PRIMARY KEY,
+    reason     TEXT,
+    added_by   TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+)");
+
+// Migration : IDs historiquement codés en dur, injectés une seule fois
+$db->exec("INSERT OR IGNORE INTO log_blacklist (log_id, added_by) VALUES
+    (4040598, 'legacy'),
+    (4062936, 'legacy'),
+    (4062933, 'legacy'),
+    (4062917, 'legacy'),
+    (4062908, 'legacy'),
+    (4062900, 'legacy'),
+    (4062895, 'legacy')");
+
+// Durée minimale d'un log (en secondes) : en dessous, blacklist automatique (5 minutes)
+define('MIN_MATCH_LENGTH', 300);

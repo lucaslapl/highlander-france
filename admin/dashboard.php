@@ -94,6 +94,12 @@ try {
                         <a href="view_logs.php" style="background: #3498db; color: #fff; text-decoration: none; padding: 8px 12px; border-radius: 4px; display: inline-block; font-size: 14px;">Ouvrir l'inspecteur log</a>
                     </div>
 
+                    <div style="background: #1a1a1a; border: 1px solid #333; padding: 20px; border-radius: 6px;">
+                        <h4 style="margin: 0 0 10px 0; color: #f35f5f;"><i class="fa-solid fa-ban"></i> Logs blacklistés</h4>
+                        <p style="font-size: 14px; color: #ccc; margin: 0 0 20px 0;">Exclure des logs logs.tf des stats et de la page Match Stats, avec motif et traçabilité.</p>
+                        <a href="manage_blacklist.php" style="background: #f35f5f; color: #fff; text-decoration: none; padding: 8px 12px; border-radius: 4px; display: inline-block; font-size: 14px;">Gérer la blacklist</a>
+                    </div>
+
                 </div>
                 <div class="admin-card" style="background: #1e1e24; border: 1px solid #2d2d35; border-radius: 6px; padding: 20px; margin-bottom: 20px;">
                     <h3 style="margin-top: 0; color: #e74c3c; display: flex; align-items: center; gap: 10px; font-size: 18px; border-bottom: 1px solid #2d2d35; padding-bottom: 10px;">

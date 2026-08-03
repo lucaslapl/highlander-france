@@ -14,14 +14,15 @@ $logToken = logScriptExecution('update_index_stats.php');
 /**
  * Fonction robuste pour récupérer du JSON via cURL
  */
-function getJson($url) {
+function getJson($url)
+{
     $ch = curl_init($url);
     curl_setopt_array($ch, [
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_TIMEOUT => 10,
-        CURLOPT_SSL_VERIFYPEER => true, 
-        CURLOPT_USERAGENT => 'Mozilla/5.0', 
+        CURLOPT_SSL_VERIFYPEER => true,
+        CURLOPT_USERAGENT => 'Mozilla/5.0',
     ]);
 
     $response = curl_exec($ch);
@@ -38,15 +39,8 @@ function getJson($url) {
 
 // 2. On entoure le reste du script pour attraper les erreurs
 try {
-    $blacklist = [
-        4040598,
-        4062936,
-        4062933,
-        4062917,
-        4062908,
-        4062900,
-        4062895
-    ];
+    $blacklist = getBlacklistedLogIds($db);
+
     $url_old = "https://logs.tf/api/v1/log?title=Highlander%20France";
     $url_new = "https://logs.tf/api/v1/log?title=highlanderfrance.tf";
 
@@ -69,12 +63,12 @@ try {
     }
 
     // Filtrage de la Blacklist
-    $filteredLogs = array_filter($mergedLogs, function($log) use ($blacklist) {
+    $filteredLogs = array_filter($mergedLogs, function ($log) use ($blacklist) {
         return !in_array($log["id"], $blacklist);
     });
 
     // Tri par ID décroissant
-    usort($filteredLogs, function($a, $b) {
+    usort($filteredLogs, function ($a, $b) {
         return $b['id'] <=> $a['id'];
     });
 
@@ -95,12 +89,12 @@ try {
         $stmt->execute([$match_id]);
         $cached_match = $stmt->fetch();
 
-        if (!$cached_match) { 
+        if (!$cached_match) {
             $details = getJson("https://logs.tf/api/v1/log/" . $match_id);
 
             if (!$details) {
                 error_log("Erreur 502/404 pour le match $match_id - On passe au suivant.");
-                continue; 
+                continue;
             }
 
             $length = $details["length"] ?? 0;
@@ -110,6 +104,19 @@ try {
 
             usleep(200000); // 0.2s pour éviter de spam l'API
         }
+    }
+
+    // Auto-blacklist : les logs de moins de 5 minutes sont exclus des stats de l'accueil
+    $shortLogIds = $db->query("SELECT match_id FROM matches_cache WHERE length > 0 AND length < " . MIN_MATCH_LENGTH)->fetchAll(PDO::FETCH_COLUMN);
+
+    foreach ($shortLogIds as $shortId) {
+        blacklistLog($db, $shortId, 'Durée inférieure à 5 minutes (blacklist automatique)', 'auto');
+    }
+
+    if (!empty($shortLogIds)) {
+        $filteredLogs = array_values(array_filter($filteredLogs, function ($log) use ($shortLogIds) {
+            return !in_array($log['id'], $shortLogIds);
+        }));
     }
 
     $placeholders = implode(',', array_fill(0, count($filteredLogs), '?'));
@@ -132,12 +139,11 @@ try {
     logScriptExecution('update_index_stats.php', $logToken, $successMessage);
 
     echo "Mise à jour réussie : " . $stats['nb'] . " matchs traités.";
-
 } catch (Exception $e) {
-    
+
     // 4. GESTION DES ERREURS : En cas de plantage, on passe le statut en FAILED avec l'erreur exacte
     logScriptExecution('update_index_stats.php', $logToken, 'FAILED: ' . $e->getMessage());
-    
+
     // On garde l'affichage de l'erreur pour la console ou l'admin
     die("Erreur script : " . $e->getMessage());
 }
