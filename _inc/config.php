@@ -60,5 +60,11 @@ $db->exec("INSERT OR IGNORE INTO log_blacklist (log_id, added_by) VALUES
     (4062900, 'legacy'),
     (4062895, 'legacy')");
 
+// Cache des durées de logs logs.tf (utilisé par la page admin des logs de matchs)
+$db->exec("CREATE TABLE IF NOT EXISTS log_length_cache (
+    log_id INTEGER PRIMARY KEY,
+    length INTEGER
+)");
+
 // Durée minimale d'un log (en secondes) : en dessous, blacklist automatique (5 minutes)
 define('MIN_MATCH_LENGTH', 300);

@@ -95,6 +95,12 @@ try {
                     </div>
 
                     <div style="background: #1a1a1a; border: 1px solid #333; padding: 20px; border-radius: 6px;">
+                        <h4 style="margin: 0 0 10px 0; color: #f39c12;"><i class="fa-solid fa-clock-rotate-left"></i> Logs des matchs joués</h4>
+                        <p style="font-size: 14px; color: #ccc; margin: 0 0 20px 0;">Liste des matchs joués avec nombre de joueurs et durée, avec alertes orange (match court, effectif incomplet).</p>
+                        <a href="match_logs.php" style="background: #f39c12; color: #fff; text-decoration: none; padding: 8px 12px; border-radius: 4px; display: inline-block; font-size: 14px;">Voir les logs</a>
+                    </div>
+
+                    <div style="background: #1a1a1a; border: 1px solid #333; padding: 20px; border-radius: 6px;">
                         <h4 style="margin: 0 0 10px 0; color: #f35f5f;"><i class="fa-solid fa-ban"></i> Logs blacklistés</h4>
                         <p style="font-size: 14px; color: #ccc; margin: 0 0 20px 0;">Exclure des logs logs.tf des stats et de la page Match Stats, avec motif et traçabilité.</p>
                         <a href="manage_blacklist.php" style="background: #f35f5f; color: #fff; text-decoration: none; padding: 8px 12px; border-radius: 4px; display: inline-block; font-size: 14px;">Gérer la blacklist</a>

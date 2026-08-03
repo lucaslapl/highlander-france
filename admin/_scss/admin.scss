@@ -265,6 +265,47 @@ body {
                 text-decoration: line-through;
                 font-weight: normal;
             }
+
+            .cell-warning {
+                background-color: #f39c12;
+                color: #111;
+                font-weight: bold;
+            }
+
+            .btn-icon {
+                background: #2b2b2b;
+                border: 1px solid #444;
+                color: #ccc;
+                width: 30px;
+                height: 30px;
+                border-radius: 4px;
+                cursor: pointer;
+                margin: 0 3px;
+                transition: all 0.2s;
+                vertical-align: middle;
+
+                &:hover {
+                    color: #fff;
+                    background: #3e3e48;
+                }
+
+                &:disabled {
+                    opacity: 0.35;
+                    cursor: not-allowed;
+                }
+            }
+
+            .btn-blacklist:hover {
+                background: #381e1e;
+                border-color: #f35f5f;
+                color: #f35f5f;
+            }
+
+            .btn-mode:hover {
+                background: #2b2118;
+                border-color: #f39c12;
+                color: #f39c12;
+            }
         }
 
         /********************************/
