@@ -1,9 +1,9 @@
 <?php
 //error_reporting(E_ALL);
 //ini_set('display_errors', 1);
-require_once '/_libs/openid.php';
-require_once '/_inc/config.php';
-require_once '/_inc/functions.php';
+require_once __DIR__ . '/_libs/openid.php';
+require_once __DIR__ . '/_inc/config.php';
+require_once __DIR__ . '/_inc/functions.php';
 $openid = new LightOpenID('highlanderfrance.tf'); 
 
 if ($openid->mode == 'cancel') {
