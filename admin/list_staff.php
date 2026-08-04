@@ -33,21 +33,21 @@ try {
 
     <?php include("../_inc/header.php"); ?>
 
-    <main id="main" style="max-width: 1200px; margin: 40px auto; padding: 0 20px;">
+    <main id="main" class="admin-main">
 
-        <div style="margin-bottom: 20px;">
-            <a href="dashboard" style="color: #aaa; text-decoration: none; font-size: 14px;">
+        <div class="admin-back">
+            <a href="dashboard">
                 <i class="fa-solid fa-arrow-left"></i> Retour au Panel Admin
             </a>
         </div>
 
-        <div class="admin-header" style="border-bottom: 2px solid #00bc8c; padding-bottom: 15px; margin-bottom: 30px;">
-            <h2 style="color: #00bc8c; margin: 0;"><i class="fa-solid fa-user-shield"></i> Gestion de l'équipe staff</h2>
-            <p style="margin: 5px 0 0 0; color: #aaa;">Vue d'ensemble de tous les comptes possédant un rang particulier sur Highlander France.</p>
+        <div class="admin-header" style="--accent: #00bc8c;">
+            <h2><i class="fa-solid fa-user-shield"></i> Gestion de l'équipe staff</h2>
+            <p>Vue d'ensemble de tous les comptes possédant un rang particulier sur Highlander France.</p>
         </div>
 
         <?php if (empty($staff_members)): ?>
-            <div style="background: #1a1a1a; padding: 20px; border-radius: 4px; text-align: center; color: #aaa;">
+            <div class="admin-empty">
                 Aucun membre du staff trouvé dans la base de données.
             </div>
         <?php else: ?>
@@ -57,7 +57,7 @@ try {
                         <th>Membre</th>
                         <th>SteamID64</th>
                         <th>Rôles actifs</th>
-                        <th style="text-align: center;">Actions</th>
+                        <th class="text-center">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -84,8 +84,8 @@ try {
                                 <?= (int)$member['is_mixer'] === 1 ? '<span class="badge badge-mixer">MIXER</span>' : '<span class="badge badge-disabled">MIXER</span>' ?>
                             </td>
 
-                            <td style="text-align: center;">
-                                <a href="manage_player.php?steamid=<?= $steamid64 ?>" style="background: #222; border: 1px solid #444; color: #fff; text-decoration: none; padding: 5px 10px; border-radius: 4px; font-size: 12px; display: inline-block;">
+                            <td class="text-center">
+                                <a href="manage_player.php?steamid=<?= $steamid64 ?>" class="admin-btn">
                                     <i class="fa-solid fa-user-gear" style="color: #ff4444;"></i> Modifier les rôles
                                 </a>
                             </td>

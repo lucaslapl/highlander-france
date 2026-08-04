@@ -182,10 +182,10 @@ foreach ($merged as $log) {
         <td>{$dateStr}</td>
         <td>" . htmlspecialchars($map) . "</td>
         <td><a href=\"https://logs.tf/{$logId}\" target=\"_blank\">" . htmlspecialchars($title) . "</a></td>
-        <td class=\"{$playersCls}\" style=\"text-align:center;\">{$players}</td>
-        <td class=\"{$durationCls}\" style=\"text-align:center;\">{$durationStr}</td>
-        <td style=\"text-align:center;\">{$modeBadge}</td>
-        <td style=\"text-align:center; white-space:nowrap;\">{$blacklistBtn}{$modeBtn}</td>
+        <td class=\"{$playersCls} text-center\">{$players}</td>
+        <td class=\"{$durationCls} text-center\">{$durationStr}</td>
+        <td class=\"text-center\">{$modeBadge}</td>
+        <td class=\"text-center\" style=\"white-space: nowrap;\">{$blacklistBtn}{$modeBtn}</td>
     </tr>";
 }
 ?>
@@ -204,42 +204,41 @@ foreach ($merged as $log) {
 
     <?php include("../_inc/header.php"); ?>
 
-    <main id="main" style="max-width: 1200px; margin: 40px auto; padding: 0 20px;">
+    <main id="main" class="admin-main">
 
-        <div style="margin-bottom: 20px;">
-            <a href="dashboard" style="color: #aaa; text-decoration: none; font-size: 14px;">
+        <div class="admin-back">
+            <a href="dashboard">
                 <i class="fa-solid fa-arrow-left"></i> Retour au Panel Admin
             </a>
         </div>
 
-        <div class="admin-header" style="border-bottom: 2px solid #f39c12; padding-bottom: 15px; margin-bottom: 30px;">
-            <h2 style="color: #f39c12; margin: 0;"><i class="fa-solid fa-clock-rotate-left"></i> Logs des matchs joués</h2>
-            <p style="margin: 5px 0 0 0; color: #aaa;">
+        <div class="admin-header" style="--accent: #f39c12;">
+            <h2><i class="fa-solid fa-clock-rotate-left"></i> Logs des matchs joués</h2>
+            <p>
                 Liste des matchs avec nombre de joueurs et durée.
-                <span class="cell-warning" style="padding: 2px 6px; border-radius: 3px;">Orange</span> = match de moins de 10 min, ou effectif incomplet ([6s] &lt; 12 joueurs, [9s] &lt; 18 joueurs).
+                <span class="admin-legend">Orange</span> = match de moins de 10 min, ou effectif incomplet ([6s] &lt; 12 joueurs, [9s] &lt; 18 joueurs).
             </p>
         </div>
 
-        <div style="margin-bottom: 15px;">
-            <input type="text" id="log-search" placeholder="Rechercher un titre ou une carte…"
-                style="width: 100%; max-width: 400px; background: #1e1e1e; border: 1px solid rgba(255,255,255,0.1); color: #fff; padding: 10px 15px; border-radius: 6px; font-size: 0.95em; box-sizing: border-box;">
+        <div class="admin-filter">
+            <input type="text" id="log-search" placeholder="Rechercher un titre ou une carte…" class="admin-search-input">
         </div>
 
-        <div style="max-height: 600px; overflow-y: auto;">
+        <div class="admin-table-scroll">
             <table class="admin-table" id="logsTable">
                 <thead>
                     <tr>
                         <th>Date</th>
                         <th>Carte</th>
                         <th>Titre</th>
-                        <th style="text-align:center;">Joueurs</th>
-                        <th style="text-align:center;">Durée</th>
-                        <th style="text-align:center;">Mode (BDD)</th>
-                        <th style="text-align:center;">Action</th>
+                        <th class="text-center">Joueurs</th>
+                        <th class="text-center">Durée</th>
+                        <th class="text-center">Mode (BDD)</th>
+                        <th class="text-center">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?= $rows ?: '<tr><td colspan="7" style="color:#aaa;font-style:italic;">Aucun log à afficher.</td></tr>' ?>
+                    <?= $rows ?: '<tr><td colspan="7" style="padding: 20px; text-align: center; color: #aaa; font-style: italic;">Aucun log à afficher.</td></tr>' ?>
                 </tbody>
             </table>
         </div>
@@ -283,7 +282,7 @@ foreach ($merged as $log) {
                 if (res.success) {
                     btn.closest("tr").remove();
                     if ($("#logsTable tbody tr").length === 0) {
-                        $("#logsTable tbody").html('<tr><td colspan="7">Aucun log à afficher.</td></tr>');
+                        $("#logsTable tbody").html('<tr><td colspan="7" style="padding: 20px; text-align: center; color: #aaa; font-style: italic;">Aucun log à afficher.</td></tr>');
                     }
                 } else {
                     alert(res.message);

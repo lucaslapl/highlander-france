@@ -55,52 +55,25 @@ $current_country = !empty($target_player['country']) ? strtolower($target_player
     <title>Admin - Gérer <?= htmlspecialchars($final_name) ?></title>
     <link rel="stylesheet" href="../_css/main.css">
     <link rel="stylesheet" href="_css/admin.css">
-    <style>
-        .badge-status {
-            font-size: 12px;
-            padding: 2px 6px;
-            border-radius: 3px;
-            font-weight: bold;
-        }
-
-        .btn-admin-submit {
-            background: #ff4444;
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 4px;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: background 0.2s;
-        }
-
-        .btn-admin-submit:hover {
-            background: #e03e3e;
-        }
-    </style>
 </head>
 
 <body>
 
     <?php include("../_inc/header.php"); ?>
 
-    <main id="main" style="max-width: 900px; margin: 40px auto; padding: 0 20px;">
+    <main id="main" class="admin-main">
 
-        <div style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
-            <a href="dashboard" style="color: #aaa; text-decoration: none; font-size: 14px;">
+        <div class="admin-back admin-back--split">
+            <a href="dashboard">
                 <i class="fa-solid fa-arrow-left"></i> Retour au Panel Admin
             </a>
-            <a href="/profile/profil?steamid=<?= htmlspecialchars($target_steamid) ?>" style="color: #3498db; text-decoration: none; font-size: 14px;">
+            <a href="/profile/profil?steamid=<?= htmlspecialchars($target_steamid) ?>">
                 Voir le profil public <i class="fa-solid fa-arrow-right-to-bracket"></i>
             </a>
         </div>
 
-        <div class="admin-header" style="border-bottom: 2px solid #ff4444; padding-bottom: 15px; margin-bottom: 30px;">
-            <h2 style="color: #ff4444; margin: 0;"><i class="fa-solid fa-user-gear"></i> Panel d'édition de compte utilisateur</h2>
+        <div class="admin-header" style="--accent: #ff4444;">
+            <h2><i class="fa-solid fa-user-gear"></i> Panel d'édition de compte utilisateur</h2>
         </div>
 
         <div class="player-profile-header">
@@ -110,24 +83,24 @@ $current_country = !empty($target_player['country']) ? strtolower($target_player
                 <p style="font-family: monospace; color: #888; font-size: 13px;">SteamID64 : <?= htmlspecialchars($target_steamid) ?></p>
                 <p style="font-family: monospace; color: #888; font-size: 13px;">SteamID3 : <?= htmlspecialchars($target_player['steamid']) ?></p>
                 <span style="display: block; margin-top: 5px; font-size: 12px; color: #aaa;">
-                    <?= (int)$target_player['is_admin'] === 1 ? '<span style="background: #e74c3c; color: #fff; padding: 2px 6px; border-radius: 4px;">Admin</span>' : '' ?>
-                    <?= (int)$target_player['is_founder'] === 1 ? '<span style="background: #d35400; color: #fff; padding: 2px 6px; border-radius: 4px;">Fondateur</span>' : '' ?>
-                    <?= (int)$target_player['is_moderator'] === 1 ? '<span style="background: #2980b9; color: #fff; padding: 2px 6px; border-radius: 4px;">Modérateur</span>' : '' ?>
-                    <?= (int)$target_player['is_mentor'] === 1 ? '<span style="background: #27ae60; color: #fff; padding: 2px 6px; border-radius: 4px;">Mentor</span>' : '' ?>
-                    <?= (int)$target_player['is_mixer'] === 1 ? '<span style="background: #8e44ad; color: #fff; padding: 2px 6px; border-radius: 4px;">Lanceur de Mix</span>' : '' ?>
+                    <?= (int)$target_player['is_admin'] === 1 ? '<span class="badge badge-admin">Admin</span>' : '' ?>
+                    <?= (int)$target_player['is_founder'] === 1 ? '<span class="badge badge-founder">Fondateur</span>' : '' ?>
+                    <?= (int)$target_player['is_moderator'] === 1 ? '<span class="badge badge-moderator">Modérateur</span>' : '' ?>
+                    <?= (int)$target_player['is_mentor'] === 1 ? '<span class="badge badge-mentor">Mentor</span>' : '' ?>
+                    <?= (int)$target_player['is_mixer'] === 1 ? '<span class="badge badge-mixer">Lanceur de Mix</span>' : '' ?>
                 </span>
             </div>
         </div>
 
         <?php if (isset($_SESSION['success'])): ?>
-            <div style="background: #1c3d27; color: #2ecc71; border: 1px solid #27ae60; padding: 12px 15px; border-radius: 4px; margin-bottom: 20px; font-size: 14px;">
+            <div class="admin-alert admin-alert--success">
                 <i class="fa-solid fa-circle-check"></i> <?= $_SESSION['success'];
                                                             unset($_SESSION['success']); ?>
             </div>
         <?php endif; ?>
 
         <?php if (isset($_SESSION['error'])): ?>
-            <div style="background: #3d1c1c; color: #e74c3c; border: 1px solid #c0392b; padding: 12px 15px; border-radius: 4px; margin-bottom: 20px; font-size: 14px;">
+            <div class="admin-alert admin-alert--error">
                 <i class="fa-solid fa-circle-xmark"></i> <?= $_SESSION['error'];
                                                             unset($_SESSION['error']); ?>
             </div>
@@ -235,7 +208,7 @@ $current_country = !empty($target_player['country']) ? strtolower($target_player
                 </div>
 
                 <div style="margin-top: 10px;">
-                    <button type="submit" class="btn-admin-submit">
+                    <button type="submit" class="admin-btn admin-btn--primary">
                         <i class="fa-solid fa-floppy-disk"></i> Enregistrer les modifications
                     </button>
                 </div>

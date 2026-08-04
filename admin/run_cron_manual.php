@@ -86,24 +86,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['trigger_cron'])) {
 
     <?php include("../_inc/header.php"); ?>
 
-    <main id="main" style="max-width: 1000px; margin: 40px auto; padding: 0 20px;">
+    <main id="main" class="admin-main">
 
-        <div style="margin-bottom: 20px;">
-            <a href="dashboard" style="color: #aaa; text-decoration: none; font-size: 14px;">
+        <div class="admin-back">
+            <a href="dashboard">
                 <i class="fa-solid fa-arrow-left"></i> Retour au Panel Admin
             </a>
         </div>
 
-        <div class="admin-header" style="border-bottom: 2px solid #f39c12; padding-bottom: 15px; margin-bottom: 30px;">
-            <h2 style="color: #f39c12; margin: 0;"><i class="fa-solid fa-gears"></i> Console d'Exécution des Tâches CRON</h2>
-            <p style="margin: 5px 0 0 0; color: #aaa;">Sélectionnez et forcez l'exécution de l'un des scripts automatisés du serveur.</p>
-            <p style="margin: 5px 0 0 0; color: #aaa;"><b>NE PAS UTILISER SAUF URGENCE OU SANS Y AVOIR ÉTÉ INVITÉ.</b></p>
+        <div class="admin-header" style="--accent: #f39c12;">
+            <h2><i class="fa-solid fa-gears"></i> Console d'Exécution des Tâches CRON</h2>
+            <p>Sélectionnez et forcez l'exécution de l'un des scripts automatisés du serveur.</p>
+            <p><b>NE PAS UTILISER SAUF URGENCE OU SANS Y AVOIR ÉTÉ INVITÉ.</b></p>
         </div>
 
-        <div style="background: #1a1a1a; padding: 25px; border-radius: 6px; border: 1px solid #2b2b2b;">
+        <div class="admin-card">
             <form action="" method="POST" class="flex flex-column">
 
-                <label for="cron_action" style="display: block; margin-bottom: 8px; font-weight: bold; color: #fff;">
+                <label for="cron_action" class="admin-form-label">
                     Sélectionner l'opération à lancer :
                 </label>
 
@@ -119,7 +119,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['trigger_cron'])) {
                 </select>
 
                 <div>
-                    <button type="submit" name="trigger_cron" class="btn-run">
+                    <button type="submit" name="trigger_cron" class="admin-btn admin-btn--primary" style="--accent: #f39c12;">
                         <i class="fa-solid fa-play"></i> Lancer le script sélectionné
                     </button>
                 </div>

@@ -71,24 +71,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['clear_logs'])) {
 
     <?php include("../_inc/header.php"); ?>
 
-    <main id="main" style="max-width: 1200px; margin: 40px auto; padding: 0 20px;">
+    <main id="main" class="admin-main">
 
-        <div style="margin-bottom: 20px;">
-            <a href="dashboard" style="color: #aaa; text-decoration: none; font-size: 14px;">
+        <div class="admin-back">
+            <a href="dashboard">
                 <i class="fa-solid fa-arrow-left"></i> Retour au Panel Admin
             </a>
         </div>
 
         <?php if (isset($_SESSION['success'])): ?>
-            <div class="alert alert-success" style="background: #1c3d27; color: #2ecc71; padding: 15px; border-radius: 4px; margin-bottom: 20px; font-size: 14px;">
+            <div class="admin-alert admin-alert--success">
                 <i class="fa-solid fa-circle-check"></i> <?= $_SESSION['success'];
                                                             unset($_SESSION['success']); ?>
             </div>
         <?php endif; ?>
 
-        <div class="admin-header" style="border-bottom: 2px solid #3498db; padding-bottom: 15px; margin-bottom: 30px;">
-            <h2 style="color: #3498db; margin: 0;"><i class="fa-solid fa-database"></i> Inspecteur de Journaux (Logs)</h2>
-            <p style="margin: 5px 0 0 0; color: #aaa;">Analyse en direct des rapports d'exécution de l'API et détection des pannes des scripts CRON.</p>
+        <div class="admin-header" style="--accent: #3498db;">
+            <h2><i class="fa-solid fa-database"></i> Inspecteur de Journaux (Logs)</h2>
+            <p>Analyse en direct des rapports d'exécution de l'API et détection des pannes des scripts CRON.</p>
         </div>
 
         <div class="log-meta-box">
@@ -100,14 +100,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['clear_logs'])) {
 
             <?php if ($file_exists && $bytes > 0): ?>
                 <form action="" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir vider l\'intégralité des logs ? Cette action est irréversible.');">
-                    <button type="submit" name="clear_logs" class="btn-clear">
+                    <button type="submit" name="clear_logs" class="admin-btn admin-btn--danger">
                         <i class="fa-solid fa-trash-can"></i> Nettoyer le journal
                     </button>
                 </form>
             <?php endif; ?>
         </div>
 
-        <h3 style="font-size: 15px; color: #aaa; text-transform: uppercase; margin-bottom: 10px; letter-spacing: 0.5px;">
+        <h3 class="admin-section-title">
             <i class="fa-solid fa-terminal"></i> 100 derniers événements (du plus récent au plus ancien)
         </h3>
 
