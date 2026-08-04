@@ -40,7 +40,6 @@ $countries_list = [
     'tu' => 'Tunisie',
     'ca' => 'Canada',
     'breizh' => 'Bretagne',
-    'unknown'        => 'Non défini / Autre'
 ];
 
 // On récupère la nationalité actuelle du joueur (mise en minuscule pour correspondre au tableau)
