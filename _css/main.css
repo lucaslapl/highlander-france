@@ -875,6 +875,18 @@ body #main #content #join a:hover {
   height: 32px;
   border-radius: 50%;
 }
+.leaderboard-note {
+  margin: 20px 0;
+  text-align: center;
+  color: #666;
+  font-size: 0.85em;
+  font-style: italic;
+}
+.leaderboard-note a {
+  color: #fbb7fb;
+  font-weight: 600;
+  text-decoration: underline;
+}
 
 /**** LOG PAGE****/
 #filters {

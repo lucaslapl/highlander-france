@@ -194,3 +194,17 @@
                     }
                 }
             }
+
+            .leaderboard-note {
+                margin: 20px 0;
+                text-align: center;
+                color: #666;
+                font-size: 0.85em;
+                font-style: italic;
+
+                a {
+                    color: $accent;
+                    font-weight: 600;
+                    text-decoration: underline;
+                }
+            }

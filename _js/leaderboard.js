@@ -1,11 +1,42 @@
-async function loadLeaderboard(mode = '9v9') {
+let currentMode = '9v9';
+let currentCategory = 'matches';
+
+const categoryConfig = {
+    matches: { header: 'Matchs', format: value => Number(value).toLocaleString('fr-FR') },
+    kills:   { header: 'Kills',  format: value => Number(value).toLocaleString('fr-FR') },
+    heal:    { header: 'Heal',   format: value => Number(value).toLocaleString('fr-FR') },
+    dpm:     { header: 'DPM',    format: value => Number(value).toFixed(1) }
+};
+
+function getLeaderboardFilename(mode, category) {
+    if (category === 'matches') {
+        return `/../_scripts/leaderboard_cache_${mode}.json`;
+    }
+    return `/../_scripts/leaderboard_cache_${mode}_${category}.json`;
+}
+
+async function loadLeaderboard(mode, category = 'matches') {
     const tbody = document.getElementById('leaderboard-body');
+    const thead = document.getElementById('leaderboard-thead');
     if (!tbody) return;
+
+    const config = categoryConfig[category];
+
+    // En-tête dynamique selon la catégorie
+    if (thead) {
+        thead.innerHTML = `
+            <tr>
+                <th>Rang</th>
+                <th>Joueur</th>
+                <th>${config.header}</th>
+            </tr>
+        `;
+    }
 
     tbody.innerHTML = '<tr><td colspan="3">Chargement...</td></tr>';
     
     try {
-        const filename = `/../_scripts/leaderboard_cache_${mode}.json`;
+        const filename = getLeaderboardFilename(mode, category);
         const response = await fetch(filename + '?v=' + new Date().getTime()); // Le ?v=... évite le cache navigateur
         if (!response.ok) {
             throw new Error('Fichier introuvable: ' + filename);
@@ -16,7 +47,9 @@ async function loadLeaderboard(mode = '9v9') {
         
         players.forEach((player, index) => {
             const row = document.createElement('tr');
-            
+            const valueKey = category === 'matches' ? 'count' : 'value';
+            const displayValue = config.format(player[valueKey]);
+
             row.innerHTML = `
                 <td>#${index + 1}</td>
                 <td>
@@ -27,7 +60,7 @@ async function loadLeaderboard(mode = '9v9') {
                         </a>
                     </div>
                 </td>
-                <td>${player.count}</td>
+                <td>${displayValue}</td>
             `;
             tbody.appendChild(row);
         });
@@ -45,9 +78,19 @@ function escapeHtml(text) {
 }
 
 function switchLeaderboard(button, mode) {
-    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('#leaderboard-mode-tabs .tab-btn').forEach(btn => btn.classList.remove('active'));
     
     button.classList.add('active');
     
-    loadLeaderboard(mode);
+    currentMode = mode;
+    loadLeaderboard(currentMode, currentCategory);
+}
+
+function switchCategory(button, category) {
+    document.querySelectorAll('#leaderboard-category-tabs .tab-btn').forEach(btn => btn.classList.remove('active'));
+
+    button.classList.add('active');
+
+    currentCategory = category;
+    loadLeaderboard(currentMode, currentCategory);
 }
