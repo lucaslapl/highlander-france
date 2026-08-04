@@ -39,7 +39,7 @@ $stmt_matches = $db->prepare("SELECT count as total_matches FROM player_stats WH
 $stmt_matches->execute([$steamid3, $currentMode]);
 $matches = $stmt_matches->fetch();
 
-$stmtMaps = $db->prepare("SELECT map_name, COUNT(map_name) as total FROM player_matches WHERE steamid = ? AND game_mode = ? GROUP BY map_name ORDER BY total DESC LIMIT 3");
+$stmtMaps = $db->prepare("SELECT map_name, COUNT(map_name) as total FROM player_matches WHERE steamid = ? AND game_mode = ? AND map_name NOT LIKE '% + %' GROUP BY map_name ORDER BY total DESC");
 $stmtMaps->execute([$steamid3, $currentMode]);
 $topMaps = $stmtMaps->fetchAll(PDO::FETCH_ASSOC);
 
@@ -226,83 +226,83 @@ $rolesConfig = [
             <div class="player-stats">
                 <h3 id="stats-title">Stats - Highlander</h3>
 
-                <div class="box-stats matches-played">
-                    <p><b id="stat-total-matches"><?php echo $matches['total_matches'] ?? 0; ?></b> matchs joués</p>
-                </div>
+                <div class="stats-grid stats-key">
+                    <div class="box-stats matches-played">
+                        <p class="stat-label">Matchs joués</p>
+                        <p class="stat-value"><b id="stat-total-matches"><?php echo $matches['total_matches'] ?? 0; ?></b></p>
+                    </div>
 
-                <div class="box-stats damage-dealt">
-                    <p><b>Dégâts moyens par match :</b> <span id="stat-total-damage"><?= number_format($matchStats['average_damage'], 0, ',', ' ') ?></span></p>
-                </div>
-                <div class="box-stats kills">
-                    <p><b>Kills :</b> <span id="stat-total-kills"><?= $matchStats['total_kills'] ?></span></p>
-                </div>
-                <div class="box-stats deaths">
-                    <p><b>Morts :</b> <span id="stat-total-deaths"><?= $matchStats['total_deaths'] ?></span></p>
-                </div>
-                <div class="box-stats kd-ratio">
-                    <p><b>Ratio K/D :</b> <span id="stat-kd-ratio"><?= $matchStats['kd_ratio'] ?></span></p>
-                </div>
+                    <div class="box-stats damage-dealt">
+                        <p class="stat-label">Dégâts moyens / match</p>
+                        <p class="stat-value"><span id="stat-total-damage"><?= number_format($matchStats['average_damage'], 0, ',', ' ') ?></span></p>
+                    </div>
 
-                <div class="box-stats classes-killed">
-                    <p><b>Classes tuées :</b></p>
-                    <div id="classes-killed-container">
-                        <?php if (empty($matchStats['classes_killed'])): ?>
-                            <p class="no-data">Aucune donnée de classe tuée pour le moment.</p>
-                        <?php else: ?>
-                            <ul class="stats-list">
-                                <?php foreach ($matchStats['classes_killed'] as $class => $count): ?>
-                                    <?php $classSafe = htmlspecialchars($class); ?>
-                                    <li class="flex space-between align-center">
-                                        <div class="flex align-center gap-10">
-                                            <img src="/_img/classes/<?= $classSafe ?>.png" alt="<?= ucfirst($classSafe) ?>" class="class-icon" title="<?= ucfirst($classSafe) ?>">
-                                        </div>
-                                        <span class="stat-value"><?= $count ?></span>
-                                    </li>
-                                <?php endforeach; ?>
-                            </ul>
-                        <?php endif; ?>
+                    <div class="box-stats kills">
+                        <p class="stat-label">Kills</p>
+                        <p class="stat-value"><span id="stat-total-kills"><?= $matchStats['total_kills'] ?></span></p>
+                    </div>
+
+                    <div class="box-stats deaths">
+                        <p class="stat-label">Morts</p>
+                        <p class="stat-value"><span id="stat-total-deaths"><?= $matchStats['total_deaths'] ?></span></p>
+                    </div>
+
+                    <div class="box-stats kd-ratio">
+                        <p class="stat-label">Ratio K/D</p>
+                        <p class="stat-value"><span id="stat-kd-ratio"><?= $matchStats['kd_ratio'] ?></span></p>
                     </div>
                 </div>
 
-                <div class="box-stats maps-played">
-                    <p><b>Top 3 des maps jouées :</b></p>
-                    <div id="maps-container">
-                        <?php if (empty($topMaps)): ?>
-                            <p class="no-data">Aucune donnée de map pour le moment.</p>
-                        <?php else: ?>
-                            <ul class="stats-list">
-                                <?php foreach ($topMaps as $map): ?>
-                                    <li class="flex space-between align-center">
-                                        <span class="stat-label"><?= htmlspecialchars($map['map_name']) ?></span>
-                                        <span class="stat-value"><?= $map['total'] ?> match(s)</span>
-                                    </li>
-                                <?php endforeach; ?>
-                            </ul>
-                        <?php endif; ?>
+                <div class="stats-grid stats-lists">
+                    <div class="box-stats classes-played">
+                        <p class="box-title">Classes jouées</p>
+                        <div id="classes-container">
+                            <?php if (empty($classesPlayed)): ?>
+                                <p class="no-data">Aucune donnée de classe pour le moment.</p>
+                            <?php else: ?>
+                                <ul class="stats-list">
+                                    <?php foreach ($classesPlayed as $class): ?>
+                                        <?php
+                                        $classNameBrut = htmlspecialchars($class['class_played']);
+                                        $iconPath = "/_img/classes/" . $classNameBrut . ".png";
+                                        ?>
+                                        <li class="flex space-between align-center">
+                                            <div class="flex align-center gap-10">
+                                                <img src="<?= $iconPath ?>" alt="<?= ucfirst($classNameBrut) ?>" class="class-icon" title="<?= ucfirst($classNameBrut) ?>">
+                                            </div>
+                                            <span class="stat-value"><?= $class['total'] ?></span>
+                                        </li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            <?php endif; ?>
+                        </div>
                     </div>
-                </div>
 
-                <div class="box-stats classes-played">
-                    <p><b>Classes jouées :</b></p>
-                    <div id="classes-container">
-                        <?php if (empty($classesPlayed)): ?>
-                            <p class="no-data">Aucune donnée de classe pour le moment.</p>
-                        <?php else: ?>
-                            <ul class="stats-list">
-                                <?php foreach ($classesPlayed as $class): ?>
-                                    <?php
-                                    $classNameBrut = htmlspecialchars($class['class_played']);
-                                    $iconPath = "/_img/classes/" . $classNameBrut . ".png";
-                                    ?>
-                                    <li class="flex space-between align-center">
-                                        <div class="flex align-center gap-10">
-                                            <img src="<?= $iconPath ?>" alt="<?= ucfirst($classNameBrut) ?>" class="class-icon" title="<?= ucfirst($classNameBrut) ?>">
-                                        </div>
-                                        <span class="stat-value"><?= $class['total'] ?></span>
-                                    </li>
-                                <?php endforeach; ?>
-                            </ul>
-                        <?php endif; ?>
+                    <div class="box-stats maps-played">
+                        <p class="box-title">Maps jouées</p>
+                        <div id="maps-container">
+                            <?php if (empty($topMaps)): ?>
+                                <p class="no-data">Aucune donnée de map pour le moment.</p>
+                            <?php else: ?>
+                                <div class="maps-chart">
+                                    <canvas id="maps-chart-canvas"></canvas>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+
+                    <div class="box-stats classes-killed">
+                        <p class="box-title">Classes tuées</p>
+                        <div id="classes-killed-container">
+                            <?php if (empty($matchStats['classes_killed'])): ?>
+                                <p class="no-data">Aucune donnée de classe tuée pour le moment.</p>
+                            <?php else: ?>
+                                <div class="classes-killed-chart">
+                                    <canvas id="classes-killed-chart-canvas"></canvas>
+                                </div>
+                                <ul class="classes-killed-legend"></ul>
+                            <?php endif; ?>
+                        </div>
                     </div>
                 </div>
 
@@ -340,6 +340,8 @@ $rolesConfig = [
     <?php include("../_inc/footer.php"); ?>
 
     <script src="https://kit.fontawesome.com/2f306d349c.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <script>window.__initialClassesKilled = <?= json_encode($matchStats['classes_killed']) ?>; window.__initialTopMaps = <?= json_encode($topMaps) ?>;</script>
     <script src="../_js/main.js"></script>
     <script src="../_js/profil.js"></script>
 </body>

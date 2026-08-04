@@ -1,3 +1,171 @@
+let classesKilledChart = null;
+let mapsChart = null;
+
+const CLASS_KILLED_COLORS = {
+    scout: '#4fc3f7',
+    soldier: '#ef5350',
+    pyro: '#ffa726',
+    demoman: '#b0a65c',
+    heavy: '#e57373',
+    engineer: '#a1887f',
+    medic: '#66bb6a',
+    sniper: '#90a4ae',
+    spy: '#ab47bc',
+};
+const CLASS_KILLED_PALETTE = ['#ff4444', '#3498db', '#2ecc71', '#f39c12', '#9b59b6', '#1abc9c', '#e67e22', '#e74c3c', '#34495e'];
+
+function classNameLabel(cls) {
+    if (!cls) return '';
+    return cls.charAt(0).toUpperCase() + cls.slice(1);
+}
+
+function renderClassesKilled(data) {
+    const container = document.getElementById('classes-killed-container');
+    if (!container) return;
+
+    if (classesKilledChart) {
+        classesKilledChart.destroy();
+        classesKilledChart = null;
+    }
+
+    const entries = (data && typeof data === 'object') ? Object.entries(data).filter(([, v]) => Number(v) > 0) : [];
+
+    if (entries.length === 0) {
+        container.innerHTML = '<p class="no-data">Aucune donnée de classe tuée pour le moment.</p>';
+        return;
+    }
+
+    if (typeof Chart === 'undefined') {
+        container.innerHTML = '<ul class="stats-list">' + entries.map(([cls, count]) => `
+            <li class="flex space-between align-center">
+                <div class="flex align-center gap-10">
+                    <img src="/_img/classes/${escapeHtml(cls)}.png" alt="${escapeHtml(classNameLabel(cls))}" class="class-icon" title="${escapeHtml(classNameLabel(cls))}">
+                </div>
+                <span class="stat-value">${count}</span>
+            </li>`).join('') + '</ul>';
+        return;
+    }
+
+    container.innerHTML = `
+        <div class="classes-killed-chart">
+            <canvas id="classes-killed-chart-canvas"></canvas>
+        </div>
+        <ul class="classes-killed-legend"></ul>`;
+
+    const labels = entries.map(([cls]) => classNameLabel(cls));
+    const values = entries.map(([, c]) => Number(c));
+    const colors = entries.map(([cls], i) => CLASS_KILLED_COLORS[cls] || CLASS_KILLED_PALETTE[i % CLASS_KILLED_PALETTE.length]);
+    const total = values.reduce((a, b) => a + b, 0);
+
+    classesKilledChart = new Chart(document.getElementById('classes-killed-chart-canvas'), {
+        type: 'doughnut',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: values,
+                backgroundColor: colors,
+                borderColor: '#141414',
+                borderWidth: 2,
+            }],
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '55%',
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: (ctx) => ` ${ctx.label} : ${ctx.parsed} (${Math.round((ctx.parsed / total) * 100)}%)`,
+                    },
+                },
+            },
+        },
+    });
+
+    const legend = container.querySelector('.classes-killed-legend');
+    if (legend) {
+        legend.innerHTML = entries.map(([cls, count]) => `
+            <li class="classes-killed-legend__item">
+                <img src="/_img/classes/${escapeHtml(cls)}.png" alt="${escapeHtml(classNameLabel(cls))}" class="class-icon" title="${escapeHtml(classNameLabel(cls))}">
+                <span class="classes-killed-legend__name">${escapeHtml(classNameLabel(cls))}</span>
+                <span class="classes-killed-legend__count">${count}<span class="classes-killed-legend__pct"> (${Math.round((count / total) * 100)}%)</span></span>
+            </li>`).join('');
+    }
+}
+
+function renderMapsChart(data) {
+    const container = document.getElementById('maps-container');
+    if (!container) return;
+
+    if (mapsChart) {
+        mapsChart.destroy();
+        mapsChart = null;
+    }
+
+    const rows = Array.isArray(data) ? data.filter(r => Number(r.total) > 0) : [];
+
+    if (rows.length === 0) {
+        container.innerHTML = '<p class="no-data">Aucune donnée de map pour le moment.</p>';
+        return;
+    }
+
+    if (typeof Chart === 'undefined') {
+        container.innerHTML = '<ul class="stats-list">' + rows.map(m => `
+            <li class="flex space-between align-center">
+                <span class="stat-label">${escapeHtml(m.map_name)}</span>
+                <span class="stat-value">${m.total} match(s)</span>
+            </li>`).join('') + '</ul>';
+        return;
+    }
+
+    const labels = rows.map(m => m.map_name);
+    const values = rows.map(m => Number(m.total));
+    const height = Math.max(160, rows.length * 30);
+
+    container.innerHTML = `
+        <div class="maps-chart" style="height:${height}px;">
+            <canvas id="maps-chart-canvas"></canvas>
+        </div>`;
+
+    mapsChart = new Chart(document.getElementById('maps-chart-canvas'), {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                data: values,
+                backgroundColor: 'rgba(52, 152, 219, 0.8)',
+                borderRadius: 4,
+                maxBarThickness: 24,
+            }],
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    callbacks: {
+                        label: (ctx) => ` ${ctx.parsed.x} match(s)`,
+                    },
+                },
+            },
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    ticks: { precision: 0 },
+                    grid: { color: 'rgba(255, 255, 255, 0.06)' },
+                },
+                y: {
+                    ticks: { font: { size: 11 }, autoSkip: false },
+                    grid: { display: false },
+                },
+            },
+        },
+    });
+}
+
 async function switchProfileMode(button, mode, steamidFallback = null) {
     // 1. Changement visuel de l'onglet actif
     document.querySelectorAll('.profile-tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -17,7 +185,7 @@ async function switchProfileMode(button, mode, steamidFallback = null) {
         document.querySelector('.player-stats').style.opacity = '0.5';
 
         // Requête vers le fichier d'API de statistiques (à créer à l'étape suivante)
-        const response = await fetch(`/profile/get_profile_stats.php?steamid=${steamid}&mode=${mode}`);
+        const response = await fetch(`/profile/get_profile_stats.php?steamid=${steamid}&mode=${mode}&_=${Date.now()}`);
         if (!response.ok) throw new Error('Erreur réseau');
 
         const data = await response.json();
@@ -31,22 +199,8 @@ async function switchProfileMode(button, mode, steamidFallback = null) {
         document.getElementById('stat-total-deaths').innerText = data.total_deaths || 0;
         document.getElementById('stat-kd-ratio').innerText = data.kd_ratio || 0;
 
-        // 4. Remplacement du tableau des Maps
-        const mapsContainer = document.getElementById('maps-container');
-        if (!data.top_maps || data.top_maps.length === 0) {
-            mapsContainer.innerHTML = '<p class="no-data">Aucune donnée de map pour ce mode.</p>';
-        } else {
-            let html = '<ul class="stats-list">';
-            data.top_maps.forEach(map => {
-                html += `
-                    <li class="flex space-between align-center">
-                        <span class="stat-label">${escapeHtml(map.map_name)}</span>
-                        <span class="stat-value">${map.total} match(s)</span>
-                    </li>`;
-            });
-            html += '</ul>';
-            mapsContainer.innerHTML = html;
-        }
+        // 4. Graphique à barres des Maps jouées
+        renderMapsChart(data.top_maps);
 
         // 5. Remplacement du tableau des Classes
         const classesContainer = document.getElementById('classes-container');
@@ -68,25 +222,8 @@ async function switchProfileMode(button, mode, steamidFallback = null) {
             classesContainer.innerHTML = html;
         }
 
-        // 5bis. Tableau des Classes tuées
-        const ckContainer = document.getElementById('classes-killed-container');
-        if (!data.classes_killed || Object.keys(data.classes_killed).length === 0) {
-            ckContainer.innerHTML = '<p class="no-data">Aucune donnée de classe tuée pour ce mode.</p>';
-        } else {
-            let html = '<ul class="stats-list">';
-            Object.entries(data.classes_killed).forEach(([cls, count]) => {
-                const className = escapeHtml(cls);
-                html += `
-            <li class="flex space-between align-center">
-                <div class="flex align-center gap-10">
-                    <img src="/_img/classes/${className}.png" alt="${className}" class="class-icon" title="${className}">
-                </div>
-                <span class="stat-value">${count}</span>
-            </li>`;
-            });
-            html += '</ul>';
-            ckContainer.innerHTML = html;
-        }
+        // 5bis. Camembert des Classes tuées
+        renderClassesKilled(data.classes_killed);
 
         // 6. Remplacement des Matchs Récents
         const recentContainer = document.getElementById('recent-container');
@@ -123,4 +260,14 @@ async function switchProfileMode(button, mode, steamidFallback = null) {
 function escapeHtml(text) {
     if (!text) return '';
     return text.toString().replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m]));
+}
+
+// Rendu initial du camembert "Classes tuées" (données injectées par PHP)
+if (typeof window.__initialClassesKilled !== 'undefined') {
+    renderClassesKilled(window.__initialClassesKilled);
+}
+
+// Rendu initial du graphique à barres "Maps jouées" (données injectées par PHP)
+if (typeof window.__initialTopMaps !== 'undefined') {
+    renderMapsChart(window.__initialTopMaps);
 }

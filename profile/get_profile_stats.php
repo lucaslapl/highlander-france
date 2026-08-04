@@ -1,5 +1,7 @@
 <?php
 header('Content-Type: application/json');
+header('Cache-Control: no-store, no-cache, must-revalidate');
+header('Pragma: no-cache');
 
 // 1. On charge la configuration et les fonctions
 require_once __DIR__ . '/../_inc/config.php';
@@ -24,14 +26,14 @@ try {
     $stmt->execute([$steamid3, $mode]);
     $matches = $stmt->fetch(PDO::FETCH_ASSOC);
 
-    /** 2. TOP 3 MAPS **/
+    /** 2. MAPS (toutes, du plus grand au plus petit, sans les logs multi-maps) **/
     $stmtMaps = $db->prepare("
         SELECT map_name, COUNT(map_name) as total 
         FROM player_matches 
-        WHERE steamid = ? AND game_mode = ? 
+        WHERE steamid = ? AND game_mode = ?
+        AND map_name NOT LIKE '% + %'
         GROUP BY map_name 
-        ORDER BY total DESC 
-        LIMIT 3
+        ORDER BY total DESC
     ");
     $stmtMaps->execute([$steamid3, $mode]);
     $topMaps = $stmtMaps->fetchAll(PDO::FETCH_ASSOC);
