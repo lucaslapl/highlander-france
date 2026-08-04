@@ -74,6 +74,8 @@ try {
     $blacklistedLogIds = getBlacklistedLogIds($db);
     // Purge rétroactive : les logs blacklistés déjà traités sont retirés des stats joueurs
     $purgedCount = 0;
+    $purgedClassCount = 0;
+
     if (!empty($blacklistedLogIds)) {
         $ph = implode(',', array_fill(0, count($blacklistedLogIds), '?'));
         $stmtList = $db->prepare("SELECT match_id, steamid, game_mode FROM player_matches WHERE match_id IN ($ph)");
@@ -89,6 +91,26 @@ try {
         $stmtDel = $db->prepare("DELETE FROM player_matches WHERE match_id IN ($ph)");
         $stmtDel->execute($blacklistedLogIds);
         $purgedCount = $stmtDel->rowCount();
+    }
+
+    // Purge rétroactive : les logs sans classe (undefined/unknown) sont retirés des stats joueurs
+    $stmtInvalidClasses = $db->query("
+    SELECT steamid, game_mode, COUNT(*) AS cnt
+    FROM player_matches
+    WHERE class_played IN ('undefined', 'unknown')
+    GROUP BY steamid, game_mode
+")->fetchAll(PDO::FETCH_ASSOC);
+
+    if (!empty($stmtInvalidClasses)) {
+        $stmtDec = $db->prepare("UPDATE player_stats SET count = count - ? WHERE steamid = ? AND game_mode = ?");
+        foreach ($stmtInvalidClasses as $row) {
+            $stmtDec->execute([(int)$row['cnt'], $row['steamid'], $row['game_mode']]);
+        }
+
+        $stmtDelClass = $db->exec("DELETE FROM player_matches WHERE class_played IN ('undefined', 'unknown')");
+        $purgedClassCount = (int)$stmtDelClass;
+
+        $db->exec("DELETE FROM player_stats WHERE count <= 0");
     }
 
     foreach ($allLogs as $log) {
@@ -177,12 +199,14 @@ try {
     }
 
     // 3. SUCCÈS : Enregistrement de la réussite dans cron_debug.log
-    $statusMsg = "SUCCESS (" . $processedCount . " nouveaux logs traités)";
+    $statusMsg = "SUCCESS (" . $processedCount . " nouveaux logs traités, "
+    . $purgedClassCount . " logs sans classe purgés)";
     logScriptExecution('update_stats.php', $logToken, $statusMsg);
 
     // Ton fichier de log d'historique classique
     file_put_contents(__DIR__ . '/log_update_stats.txt', date('Y-m-d H:i:s') . " OK\n", FILE_APPEND);
-    echo "Mise à jour des stats terminée. Nouveaux logs traités : " . $processedCount;
+    echo "Mise à jour des stats terminée. Nouveaux logs traités : " . $processedCount
+    . ". Logs sans classe purgés : " . $purgedClassCount;
 } catch (Exception $e) {
 
     // 4. ÉCHEC : On intercepte l'erreur critique et on ferme la ligne d'audit sur un FAILED
