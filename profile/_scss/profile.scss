@@ -71,6 +71,18 @@ body {
                         grid-template-columns: repeat(3, 1fr);
                         align-items: start;
                     }
+
+                    &.stats-combat {
+                        grid-template-columns: 1fr;
+
+                        .stat-label {
+                            font-size: 0.8em;
+                            color: #aaa;
+                            text-transform: uppercase;
+                            letter-spacing: 0.5px;
+                            margin-bottom: 8px;
+                        }
+                    }
                 }
 
                 .box-stats {
@@ -221,35 +233,63 @@ body {
                         font-size: 1.6em;
                     }
 
-                    .matches-list {
-                        list-style-type: none;
-                        padding-left: 0;
+                    .matches-table {
+                        width: 100%;
+                        border-collapse: collapse;
+                        font-size: 0.95em;
 
-                        li {
-                            display: flex;
-                            align-items: center;
-                            justify-content: space-between;
-                            gap: 15px;
-                            margin-bottom: 10px;
+                        th,
+                        td {
+                            padding: 10px 12px;
+                            text-align: left;
+                            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+                        }
 
-                            .match-map {
-                                font-size: 1.2em;
-                                color: #ccc;
-                                font-weight: bold;
+                        th {
+                            font-size: 0.8em;
+                            color: #aaa;
+                            text-transform: uppercase;
+                            letter-spacing: 0.5px;
+                            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+                        }
+
+                        .match-row {
+                            cursor: pointer;
+                            transition: background-color 0.15s ease;
+
+                            &:hover {
+                                background-color: rgba(255, 255, 255, 0.06);
                             }
 
-                            .btn-log {
-                                background-color: rgb(0, 123, 255);
-                                color: #fff;
-                                padding: 5px 10px;
-                                border-radius: 4px;
-                                text-decoration: none;
-                                font-size: 0.9em;
+                            td:first-child {
+                                display: flex;
+                                align-items: center;
+                                gap: 10px;
                                 white-space: nowrap;
+                            }
+                        }
 
-                                &:hover {
-                                    background-color: rgb(0, 86, 179);
-                                }
+                        .match-result {
+                            display: inline-block;
+                            padding: 3px 10px;
+                            border-radius: 4px;
+                            font-size: 0.85em;
+                            font-weight: bold;
+                            white-space: nowrap;
+
+                            &.result-win {
+                                background-color: rgba(39, 174, 96, 0.25);
+                                color: #2ecc71;
+                            }
+
+                            &.result-loss {
+                                background-color: rgba(231, 76, 60, 0.25);
+                                color: #e74c3c;
+                            }
+
+                            &.result-unknown {
+                                background-color: rgba(255, 255, 255, 0.1);
+                                color: #aaa;
                             }
                         }
                     }
@@ -283,8 +323,12 @@ body {
                         grid-template-columns: 1fr;
                     }
 
-                    .matches-list li {
-                        flex-wrap: wrap;
+                    .recent-matches {
+                        overflow-x: auto;
+
+                        .matches-table {
+                            min-width: 520px;
+                        }
                     }
 
                     .classes-killed .classes-killed-legend {

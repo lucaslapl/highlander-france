@@ -194,10 +194,11 @@ async function switchProfileMode(button, mode, steamidFallback = null) {
         document.getElementById('stats-title').innerText = `Stats - ${mode === '6s' ? '6v6' : 'Highlander'}`;
         document.getElementById('recent-title').innerText = `Matchs Récents (${mode === '6s' ? '6v6' : '9v9'})`;
         document.getElementById('stat-total-matches').innerText = data.total_matches;
-        document.getElementById('stat-total-damage').innerText = Number(data.average_damage || 0).toLocaleString('fr-FR');
+        document.getElementById('stat-total-damage').innerText = Number(data.average_dpm || 0).toLocaleString('fr-FR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
         document.getElementById('stat-total-kills').innerText = data.total_kills || 0;
         document.getElementById('stat-total-deaths').innerText = data.total_deaths || 0;
         document.getElementById('stat-kd-ratio').innerText = data.kd_ratio || 0;
+        document.getElementById('stat-combat-airshots').innerText = data.total_airshots || 0;
 
         // 4. Graphique à barres des Maps jouées
         renderMapsChart(data.top_maps);
@@ -230,23 +231,36 @@ async function switchProfileMode(button, mode, steamidFallback = null) {
         if (!data.recent_matches || data.recent_matches.length === 0) {
             recentContainer.innerHTML = '<p class="no-data">Aucun match enregistré pour le moment dans ce mode.</p>';
         } else {
-            let html = '<ul class="matches-list">';
+            let html = `<table class="matches-table">
+                            <thead>
+                                <tr>
+                                    <th>Classe</th>
+                                    <th>Résultat</th>
+                                    <th>Map</th>
+                                    <th>K/D/A</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>`;
             data.recent_matches.forEach(match => {
                 const mId = escapeHtml(match.match_id);
                 const cPlayed = escapeHtml(match.class_played);
+                const won = (match.won === 1 || match.won === '1') ? 'win' : ((match.won === 0 || match.won === '0') ? 'loss' : 'unknown');
+                const resultClass = `result-${won}`;
+                const resultLabel = won === 'win' ? 'Victoire' : (won === 'loss' ? 'Défaite' : '—');
                 html += `
-                    <li class="flex space-between align-center match-item">
-                        <div class="flex align-center gap-15">
+                    <tr class="match-row" data-href="https://logs.tf/${mId}">
+                        <td data-label="Classe">
                             <img src="/_img/classes/${cPlayed}.png" alt="${cPlayed}" class="class-icon" title="Joué en ${cPlayed}">
-                            <span class="match-map">${escapeHtml(match.map_name)}</span>
-                            <span class="stat-value">${match.kills || 0}K / ${match.deaths || 0}D / ${Number(match.dmg || 0).toLocaleString('fr-FR')} dmg</span>
-                        </div>
-                        <a href="https://logs.tf/${mId}" target="_blank" class="btn-log">
-                            <i class="fa-solid fa-file-lines"></i> Log #${mId}
-                        </a>
-                    </li>`;
+                            <span>${cPlayed.charAt(0).toUpperCase() + cPlayed.slice(1)}</span>
+                        </td>
+                        <td data-label="Résultat"><span class="match-result ${resultClass}">${resultLabel}</span></td>
+                        <td data-label="Map">${escapeHtml(match.map_name)}</td>
+                        <td data-label="K/D/A">${match.kills || 0} / ${match.deaths || 0} / ${match.assists || 0}</td>
+                        <td data-label="Date">${escapeHtml(match.match_date || '—')}</td>
+                    </tr>`;
             });
-            html += '</ul>';
+            html += '</tbody></table>';
             recentContainer.innerHTML = html;
         }
 
@@ -271,3 +285,11 @@ if (typeof window.__initialClassesKilled !== 'undefined') {
 if (typeof window.__initialTopMaps !== 'undefined') {
     renderMapsChart(window.__initialTopMaps);
 }
+
+// Clic sur une ligne du tableau des matchs récents → ouvre la log logs.tf
+document.addEventListener('click', function (event) {
+    const row = event.target.closest('.match-row');
+    if (row && row.dataset.href) {
+        window.open(row.dataset.href, '_blank');
+    }
+});

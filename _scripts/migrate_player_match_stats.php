@@ -24,6 +24,13 @@ $newColumns = [
     'headshots'          => 'INTEGER DEFAULT 0',
     'longest_killstreak' => 'INTEGER DEFAULT 0',
     'classes_killed'     => 'TEXT DEFAULT NULL',
+    'length'             => 'INTEGER DEFAULT 0',
+    'dapm'               => 'INTEGER DEFAULT 0',
+    'dmg_taken'          => 'INTEGER DEFAULT 0',
+    'medkits_hp'         => 'INTEGER DEFAULT 0',
+    'airshots'           => 'INTEGER DEFAULT 0',
+    'captures'           => 'INTEGER DEFAULT 0',
+    'won'                => 'INTEGER DEFAULT NULL',
 ];
 
 try {

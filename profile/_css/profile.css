@@ -54,6 +54,16 @@ body #main #content .player-stats .stats-grid.stats-lists {
   grid-template-columns: repeat(3, 1fr);
   align-items: start;
 }
+body #main #content .player-stats .stats-grid.stats-combat {
+  grid-template-columns: 1fr;
+}
+body #main #content .player-stats .stats-grid.stats-combat .stat-label {
+  font-size: 0.8em;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
 body #main #content .player-stats .box-stats {
   background-color: rgba(255, 255, 255, 0.1);
   padding: 15px 25px;
@@ -170,33 +180,56 @@ body #main #content .player-stats .no-data {
 body #main #content .player-stats .recent-matches h3 {
   font-size: 1.6em;
 }
-body #main #content .player-stats .recent-matches .matches-list {
-  list-style-type: none;
-  padding-left: 0;
+body #main #content .player-stats .recent-matches .matches-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95em;
 }
-body #main #content .player-stats .recent-matches .matches-list li {
+body #main #content .player-stats .recent-matches .matches-table th,
+body #main #content .player-stats .recent-matches .matches-table td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+body #main #content .player-stats .recent-matches .matches-table th {
+  font-size: 0.8em;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+body #main #content .player-stats .recent-matches .matches-table .match-row {
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+body #main #content .player-stats .recent-matches .matches-table .match-row:hover {
+  background-color: rgba(255, 255, 255, 0.06);
+}
+body #main #content .player-stats .recent-matches .matches-table .match-row td:first-child {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 15px;
-  margin-bottom: 10px;
-}
-body #main #content .player-stats .recent-matches .matches-list li .match-map {
-  font-size: 1.2em;
-  color: #ccc;
-  font-weight: bold;
-}
-body #main #content .player-stats .recent-matches .matches-list li .btn-log {
-  background-color: rgb(0, 123, 255);
-  color: #fff;
-  padding: 5px 10px;
-  border-radius: 4px;
-  text-decoration: none;
-  font-size: 0.9em;
+  gap: 10px;
   white-space: nowrap;
 }
-body #main #content .player-stats .recent-matches .matches-list li .btn-log:hover {
-  background-color: rgb(0, 86, 179);
+body #main #content .player-stats .recent-matches .matches-table .match-result {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 0.85em;
+  font-weight: bold;
+  white-space: nowrap;
+}
+body #main #content .player-stats .recent-matches .matches-table .match-result.result-win {
+  background-color: rgba(39, 174, 96, 0.25);
+  color: #2ecc71;
+}
+body #main #content .player-stats .recent-matches .matches-table .match-result.result-loss {
+  background-color: rgba(231, 76, 60, 0.25);
+  color: #e74c3c;
+}
+body #main #content .player-stats .recent-matches .matches-table .match-result.result-unknown {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #aaa;
 }
 body #main #content .player-stats {
   /* --- Responsive : grille des statistiques --- */
@@ -223,8 +256,11 @@ body #main #content .player-stats {
   body #main #content .player-stats .stats-grid.stats-key {
     grid-template-columns: 1fr;
   }
-  body #main #content .player-stats .matches-list li {
-    flex-wrap: wrap;
+  body #main #content .player-stats .recent-matches {
+    overflow-x: auto;
+  }
+  body #main #content .player-stats .recent-matches .matches-table {
+    min-width: 520px;
   }
   body #main #content .player-stats .classes-killed .classes-killed-legend {
     grid-template-columns: 1fr;

@@ -328,8 +328,8 @@ $rolesConfig = [
                     </div>
 
                     <div class="box-stats damage-dealt">
-                        <p class="stat-label">Dégâts moyens / match</p>
-                        <p class="stat-value"><span id="stat-total-damage"><?= number_format($matchStats['average_damage'], 0, ',', ' ') ?></span></p>
+                        <p class="stat-label">Dégâts / min</p>
+                        <p class="stat-value"><span id="stat-total-damage"><?= number_format($matchStats['average_dpm'], 1, ',', ' ') ?></span></p>
                     </div>
 
                     <div class="box-stats kills">
@@ -345,6 +345,13 @@ $rolesConfig = [
                     <div class="box-stats kd-ratio">
                         <p class="stat-label">Ratio K/D</p>
                         <p class="stat-value"><span id="stat-kd-ratio"><?= $matchStats['kd_ratio'] ?></span></p>
+                    </div>
+                </div>
+
+                <div class="stats-grid stats-combat">
+                    <div class="box-stats combat-airshots">
+                        <p class="stat-label">Airshots</p>
+                        <p class="stat-value"><span id="stat-combat-airshots"><?= (int)($matchStats['total_airshots'] ?? 0) ?></span></p>
                     </div>
                 </div>
 
@@ -407,24 +414,38 @@ $rolesConfig = [
                         <?php if (empty($recentMatches)): ?>
                             <p class="no-data">Aucun match enregistré pour le moment.</p>
                         <?php else: ?>
-                            <ul class="matches-list">
-                                <?php foreach ($recentMatches as $match): ?>
-                                    <?php
-                                    $mId = htmlspecialchars($match['match_id']);
-                                    $cPlayed = htmlspecialchars($match['class_played']);
-                                    ?>
-                                    <li class="flex space-between align-center match-item">
-                                        <div class="flex align-center gap-15">
-                                            <img src="/_img/classes/<?= $cPlayed ?>.png" alt="<?= ucfirst($cPlayed) ?>" class="class-icon" title="Joué en <?= ucfirst($cPlayed) ?>">
-                                            <span class="match-map"><?= htmlspecialchars($match['map_name']) ?></span>
-                                            <span class="stat-value"><?= (int)$match['kills'] ?>K / <?= (int)$match['deaths'] ?>D / <?= number_format((int)$match['dmg'], 0, ',', ' ') ?> dmg</span>
-                                        </div>
-                                        <a href="https://logs.tf/<?= $mId ?>" target="_blank" class="btn-log">
-                                            <i class="fa-solid fa-file-lines"></i> Log #<?= $mId ?>
-                                        </a>
-                                    </li>
-                                <?php endforeach; ?>
-                            </ul>
+                            <table class="matches-table">
+                                <thead>
+                                    <tr>
+                                        <th>Classe</th>
+                                        <th>Résultat</th>
+                                        <th>Map</th>
+                                        <th>K/D/A</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($recentMatches as $match): ?>
+                                        <?php
+                                        $mId = htmlspecialchars($match['match_id']);
+                                        $cPlayed = htmlspecialchars($match['class_played']);
+                                        $won = $match['won'] ?? null;
+                                        $resultClass = $won === 1 ? 'result-win' : ($won === 0 ? 'result-loss' : 'result-unknown');
+                                        $resultLabel = $won === 1 ? 'Victoire' : ($won === 0 ? 'Défaite' : '—');
+                                        ?>
+                                        <tr class="match-row" data-href="https://logs.tf/<?= $mId ?>">
+                                            <td data-label="Classe">
+                                                <img src="/_img/classes/<?= $cPlayed ?>.png" alt="<?= ucfirst($cPlayed) ?>" class="class-icon" title="Joué en <?= ucfirst($cPlayed) ?>">
+                                                <span><?= ucfirst($cPlayed) ?></span>
+                                            </td>
+                                            <td data-label="Résultat"><span class="match-result <?= $resultClass ?>"><?= $resultLabel ?></span></td>
+                                            <td data-label="Map"><?= htmlspecialchars($match['map_name']) ?></td>
+                                            <td data-label="K/D/A"><?= (int)$match['kills'] ?> / <?= (int)$match['deaths'] ?> / <?= (int)$match['assists'] ?></td>
+                                            <td data-label="Date"><?= htmlspecialchars($match['match_date'] ?? '—') ?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
                         <?php endif; ?>
                     </div>
                 </div>

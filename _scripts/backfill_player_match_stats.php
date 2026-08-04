@@ -29,7 +29,7 @@ try {
     // 1. Logs en base dont les stats ne sont pas encore remplies
     $missing = $db->query("
     SELECT DISTINCT match_id FROM player_matches
-    WHERE classes_killed IS NULL
+    WHERE length = 0 OR won IS NULL
 ")->fetchAll(PDO::FETCH_COLUMN);
 
     if (empty($missing)) {

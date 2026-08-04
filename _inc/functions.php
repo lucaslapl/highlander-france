@@ -282,20 +282,38 @@ function extractLogPlayerStats($details)
 {
     $classKills = $details['classkills'] ?? [];
     $stats = [];
+    $logLength = (int)($details['length'] ?? 0); // durée du log, commune à tous les joueurs
+
+    // Victoire / défaite par équipe (score le plus élevé)
+    $teams   = $details['teams'] ?? [];
+    $redScore  = (int)($teams['Red']['score'] ?? 0);
+    $blueScore = (int)($teams['Blue']['score'] ?? 0);
+    $wonIfRed  = ($redScore > $blueScore) ? 1 : (($redScore < $blueScore) ? 0 : null);
+    $wonIfBlue = ($blueScore > $redScore) ? 1 : (($blueScore < $redScore) ? 0 : null);
 
     foreach (($details['players'] ?? []) as $steamid => $pData) {
+        $playerTeam = strtolower($pData['team'] ?? '');
+        $won = ($playerTeam === 'red') ? $wonIfRed : (($playerTeam === 'blue') ? $wonIfBlue : null);
+
         $stats[$steamid] = [
+            'length'             => $logLength,
+            'won'                => $won,
+            'dapm'               => (int)($pData['dapm'] ?? 0),
             'dmg'                => (int)($pData['dmg'] ?? 0),
+            'dmg_taken'          => (int)($pData['dt'] ?? 0),
             'kills'              => (int)($pData['kills'] ?? 0),
             'deaths'             => (int)($pData['deaths'] ?? 0),
             'assists'            => (int)($pData['assists'] ?? 0),
             'suicides'           => (int)($pData['suicides'] ?? 0),
             'heal'               => (int)($pData['heal'] ?? 0),
             'medkits'            => (int)($pData['medkits'] ?? 0),
+            'medkits_hp'         => (int)($pData['medkits_hp'] ?? 0),
             'ubers'              => (int)($pData['ubers'] ?? 0),
             'drops'              => (int)($pData['drops'] ?? 0),
             'backstabs'          => (int)($pData['backstabs'] ?? 0),
             'headshots'          => (int)($pData['headshots'] ?? 0),
+            'airshots'           => (int)($pData['as'] ?? 0),
+            'captures'           => (int)($pData['cpc'] ?? 0),
             'longest_killstreak' => (int)($pData['lks'] ?? 0),
             'classes_killed'     => json_encode($classKills[$steamid] ?? [], JSON_UNESCAPED_SLASHES),
         ];
@@ -313,8 +331,9 @@ function upsertPlayerMatchStats($db, $steamid, $matchId, $mapName, $classPlayed,
     $stmt = $db->prepare("INSERT INTO player_matches
         (steamid, match_id, map_name, class_played, game_mode,
          dmg, kills, deaths, assists, suicides, heal, medkits, ubers, drops,
-         backstabs, headshots, longest_killstreak, classes_killed)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+         backstabs, headshots, longest_killstreak, classes_killed,
+         length, dapm, dmg_taken, medkits_hp, airshots, captures, won)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ON CONFLICT(steamid, match_id) DO UPDATE SET
             dmg = excluded.dmg,
             kills = excluded.kills,
@@ -328,7 +347,14 @@ function upsertPlayerMatchStats($db, $steamid, $matchId, $mapName, $classPlayed,
             backstabs = excluded.backstabs,
             headshots = excluded.headshots,
             longest_killstreak = excluded.longest_killstreak,
-            classes_killed = excluded.classes_killed");
+            classes_killed = excluded.classes_killed,
+            length = excluded.length,
+            dapm = excluded.dapm,
+            dmg_taken = excluded.dmg_taken,
+            medkits_hp = excluded.medkits_hp,
+            airshots = excluded.airshots,
+            captures = excluded.captures,
+            won = excluded.won");
 
     $stmt->execute([
         $steamid,
@@ -349,6 +375,13 @@ function upsertPlayerMatchStats($db, $steamid, $matchId, $mapName, $classPlayed,
         (int)($stats['headshots'] ?? 0),
         (int)($stats['longest_killstreak'] ?? 0),
         $stats['classes_killed'] ?? '[]',
+        (int)($stats['length'] ?? 0),
+        (int)($stats['dapm'] ?? 0),
+        (int)($stats['dmg_taken'] ?? 0),
+        (int)($stats['medkits_hp'] ?? 0),
+        (int)($stats['airshots'] ?? 0),
+        (int)($stats['captures'] ?? 0),
+        array_key_exists('won', $stats) ? (is_null($stats['won']) ? null : (int)$stats['won']) : null,
     ]);
 }
 
@@ -359,22 +392,32 @@ function upsertPlayerMatchStats($db, $steamid, $matchId, $mapName, $classPlayed,
 function getPlayerMatchStats($db, $steamid3, $mode)
 {
     $empty = [
-        'average_damage' => 0,
-        'total_kills' => 0,
-        'total_deaths' => 0,
-        'total_assists' => 0,
-        'kd_ratio' => 0,
-        'classes_killed' => [],
+        'average_dpm'      => 0,
+        'average_dtpm'     => 0,
+        'total_dmg_taken'  => 0,
+        'total_airshots'   => 0,
+        'total_captures'   => 0,
+        'total_medkits_hp' => 0,
+        'total_kills'      => 0,
+        'total_deaths'     => 0,
+        'total_assists'    => 0,
+        'kd_ratio'         => 0,
+        'classes_killed'   => [],
     ];
     if (!playerMatchColumnsAvailable($db)) {
         return $empty;
     }
     try {
         $stmt = $db->prepare("
-        SELECT COALESCE(AVG(dmg), 0)    AS average_damage,
-               COALESCE(SUM(kills), 0)  AS total_kills,
-               COALESCE(SUM(deaths), 0) AS total_deaths,
-               COALESCE(SUM(assists), 0) AS total_assists
+        SELECT COALESCE(AVG(CASE WHEN length > 0 THEN dapm END), 0)                   AS average_dpm,
+               COALESCE(AVG(CASE WHEN length > 0 THEN dmg_taken * 60.0 / length END), 0) AS average_dtpm,
+               COALESCE(SUM(dmg_taken), 0)  AS total_dmg_taken,
+               COALESCE(SUM(airshots), 0)   AS total_airshots,
+               COALESCE(SUM(captures), 0)   AS total_captures,
+               COALESCE(SUM(medkits_hp), 0) AS total_medkits_hp,
+               COALESCE(SUM(kills), 0)      AS total_kills,
+               COALESCE(SUM(deaths), 0)     AS total_deaths,
+               COALESCE(SUM(assists), 0)    AS total_assists
         FROM player_matches
         WHERE steamid = ? AND game_mode = ?
     ");
@@ -405,12 +448,17 @@ function getPlayerMatchStats($db, $steamid3, $mode)
         arsort($classesKilled);
 
         return [
-            'average_damage' => (int)round((float)$t['average_damage']),
-            'total_kills'    => (int)$t['total_kills'],
-            'total_deaths'   => (int)$t['total_deaths'],
-            'total_assists'  => (int)$t['total_assists'],
-            'kd_ratio'       => $kd,
-            'classes_killed' => $classesKilled,
+            'average_dpm'      => round((float)$t['average_dpm'], 1),
+            'average_dtpm'     => round((float)$t['average_dtpm'], 1),
+            'total_dmg_taken'  => (int)$t['total_dmg_taken'],
+            'total_airshots'   => (int)$t['total_airshots'],
+            'total_captures'   => (int)$t['total_captures'],
+            'total_medkits_hp' => (int)$t['total_medkits_hp'],
+            'total_kills'      => (int)$t['total_kills'],
+            'total_deaths'     => (int)$t['total_deaths'],
+            'total_assists'    => (int)$t['total_assists'],
+            'kd_ratio'         => $kd,
+            'classes_killed'   => $classesKilled,
         ];
     } catch (PDOException $e) {
         return $empty;
@@ -435,19 +483,42 @@ function playerMatchColumnsAvailable($db)
 
 function getRecentPlayerMatches($db, $steamid3, $mode, $limit = 5)
 {
-    $extra = playerMatchColumnsAvailable($db) ? ', dmg, kills, deaths' : '';
-    $stmt = $db->prepare("SELECT match_id, map_name, class_played$extra
-                          FROM player_matches
-                          WHERE steamid = ? AND game_mode = ?
-                          ORDER BY match_id DESC
+    $extra = '';
+    if (playerMatchColumnsAvailable($db)) {
+        $extra .= ', dmg, kills, deaths, assists';
+        if (playerMatchColumnExists($db, 'won')) {
+            $extra .= ', won';
+        }
+    }
+    $stmt = $db->prepare("SELECT pm.match_id, pm.map_name, pm.class_played$extra,
+                                 ld.date AS match_date
+                          FROM player_matches pm
+                          LEFT JOIN log_dates ld ON ld.log_id = pm.match_id
+                          WHERE pm.steamid = ? AND pm.game_mode = ?
+                          ORDER BY pm.match_id DESC
                           LIMIT " . (int)$limit);
     $stmt->execute([$steamid3, $mode]);
     $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
     foreach ($rows as &$r) {
-        $r['dmg']    = (int)($r['dmg'] ?? 0);
-        $r['kills']  = (int)($r['kills'] ?? 0);
-        $r['deaths'] = (int)($r['deaths'] ?? 0);
+        $r['dmg']       = (int)($r['dmg'] ?? 0);
+        $r['kills']     = (int)($r['kills'] ?? 0);
+        $r['deaths']    = (int)($r['deaths'] ?? 0);
+        $r['assists']   = (int)($r['assists'] ?? 0);
+        $r['won']       = isset($r['won']) ? (is_null($r['won']) ? null : (int)$r['won']) : null;
+        $r['match_date'] = !empty($r['match_date']) ? date('d/m/Y', (int)$r['match_date']) : null;
     }
     unset($r);
     return $rows;
+}
+
+function playerMatchColumnExists($db, $column)
+{
+    static $cols = null;
+    if ($cols === null) {
+        $cols = [];
+        foreach ($db->query("PRAGMA table_info(player_matches)")->fetchAll(PDO::FETCH_ASSOC) as $c) {
+            $cols[$c['name']] = true;
+        }
+    }
+    return isset($cols[$column]);
 }
