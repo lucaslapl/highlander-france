@@ -19,13 +19,17 @@ async function switchProfileMode(button, mode, steamidFallback = null) {
         // Requête vers le fichier d'API de statistiques (à créer à l'étape suivante)
         const response = await fetch(`/profile/get_profile_stats.php?steamid=${steamid}&mode=${mode}`);
         if (!response.ok) throw new Error('Erreur réseau');
-        
+
         const data = await response.json();
 
         // 3. Remplacement des textes basiques
         document.getElementById('stats-title').innerText = `Stats - ${mode === '6s' ? '6v6' : 'Highlander'}`;
         document.getElementById('recent-title').innerText = `Matchs Récents (${mode === '6s' ? '6v6' : '9v9'})`;
         document.getElementById('stat-total-matches').innerText = data.total_matches;
+        document.getElementById('stat-total-damage').innerText = Number(data.total_damage || 0).toLocaleString('fr-FR');
+        document.getElementById('stat-total-kills').innerText = data.total_kills || 0;
+        document.getElementById('stat-total-deaths').innerText = data.total_deaths || 0;
+        document.getElementById('stat-kd-ratio').innerText = data.kd_ratio || 0;
 
         // 4. Remplacement du tableau des Maps
         const mapsContainer = document.getElementById('maps-container');
@@ -64,6 +68,26 @@ async function switchProfileMode(button, mode, steamidFallback = null) {
             classesContainer.innerHTML = html;
         }
 
+        // 5bis. Tableau des Classes tuées
+        const ckContainer = document.getElementById('classes-killed-container');
+        if (!data.classes_killed || Object.keys(data.classes_killed).length === 0) {
+            ckContainer.innerHTML = '<p class="no-data">Aucune donnée de classe tuée pour ce mode.</p>';
+        } else {
+            let html = '<ul class="stats-list">';
+            Object.entries(data.classes_killed).forEach(([cls, count]) => {
+                const className = escapeHtml(cls);
+                html += `
+            <li class="flex space-between align-center">
+                <div class="flex align-center gap-10">
+                    <img src="/_img/classes/${className}.png" alt="${className}" class="class-icon" title="${className}">
+                </div>
+                <span class="stat-value">${count}</span>
+            </li>`;
+            });
+            html += '</ul>';
+            ckContainer.innerHTML = html;
+        }
+
         // 6. Remplacement des Matchs Récents
         const recentContainer = document.getElementById('recent-container');
         if (!data.recent_matches || data.recent_matches.length === 0) {
@@ -78,6 +102,7 @@ async function switchProfileMode(button, mode, steamidFallback = null) {
                         <div class="flex align-center gap-15">
                             <img src="/_img/classes/${cPlayed}.png" alt="${cPlayed}" class="class-icon" title="Joué en ${cPlayed}">
                             <span class="match-map">${escapeHtml(match.map_name)}</span>
+                            <span class="stat-value">${match.kills || 0}K / ${match.deaths || 0}D / ${Number(match.dmg || 0).toLocaleString('fr-FR')} dmg</span>
                         </div>
                         <a href="https://logs.tf/${mId}" target="_blank" class="btn-log">
                             <i class="fa-solid fa-file-lines"></i> Log #${mId}

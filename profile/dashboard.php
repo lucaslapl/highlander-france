@@ -29,7 +29,7 @@ if ($user === false) {
     try {
         $insert = $db->prepare("INSERT INTO players_info (steamid, display_name) VALUES (?, ?)");
         $insert->execute([$steamid3, 'Nouveau Joueur']);
-        
+
         // On recharge les données
         $stmt->execute([$steamid3]);
         $user = $stmt->fetch();
@@ -46,7 +46,7 @@ $last_update = (int)($user['last_updated'] ?? 0);
 if (empty($user['name']) || ($last_update < time() - 86400)) {
     // Appel de la fonction de synchro
     syncSteamProfile($steamid3, $db, $STEAM_API_KEY);
-    
+
     // On recharge les données car elles ont changé en base
     $stmt->execute([$steamid3]);
     $user = $stmt->fetch();
@@ -89,9 +89,8 @@ $stmtClasses = $db->prepare("SELECT class_played, COUNT(class_played) as total F
 $stmtClasses->execute([$steamid3, $currentMode]);
 $classesPlayed = $stmtClasses->fetchAll(PDO::FETCH_ASSOC);
 
-$stmtRecent = $db->prepare("SELECT match_id, map_name, class_played FROM player_matches WHERE steamid = ? AND game_mode = ? ORDER BY match_id DESC LIMIT 5");
-$stmtRecent->execute([$steamid3, $currentMode]);
-$recentMatches = $stmtRecent->fetchAll(PDO::FETCH_ASSOC);
+$recentMatches = getRecentPlayerMatches($db, $steamid3, $currentMode); // ou $mode
+$matchStats = getPlayerMatchStats($db, $steamid3, $currentMode);
 
 // CONFIGURATION DES BADGES ROLES (Sans icônes)
 $rolesConfig = [
@@ -105,6 +104,7 @@ $rolesConfig = [
 
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -146,6 +146,7 @@ $rolesConfig = [
             flex-wrap: wrap;
             gap: 8px;
         }
+
         .badge-staff {
             display: inline-block;
             padding: 4px 10px;
@@ -156,21 +157,40 @@ $rolesConfig = [
             color: #fff;
             line-height: 1;
         }
-        .badge-admin { background-color: #d9534f; }
-        .badge-founder { background-color: #f0ad4e; }
-        .badge-moderator { background-color: #5bc0de; }
-        .badge-mentor { background-color: #5cb85c; }
-        .badge-mixer { background-color: #9b59b6; }
+
+        .badge-admin {
+            background-color: #d9534f;
+        }
+
+        .badge-founder {
+            background-color: #f0ad4e;
+        }
+
+        .badge-moderator {
+            background-color: #5bc0de;
+        }
+
+        .badge-mentor {
+            background-color: #5cb85c;
+        }
+
+        .badge-mixer {
+            background-color: #9b59b6;
+        }
     </style>
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-30553SX3GJ"></script>
     <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-30553SX3GJ');
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'G-30553SX3GJ');
     </script>
 </head>
+
 <body>
 
     <?php include("../_inc/header.php"); ?>
@@ -181,21 +201,23 @@ $rolesConfig = [
 
                 <?php if (isset($_SESSION['success'])): ?>
                     <div style="background: #4CAF50; color: white; padding: 10px; margin-bottom: 15px; border-radius: 4px;">
-                        <?= $_SESSION['success']; unset($_SESSION['success']); ?>
+                        <?= $_SESSION['success'];
+                        unset($_SESSION['success']); ?>
                     </div>
                 <?php endif; ?>
 
                 <?php if (isset($_SESSION['error'])): ?>
                     <div style="background: #f44336; color: white; padding: 10px; margin-bottom: 15px; border-radius: 4px;">
-                        <?= $_SESSION['error']; unset($_SESSION['error']); ?>
+                        <?= $_SESSION['error'];
+                        unset($_SESSION['error']); ?>
                     </div>
                 <?php endif; ?>
 
-                <?php 
+                <?php
                 // Si le visiteur actuel est admin, on lui affiche les outils d'administration
-                if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true): 
+                if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true):
                 ?>
-                    <div class="admin-profile-box" style="background: #2c1a1a; border: 1px solid #ff4444; padding: 15px; margin: 15px 0 15px 0; border-radius: 5px;">             
+                    <div class="admin-profile-box" style="background: #2c1a1a; border: 1px solid #ff4444; padding: 15px; margin: 15px 0 15px 0; border-radius: 5px;">
                         <a href="/admin/dashboard.php" class="btn-admin" style="background: #ff4444; color: white; padding: 8px 12px; text-decoration: none; border-radius: 4px; display: inline-block;">
                             <i class="fa-solid fa-user-gear"></i> Panel d'administration
                         </a>
@@ -204,7 +226,7 @@ $rolesConfig = [
 
                 <div class="profile-header flex align-center">
                     <img src="<?php echo htmlspecialchars($user['avatar']); ?>" alt="Avatar de <?php echo htmlspecialchars($user['display_name']); ?>" class="profile-avatar">
-                    
+
                     <div class="flex flex-column justify-center gap-5" style="align-items: flex-start;">
                         <div class="flex align-center gap-10">
                             <h2 style="margin: 0; display: flex; align-items: center; gap: 10px;">
@@ -229,7 +251,7 @@ $rolesConfig = [
                         </div>
                     </div>
                 </div>
-                
+
                 <h3>Informations personnelles</h3>
                 <p>SteamID : <?php echo $steamid3; ?></p>
 
@@ -237,27 +259,26 @@ $rolesConfig = [
 
                 <div class="dashboard-box">
                     <h3>Votre pseudo</h3>
-                    
+
                     <?php if (isset($user['name_changed']) && (int)$user['name_changed'] === 1): ?>
                         <p>Pseudo enregistré : <strong><?= htmlspecialchars($user['display_name']) ?></strong></p>
-                        
+
                     <?php else: ?>
                         <p class="info-text"><strong>Attention :</strong> Ce changement est <strong>unique et définitif</strong>. Vous ne pourrez plus le modifier par la suite.</p>
-                        
+
                         <form action="update_profile.php" method="POST" class="flex flex-column gap-10">
                             <div class="form-group">
                                 <label for="display_name">Nouveau pseudo :</label>
-                                <input 
-                                    type="text" 
-                                    id="display_name" 
-                                    name="display_name" 
-                                    value="<?= htmlspecialchars($user['display_name'] ?? $user['name']) ?>" 
-                                    maxlength="32" 
-                                    required 
-                                    class="form-control"
-                                >
+                                <input
+                                    type="text"
+                                    id="display_name"
+                                    name="display_name"
+                                    value="<?= htmlspecialchars($user['display_name'] ?? $user['name']) ?>"
+                                    maxlength="32"
+                                    required
+                                    class="form-control">
                             </div>
-                            
+
                             <button type="submit" name="action" value="update_name" class="btn-submit" onclick="return confirm('Êtes-vous sûr ? Ce changement est définitif et unique !');" style="background: #525252; border: 1px solid #333; color: white; padding: 8px; border-radius: 4px;width: 190px;">
                                 <i class="fa-solid fa-floppy-disk"></i> Confirmer définitivement
                             </button>
@@ -265,17 +286,17 @@ $rolesConfig = [
                     <?php endif; ?>
                 </div>
                 <h3>Nationalité</h3>
-    
+
                 <?php if ($isLocked && !empty($country)): ?>
                     <div class="flex align-center gap-10">
                         <img src="/_img/flags/<?= htmlspecialchars($country) ?>.gif" alt="<?= $countries[$country] ?? $country ?>" class="flag-icon">
                         <span>Nationalité enregistrée : <strong><?= $countries[$country] ?? strtoupper($country) ?></strong></span>
                     </div>
-                    
+
                 <?php else: ?>
                     <form action="update_country.php" method="POST" class="country-form">
                         <p>Sélectionnez votre nationalité (ce choix sera <strong>définitif</strong>) :</p>
-                        
+
                         <div class="flex align-center gap-10">
                             <select name="country" required class="select-country">
                                 <option value="" disabled selected>Choisir un pays...</option>
@@ -283,7 +304,7 @@ $rolesConfig = [
                                     <option value="<?= $code ?>"><?= $name ?></option>
                                 <?php endforeach; ?>
                             </select>
-                            
+
                             <button type="submit" class="btn-submit-country">Confirmer</button>
                         </div>
                     </form>
@@ -302,6 +323,40 @@ $rolesConfig = [
 
                 <div class="box-stats matches-played">
                     <p><b id="stat-total-matches"><?php echo $matches['total_matches'] ?? 0; ?></b> matchs joués</p>
+                </div>
+
+                <div class="box-stats damage-dealt">
+                    <p><b>Dégâts totaux :</b> <span id="stat-total-damage"><?= number_format($matchStats['total_damage'], 0, ',', ' ') ?></span></p>
+                </div>
+                <div class="box-stats kills">
+                    <p><b>Kills :</b> <span id="stat-total-kills"><?= $matchStats['total_kills'] ?></span></p>
+                </div>
+                <div class="box-stats deaths">
+                    <p><b>Morts :</b> <span id="stat-total-deaths"><?= $matchStats['total_deaths'] ?></span></p>
+                </div>
+                <div class="box-stats kd-ratio">
+                    <p><b>Ratio K/D :</b> <span id="stat-kd-ratio"><?= $matchStats['kd_ratio'] ?></span></p>
+                </div>
+
+                <div class="box-stats classes-killed">
+                    <p><b>Classes tuées :</b></p>
+                    <div id="classes-killed-container">
+                        <?php if (empty($matchStats['classes_killed'])): ?>
+                            <p class="no-data">Aucune donnée de classe tuée pour le moment.</p>
+                        <?php else: ?>
+                            <ul class="stats-list">
+                                <?php foreach ($matchStats['classes_killed'] as $class => $count): ?>
+                                    <?php $classSafe = htmlspecialchars($class); ?>
+                                    <li class="flex space-between align-center">
+                                        <div class="flex align-center gap-10">
+                                            <img src="/_img/classes/<?= $classSafe ?>.png" alt="<?= ucfirst($classSafe) ?>" class="class-icon" title="<?= ucfirst($classSafe) ?>">
+                                        </div>
+                                        <span class="stat-value"><?= $count ?></span>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        <?php endif; ?>
+                    </div>
                 </div>
 
                 <div class="box-stats maps-played">
@@ -344,8 +399,8 @@ $rolesConfig = [
                             </ul>
                         <?php endif; ?>
                     </div>
-                </div>                    
-                
+                </div>
+
                 <div class="recent-matches">
                     <h3 id="recent-title">Matchs Récents (9v9)</h3>
                     <div id="recent-container">
@@ -354,7 +409,7 @@ $rolesConfig = [
                         <?php else: ?>
                             <ul class="matches-list">
                                 <?php foreach ($recentMatches as $match): ?>
-                                    <?php 
+                                    <?php
                                     $mId = htmlspecialchars($match['match_id']);
                                     $cPlayed = htmlspecialchars($match['class_played']);
                                     ?>
@@ -362,6 +417,7 @@ $rolesConfig = [
                                         <div class="flex align-center gap-15">
                                             <img src="/_img/classes/<?= $cPlayed ?>.png" alt="<?= ucfirst($cPlayed) ?>" class="class-icon" title="Joué en <?= ucfirst($cPlayed) ?>">
                                             <span class="match-map"><?= htmlspecialchars($match['map_name']) ?></span>
+                                            <span class="stat-value"><?= (int)$match['kills'] ?>K / <?= (int)$match['deaths'] ?>D / <?= number_format((int)$match['dmg'], 0, ',', ' ') ?> dmg</span>
                                         </div>
                                         <a href="https://logs.tf/<?= $mId ?>" target="_blank" class="btn-log">
                                             <i class="fa-solid fa-file-lines"></i> Log #<?= $mId ?>
@@ -382,4 +438,5 @@ $rolesConfig = [
     <script src="../_js/main.js"></script>
     <script src="../_js/profil.js"></script>
 </body>
+
 </html>

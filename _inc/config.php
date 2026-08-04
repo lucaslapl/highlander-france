@@ -72,5 +72,27 @@ $db->exec("CREATE TABLE IF NOT EXISTS log_dates (
     date   INTEGER
 )");
 
+$db->exec("CREATE TABLE IF NOT EXISTS player_matches (
+    steamid            TEXT,
+    match_id           INTEGER,
+    map_name           TEXT,
+    class_played       TEXT,
+    game_mode          TEXT DEFAULT '9v9',
+    dmg                INTEGER DEFAULT 0,
+    kills              INTEGER DEFAULT 0,
+    deaths             INTEGER DEFAULT 0,
+    assists            INTEGER DEFAULT 0,
+    suicides           INTEGER DEFAULT 0,
+    heal               INTEGER DEFAULT 0,
+    medkits            INTEGER DEFAULT 0,
+    ubers              INTEGER DEFAULT 0,
+    drops              INTEGER DEFAULT 0,
+    backstabs          INTEGER DEFAULT 0,
+    headshots          INTEGER DEFAULT 0,
+    longest_killstreak INTEGER DEFAULT 0,
+    classes_killed     TEXT DEFAULT NULL,
+    PRIMARY KEY (steamid, match_id)
+)");
+
 // Durée minimale d'un log (en secondes) : en dessous, blacklist automatique (5 minutes)
 define('MIN_MATCH_LENGTH', 300);

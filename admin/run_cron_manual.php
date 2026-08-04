@@ -15,7 +15,9 @@ $available_scripts = [
     'sync_with_steam' => 'sync_steam.php',
     'generate_json' => 'generate_json.php',
     'sync_steam_avatars' => 'sync_steam_avatars.php',
-    'backfill_log_dates' => 'backfill_log_dates.php'
+    'backfill_log_dates' => 'backfill_log_dates.php',
+    'migrate_player_match_stats' => 'migrate_player_match_stats.php',
+    'backfill_player_match_stats' => 'backfill_player_match_stats.php'
 ];
 
 $output = "";
@@ -116,6 +118,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['trigger_cron'])) {
                     <option value="generate_json" <?= $selected_action === 'generate_json' ? 'selected' : '' ?>>Génération du fichier JSON (leaderboard) (generate_json.php)</option>
                     <option value="sync_steam_avatars" <?= $selected_action === 'sync_steam_avatars' ? 'selected' : '' ?>>Synchronisation avec Steam (en cas de profils cassés) (sync_steam_avatars.php)</option>
                     <option value="backfill_log_dates" <?= $selected_action === 'backfill_log_dates' ? 'selected' : '' ?>>Backfill des dates de matchs (backfill_log_dates.php)</option>
+                    <option value="migrate_player_match_stats" <?= $selected_action === 'migrate_player_match_stats' ? 'selected' : '' ?>>Migration des stats de match (migrate_player_match_stats.php)</option>
+                    <option value="backfill_player_match_stats" <?= $selected_action === 'backfill_player_match_stats' ? 'selected' : '' ?>>Backfill des stats de match (backfill_player_match_stats.php)</option>
                 </select>
 
                 <div>

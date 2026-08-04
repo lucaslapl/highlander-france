@@ -132,6 +132,8 @@ try {
             $rawMap = $details['info']['map'] ?? 'unknown';
             $mapName = preg_replace('/_(v|rc|f)\d+.*?$/i', '', $rawMap);
 
+            $perLogStats = extractLogPlayerStats($details);
+
             if (isset($details['players'])) {
                 foreach ($details['players'] as $steamid => $pData) {
 
@@ -144,9 +146,8 @@ try {
                     if (!empty($pData['class_stats']) && isset($pData['class_stats'][0]['type'])) {
                         $classPlayed = $pData['class_stats'][0]['type'];
                     }
-                    $db->prepare("INSERT OR IGNORE INTO player_matches (steamid, match_id, map_name, class_played, game_mode) 
-                                  VALUES (?, ?, ?, ?, ?)")
-                        ->execute([$steamid, $logId, $mapName, $classPlayed, $gameMode]);
+                    $stats = $perLogStats[$steamid] ?? [];
+                    upsertPlayerMatchStats($db, $steamid, $logId, $mapName, $classPlayed, $gameMode, $stats);
 
                     // check if player info exists
                     $stmtCheck = $db->prepare("SELECT 1 FROM players_info WHERE steamid = ?");

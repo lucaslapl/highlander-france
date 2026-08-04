@@ -47,9 +47,8 @@ $stmtClasses = $db->prepare("SELECT class_played, COUNT(class_played) as total F
 $stmtClasses->execute([$steamid3, $currentMode]);
 $classesPlayed = $stmtClasses->fetchAll(PDO::FETCH_ASSOC);
 
-$stmtRecent = $db->prepare("SELECT match_id, map_name, class_played FROM player_matches WHERE steamid = ? AND game_mode = ? ORDER BY match_id DESC LIMIT 5");
-$stmtRecent->execute([$steamid3, $currentMode]);
-$recentMatches = $stmtRecent->fetchAll(PDO::FETCH_ASSOC);
+$recentMatches = getRecentPlayerMatches($db, $steamid3, $currentMode); // ou $mode
+$matchStats = getPlayerMatchStats($db, $steamid3, $currentMode);
 
 // CONFIGURATION DES BADGES ROLES (Sans icônes)
 $rolesConfig = [
@@ -63,6 +62,7 @@ $rolesConfig = [
 
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -96,7 +96,7 @@ $rolesConfig = [
 
     <link rel="stylesheet" href="../_css/main.css">
     <link rel="stylesheet" href="_css/profile.css">
-    
+
     <style>
         .staff-badges-container {
             margin-top: 5px;
@@ -104,6 +104,7 @@ $rolesConfig = [
             flex-wrap: wrap;
             gap: 8px;
         }
+
         .badge-staff {
             display: inline-block;
             padding: 4px 10px;
@@ -114,35 +115,54 @@ $rolesConfig = [
             color: #fff;
             line-height: 1;
         }
-        .badge-admin { background-color: #d9534f; }
-        .badge-founder { background-color: #f0ad4e; }
-        .badge-moderator { background-color: #5bc0de; }
-        .badge-mentor { background-color: #5cb85c; }
-        .badge-mixer { background-color: #9b59b6; }
+
+        .badge-admin {
+            background-color: #d9534f;
+        }
+
+        .badge-founder {
+            background-color: #f0ad4e;
+        }
+
+        .badge-moderator {
+            background-color: #5bc0de;
+        }
+
+        .badge-mentor {
+            background-color: #5cb85c;
+        }
+
+        .badge-mixer {
+            background-color: #9b59b6;
+        }
     </style>
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-30553SX3GJ"></script>
     <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-30553SX3GJ');
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+        gtag('js', new Date());
+        gtag('config', 'G-30553SX3GJ');
     </script>
 
     <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "ProfilePage",
-        "mainEntity": {
-            "@type": "Person",
-            "name": "<?php echo htmlspecialchars($player['display_name'] ?? $player['name']); ?>",
-            "image": "<?php echo htmlspecialchars($player['avatar']); ?>",
-            "description": "Profil de <?php echo htmlspecialchars($player['display_name'] ?? $player['name']); ?> sur Highlander France, communauté compétitive de Team Fortress 2.",
-            "identifier": "<?php echo htmlspecialchars($steamid); ?>"
+        {
+            "@context": "https://schema.org",
+            "@type": "ProfilePage",
+            "mainEntity": {
+                "@type": "Person",
+                "name": "<?php echo htmlspecialchars($player['display_name'] ?? $player['name']); ?>",
+                "image": "<?php echo htmlspecialchars($player['avatar']); ?>",
+                "description": "Profil de <?php echo htmlspecialchars($player['display_name'] ?? $player['name']); ?> sur Highlander France, communauté compétitive de Team Fortress 2.",
+                "identifier": "<?php echo htmlspecialchars($steamid); ?>"
+            }
         }
-    }
     </script>
 </head>
+
 <body>
 
     <?php include("../_inc/header.php"); ?>
@@ -156,7 +176,7 @@ $rolesConfig = [
                         <p>Vous visualisez le profil de : <strong><?= htmlspecialchars($player['display_name'] ?? $player['name']) ?></strong></p>
                         <p>SteamID64 : <code><?= htmlspecialchars($steamid) ?></code></p>
                         <p>SteamID3 : <code><?= htmlspecialchars($steamid3) ?></code></p>
-                        
+
                         <a href="/admin/manage_player.php?steamid=<?= htmlspecialchars($steamid) ?>" class="btn-admin" style="background: #ff4444; color: white; padding: 8px 12px; text-decoration: none; border-radius: 4px; display: inline-block;">
                             <i class="fa-solid fa-user-gear"></i> Gérer ce joueur
                         </a>
@@ -165,11 +185,11 @@ $rolesConfig = [
 
                 <div class="profile-header flex align-center">
                     <img src="<?php echo htmlspecialchars($player['avatar']); ?>" alt="Avatar de <?php echo htmlspecialchars($player['display_name'] ?? $player['name']); ?>" class="profile-avatar">
-                    
+
                     <div class="flex flex-column justify-center gap-5" style="align-items: flex-start;">
                         <div class="flex align-center gap-10">
                             <h2 style="margin: 0; display: flex; align-items: center; gap: 10px;">
-                                <?php echo htmlspecialchars($player['display_name'] ?? $player['name']); ?> 
+                                <?php echo htmlspecialchars($player['display_name'] ?? $player['name']); ?>
                                 <?php if (!empty($country)): ?>
                                     <img src="/_img/flags/<?= htmlspecialchars($country) ?>.gif" alt="<?= $countries[$country] ?? $country ?>" class="flag-icon">
                                 <?php endif; ?>
@@ -190,7 +210,7 @@ $rolesConfig = [
                         </div>
                     </div>
                 </div>
-                
+
                 <a href="https://steamcommunity.com/profiles/<?php echo $steamid; ?>" target="_blank" class="steam-profile-link" style="margin-top: 15px; display: inline-block;">
                     <i class="fab fa-steam"></i> Profil Steam
                 </a>
@@ -208,6 +228,40 @@ $rolesConfig = [
 
                 <div class="box-stats matches-played">
                     <p><b id="stat-total-matches"><?php echo $matches['total_matches'] ?? 0; ?></b> matchs joués</p>
+                </div>
+
+                <div class="box-stats damage-dealt">
+                    <p><b>Dégâts totaux :</b> <span id="stat-total-damage"><?= number_format($matchStats['total_damage'], 0, ',', ' ') ?></span></p>
+                </div>
+                <div class="box-stats kills">
+                    <p><b>Kills :</b> <span id="stat-total-kills"><?= $matchStats['total_kills'] ?></span></p>
+                </div>
+                <div class="box-stats deaths">
+                    <p><b>Morts :</b> <span id="stat-total-deaths"><?= $matchStats['total_deaths'] ?></span></p>
+                </div>
+                <div class="box-stats kd-ratio">
+                    <p><b>Ratio K/D :</b> <span id="stat-kd-ratio"><?= $matchStats['kd_ratio'] ?></span></p>
+                </div>
+
+                <div class="box-stats classes-killed">
+                    <p><b>Classes tuées :</b></p>
+                    <div id="classes-killed-container">
+                        <?php if (empty($matchStats['classes_killed'])): ?>
+                            <p class="no-data">Aucune donnée de classe tuée pour le moment.</p>
+                        <?php else: ?>
+                            <ul class="stats-list">
+                                <?php foreach ($matchStats['classes_killed'] as $class => $count): ?>
+                                    <?php $classSafe = htmlspecialchars($class); ?>
+                                    <li class="flex space-between align-center">
+                                        <div class="flex align-center gap-10">
+                                            <img src="/_img/classes/<?= $classSafe ?>.png" alt="<?= ucfirst($classSafe) ?>" class="class-icon" title="<?= ucfirst($classSafe) ?>">
+                                        </div>
+                                        <span class="stat-value"><?= $count ?></span>
+                                    </li>
+                                <?php endforeach; ?>
+                            </ul>
+                        <?php endif; ?>
+                    </div>
                 </div>
 
                 <div class="box-stats maps-played">
@@ -250,8 +304,8 @@ $rolesConfig = [
                             </ul>
                         <?php endif; ?>
                     </div>
-                </div>                    
-                
+                </div>
+
                 <div class="recent-matches">
                     <h3 id="recent-title">Matchs Récents (9v9)</h3>
                     <div id="recent-container">
@@ -260,7 +314,7 @@ $rolesConfig = [
                         <?php else: ?>
                             <ul class="matches-list">
                                 <?php foreach ($recentMatches as $match): ?>
-                                    <?php 
+                                    <?php
                                     $mId = htmlspecialchars($match['match_id']);
                                     $cPlayed = htmlspecialchars($match['class_played']);
                                     ?>
@@ -268,6 +322,7 @@ $rolesConfig = [
                                         <div class="flex align-center gap-15">
                                             <img src="/_img/classes/<?= $cPlayed ?>.png" alt="<?= ucfirst($cPlayed) ?>" class="class-icon" title="Joué en <?= ucfirst($cPlayed) ?>">
                                             <span class="match-map"><?= htmlspecialchars($match['map_name']) ?></span>
+                                            <span class="stat-value"><?= (int)$match['kills'] ?>K / <?= (int)$match['deaths'] ?>D / <?= number_format((int)$match['dmg'], 0, ',', ' ') ?> dmg</span>
                                         </div>
                                         <a href="https://logs.tf/<?= $mId ?>" target="_blank" class="btn-log">
                                             <i class="fa-solid fa-file-lines"></i> Log #<?= $mId ?>
@@ -288,4 +343,5 @@ $rolesConfig = [
     <script src="../_js/main.js"></script>
     <script src="../_js/profil.js"></script>
 </body>
+
 </html>

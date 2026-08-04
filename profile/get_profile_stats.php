@@ -48,24 +48,22 @@ try {
     $classesPlayed = $stmtClasses->fetchAll(PDO::FETCH_ASSOC);
 
     /** 4. MATCHS RÉCENTS **/
-    $stmtRecent = $db->prepare("
-        SELECT match_id, map_name, class_played 
-        FROM player_matches 
-        WHERE steamid = ? AND game_mode = ? 
-        ORDER BY match_id DESC 
-        LIMIT 5
-    ");
-    $stmtRecent->execute([$steamid3, $mode]);
-    $recentMatches = $stmtRecent->fetchAll(PDO::FETCH_ASSOC);
+    $recentMatches = getRecentPlayerMatches($db, $steamid3, $currentMode); // ou $mode
+    $matchStats = getPlayerMatchStats($db, $steamid3, $mode);
 
     /** 5. ENVOI DE LA RÉPONSE **/
     echo json_encode([
-        'total_matches'  => $matches['total_matches'] ?? 0,
-        'top_maps'       => $topMaps ? $topMaps : [],
-        'classes_played' => $classesPlayed ? $classesPlayed : [],
-        'recent_matches' => $recentMatches ? $recentMatches : []
+        'total_matches'   => $matches['total_matches'] ?? 0,
+        'top_maps'        => $topMaps ? $topMaps : [],
+        'classes_played'  => $classesPlayed ? $classesPlayed : [],
+        'recent_matches'  => $recentMatches ? $recentMatches : [],
+        'total_damage'    => $matchStats['total_damage'],
+        'total_kills'     => $matchStats['total_kills'],
+        'total_deaths'    => $matchStats['total_deaths'],
+        'total_assists'   => $matchStats['total_assists'],
+        'kd_ratio'        => $matchStats['kd_ratio'],
+        'classes_killed'  => $matchStats['classes_killed'],
     ]);
-
 } catch (PDOException $e) {
     http_response_code(500);
     echo json_encode(['error' => 'Erreur lors de la récupération des données.']);
