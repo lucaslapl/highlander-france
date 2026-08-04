@@ -34,6 +34,14 @@ $action = $_POST['action'] ?? '';
 $log_id = $_POST['log_id'] ?? '';
 $reason = trim($_POST['reason'] ?? '');
 
+// On invalide le cache des logs des Match Stats dès qu'on modifie la blacklist
+function invalidateLogsCache() {
+    $cacheFile = __DIR__ . '/../../_scripts/cache_hlfr_logs.json';
+    if (is_file($cacheFile)) {
+        @unlink($cacheFile);
+    }
+}
+
 if (!ctype_digit($log_id)) {
     respond(false, "ID de log invalide.");
 }
@@ -47,6 +55,7 @@ try {
         $stmt->execute([$log_id, $reason !== '' ? $reason : null, $steamid64]);
 
         if ($stmt->rowCount() > 0) {
+            invalidateLogsCache();
             respond(true, "Le log #$log_id a été blacklisté avec succès.");
         } else {
             respond(false, "Le log #$log_id est déjà blacklisté.");
@@ -56,6 +65,7 @@ try {
         $stmt->execute([$log_id]);
 
         if ($stmt->rowCount() > 0) {
+            invalidateLogsCache();
             respond(true, "Le log #$log_id a été retiré de la blacklist.");
         } else {
             respond(false, "Le log #$log_id n'est pas dans la blacklist.");

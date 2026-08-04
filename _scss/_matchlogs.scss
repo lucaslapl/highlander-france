@@ -86,8 +86,23 @@
                 cursor: pointer;
             }
 
+            .page-btn.nav {
+                font-weight: bold;
+            }
+
+            .page-btn:disabled {
+                opacity: .45;
+                cursor: default;
+            }
+
             .page-btn.active {
                 background: $accent;
                 color: white;
                 font-weight: bold;
+            }
+
+            .page-ellipsis {
+                align-self: center;
+                color: #999;
+                padding: 0 2px;
             }

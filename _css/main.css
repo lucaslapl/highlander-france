@@ -965,10 +965,25 @@ body #main #content #join a:hover {
   cursor: pointer;
 }
 
+.page-btn.nav {
+  font-weight: bold;
+}
+
+.page-btn:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
 .page-btn.active {
   background: #fbb7fb;
   color: white;
   font-weight: bold;
+}
+
+.page-ellipsis {
+  align-self: center;
+  color: #999;
+  padding: 0 2px;
 }
 
 /** FOOTER **/
