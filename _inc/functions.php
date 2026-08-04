@@ -359,7 +359,7 @@ function upsertPlayerMatchStats($db, $steamid, $matchId, $mapName, $classPlayed,
 function getPlayerMatchStats($db, $steamid3, $mode)
 {
     $empty = [
-        'total_damage' => 0,
+        'average_damage' => 0,
         'total_kills' => 0,
         'total_deaths' => 0,
         'total_assists' => 0,
@@ -371,7 +371,7 @@ function getPlayerMatchStats($db, $steamid3, $mode)
     }
     try {
         $stmt = $db->prepare("
-        SELECT COALESCE(SUM(dmg), 0)    AS total_damage,
+        SELECT COALESCE(AVG(dmg), 0)    AS average_damage,
                COALESCE(SUM(kills), 0)  AS total_kills,
                COALESCE(SUM(deaths), 0) AS total_deaths,
                COALESCE(SUM(assists), 0) AS total_assists
@@ -405,7 +405,7 @@ function getPlayerMatchStats($db, $steamid3, $mode)
         arsort($classesKilled);
 
         return [
-            'total_damage'   => (int)$t['total_damage'],
+            'average_damage' => (int)round((float)$t['average_damage']),
             'total_kills'    => (int)$t['total_kills'],
             'total_deaths'   => (int)$t['total_deaths'],
             'total_assists'  => (int)$t['total_assists'],

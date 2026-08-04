@@ -48,7 +48,7 @@ try {
     $classesPlayed = $stmtClasses->fetchAll(PDO::FETCH_ASSOC);
 
     /** 4. MATCHS RÉCENTS **/
-    $recentMatches = getRecentPlayerMatches($db, $steamid3, $currentMode); // ou $mode
+    $recentMatches = getRecentPlayerMatches($db, $steamid3, $mode);
     $matchStats = getPlayerMatchStats($db, $steamid3, $mode);
 
     /** 5. ENVOI DE LA RÉPONSE **/
@@ -57,7 +57,7 @@ try {
         'top_maps'        => $topMaps ? $topMaps : [],
         'classes_played'  => $classesPlayed ? $classesPlayed : [],
         'recent_matches'  => $recentMatches ? $recentMatches : [],
-        'total_damage'    => $matchStats['total_damage'],
+        'average_damage'  => $matchStats['average_damage'],
         'total_kills'     => $matchStats['total_kills'],
         'total_deaths'    => $matchStats['total_deaths'],
         'total_assists'   => $matchStats['total_assists'],

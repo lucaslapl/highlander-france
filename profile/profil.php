@@ -231,7 +231,7 @@ $rolesConfig = [
                 </div>
 
                 <div class="box-stats damage-dealt">
-                    <p><b>Dégâts totaux :</b> <span id="stat-total-damage"><?= number_format($matchStats['total_damage'], 0, ',', ' ') ?></span></p>
+                    <p><b>Dégâts moyens par match :</b> <span id="stat-total-damage"><?= number_format($matchStats['average_damage'], 0, ',', ' ') ?></span></p>
                 </div>
                 <div class="box-stats kills">
                     <p><b>Kills :</b> <span id="stat-total-kills"><?= $matchStats['total_kills'] ?></span></p>

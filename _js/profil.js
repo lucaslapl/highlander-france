@@ -26,7 +26,7 @@ async function switchProfileMode(button, mode, steamidFallback = null) {
         document.getElementById('stats-title').innerText = `Stats - ${mode === '6s' ? '6v6' : 'Highlander'}`;
         document.getElementById('recent-title').innerText = `Matchs Récents (${mode === '6s' ? '6v6' : '9v9'})`;
         document.getElementById('stat-total-matches').innerText = data.total_matches;
-        document.getElementById('stat-total-damage').innerText = Number(data.total_damage || 0).toLocaleString('fr-FR');
+        document.getElementById('stat-total-damage').innerText = Number(data.average_damage || 0).toLocaleString('fr-FR');
         document.getElementById('stat-total-kills').innerText = data.total_kills || 0;
         document.getElementById('stat-total-deaths').innerText = data.total_deaths || 0;
         document.getElementById('stat-kd-ratio').innerText = data.kd_ratio || 0;
