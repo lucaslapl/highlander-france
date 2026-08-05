@@ -50,6 +50,21 @@ $classesPlayed = $stmtClasses->fetchAll(PDO::FETCH_ASSOC);
 $recentMatches = getRecentPlayerMatches($db, $steamid3, $currentMode); // ou $mode
 $matchStats = getPlayerMatchStats($db, $steamid3, $currentMode);
 
+// Activité : nombre de matchs par jour sur les 3 derniers mois (tous modes confondus)
+$stmtActivity = $db->prepare("
+    SELECT strftime('%Y-%m-%d', ld.date, 'unixepoch') AS day, COUNT(DISTINCT pm.match_id) AS matches
+    FROM player_matches pm
+    LEFT JOIN log_dates ld ON ld.log_id = pm.match_id
+    WHERE pm.steamid = ? AND ld.date IS NOT NULL
+      AND ld.date >= strftime('%s', 'now', '-3 months')
+    GROUP BY day
+");
+$stmtActivity->execute([$steamid3]);
+$activityData = [];
+foreach ($stmtActivity->fetchAll(PDO::FETCH_ASSOC) as $row) {
+    $activityData[$row['day']] = (int)$row['matches'];
+}
+
 // CONFIGURATION DES BADGES ROLES (Sans icônes)
 $rolesConfig = [
     'is_founder'   => ['label' => 'Fondateur',   'class' => 'badge-founder'],
@@ -183,31 +198,55 @@ $rolesConfig = [
                     </div>
                 <?php endif; ?>
 
-                <div class="profile-header flex align-center">
-                    <img src="<?php echo htmlspecialchars($player['avatar']); ?>" alt="Avatar de <?php echo htmlspecialchars($player['display_name'] ?? $player['name']); ?>" class="profile-avatar">
+                <div class="personnal-info__top">
+                    <div class="profile-header flex align-center">
+                        <img src="<?php echo htmlspecialchars($player['avatar']); ?>" alt="Avatar de <?php echo htmlspecialchars($player['display_name'] ?? $player['name']); ?>" class="profile-avatar">
 
-                    <div class="flex flex-column justify-center gap-5" style="align-items: flex-start;">
-                        <div class="flex align-center gap-10">
-                            <h2 style="margin: 0; display: flex; align-items: center; gap: 10px;">
-                                <?php echo htmlspecialchars($player['display_name'] ?? $player['name']); ?>
-                                <?php if (!empty($country)): ?>
-                                    <img src="/_img/flags/<?= htmlspecialchars($country) ?>.gif" alt="<?= $countries[$country] ?? $country ?>" class="flag-icon">
+                        <div class="flex flex-column justify-center gap-5" style="align-items: flex-start;">
+                            <div class="flex align-center gap-10">
+                                <h2 style="margin: 0; display: flex; align-items: center; gap: 10px;">
+                                    <?php echo htmlspecialchars($player['display_name'] ?? $player['name']); ?>
+                                    <?php if (!empty($country)): ?>
+                                        <img src="/_img/flags/<?= htmlspecialchars($country) ?>.gif" alt="<?= $countries[$country] ?? $country ?>" class="flag-icon">
+                                    <?php endif; ?>
+                                </h2>
+                                <?php if ($date_formatee): ?>
+                                    <span style="font-size: 0.85rem; color: #888;">inscrit le <?= $date_formatee; ?></span>
                                 <?php endif; ?>
-                            </h2>
-                            <?php if ($date_formatee): ?>
-                                <span style="font-size: 0.85rem; color: #888;">inscrit le <?= $date_formatee; ?></span>
-                            <?php endif; ?>
-                        </div>
+                            </div>
 
-                        <div class="staff-badges-container">
-                            <?php foreach ($rolesConfig as $dbKey => $badgeInfo): ?>
-                                <?php if (isset($player[$dbKey]) && ($player[$dbKey] == 1 || $player[$dbKey] === true)): ?>
-                                    <span class="badge-staff <?= $badgeInfo['class'] ?>">
-                                        <?= htmlspecialchars($badgeInfo['label']) ?>
-                                    </span>
-                                <?php endif; ?>
-                            <?php endforeach; ?>
+                            <div class="staff-badges-container">
+                                <?php foreach ($rolesConfig as $dbKey => $badgeInfo): ?>
+                                    <?php if (isset($player[$dbKey]) && ($player[$dbKey] == 1 || $player[$dbKey] === true)): ?>
+                                        <span class="badge-staff <?= $badgeInfo['class'] ?>">
+                                            <?= htmlspecialchars($badgeInfo['label']) ?>
+                                        </span>
+                                    <?php endif; ?>
+                                <?php endforeach; ?>
+                            </div>
                         </div>
+                    </div>
+
+                    <div class="activity-calendar">
+                        <h3>Activité — 3 derniers mois</h3>
+                        <p class="activity-calendar__summary" id="activity-summary"></p>
+                        <div class="activity-calendar__scroll">
+                            <div class="activity-calendar__body">
+                                <div class="activity-calendar__months" id="activity-months"></div>
+                                <div class="activity-calendar__days" id="activity-days"></div>
+                                <div class="activity-calendar__grid" id="activity-grid"></div>
+                            </div>
+                        </div>
+                        <div class="activity-calendar__legend">
+                            <span>Moins</span>
+                            <span class="activity-calendar__cell activity-calendar__cell--0"></span>
+                            <span class="activity-calendar__cell activity-calendar__cell--1"></span>
+                            <span class="activity-calendar__cell activity-calendar__cell--2"></span>
+                            <span class="activity-calendar__cell activity-calendar__cell--3"></span>
+                            <span class="activity-calendar__cell activity-calendar__cell--4"></span>
+                            <span>Plus</span>
+                        </div>
+                        <div class="activity-calendar__tooltip" id="activity-tooltip"></div>
                     </div>
                 </div>
 
@@ -362,7 +401,7 @@ $rolesConfig = [
 
     <script src="https://kit.fontawesome.com/2f306d349c.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
-    <script>window.__initialClassesKilled = <?= json_encode($matchStats['classes_killed']) ?>; window.__initialTopMaps = <?= json_encode($topMaps) ?>;</script>
+    <script>window.__initialClassesKilled = <?= json_encode($matchStats['classes_killed']) ?>; window.__initialTopMaps = <?= json_encode($topMaps) ?>; window.__activityData = <?= json_encode($activityData) ?>;</script>
     <script src="../_js/main.js"></script>
     <script src="../_js/profil.js"></script>
 </body>

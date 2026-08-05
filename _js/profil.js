@@ -271,6 +271,126 @@ async function switchProfileMode(button, mode, steamidFallback = null) {
     }
 }
 
+function renderActivityCalendar(data) {
+    const container = document.getElementById('activity-grid');
+    if (!container) return;
+
+    const map = (data && typeof data === 'object') ? data : {};
+
+    const pad = (n) => String(n).padStart(2, '0');
+    const dateKey = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+
+    // Semaine courante commençant un dimanche, fenêtre de 3 mois en arrière
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const endWeek = new Date(today);
+    endWeek.setDate(today.getDate() - today.getDay());
+    const start = new Date(endWeek);
+    start.setMonth(start.getMonth() - 3);
+
+    const weeks = Math.max(1, Math.round((endWeek - start) / (7 * 86400000)));
+
+    // Seuils par quartiles des jours non nuls (niveau de couleur)
+    const counts = Object.values(map).filter(v => v > 0).sort((a, b) => a - b);
+    const n = counts.length;
+    const q = (p) => n === 0 ? 0 : counts[Math.min(n - 1, Math.floor(p * n))];
+    const t1 = q(0.25), t2 = q(0.5), t3 = q(0.75);
+
+    const level = (c) => {
+        if (!c) return 0;
+        if (c <= t1) return 1;
+        if (c <= t2) return 2;
+        if (c <= t3) return 3;
+        return 4;
+    };
+
+    const total = Object.values(map).reduce((a, b) => a + b, 0);
+
+    // Libellés de mois au-dessus des semaines (chacun s'étale sur ses semaines)
+    let months = '';
+    let lastMonth = -1;
+    let monthStart = 0;
+    let monthLabel = '';
+    const mCursor = new Date(start);
+    for (let w = 0; w < weeks; w++) {
+        const m = mCursor.getMonth();
+        if (m !== lastMonth) {
+            if (lastMonth !== -1) {
+                months += `<span style="grid-column: ${monthStart} / ${w + 1}">${monthLabel}</span>`;
+            }
+            monthLabel = mCursor.toLocaleDateString('fr-FR', { month: 'short' });
+            monthStart = w + 1;
+            lastMonth = m;
+        }
+        mCursor.setDate(mCursor.getDate() + 7);
+    }
+    if (lastMonth !== -1) {
+        months += `<span style="grid-column: ${monthStart} / ${weeks + 1}">${monthLabel}</span>`;
+    }
+    const monthsContainer = document.getElementById('activity-months');
+    monthsContainer.style.gridTemplateColumns = `repeat(${weeks}, 1fr)`;
+    monthsContainer.innerHTML = months;
+
+    // Jours de la semaine (colonne de gauche : Lun, Mer, Ven)
+    const dayNames = [
+        ['Lun', 1], ['Mer', 3], ['Ven', 5]
+    ];
+    document.getElementById('activity-days').innerHTML = dayNames.map(([label, row]) =>
+        `<span style="grid-row: ${row + 1}">${label}</span>`
+    ).join('');
+
+    // Cellules de la grille : N colonnes (semaines) x 7 lignes (jours)
+    let cells = '';
+    const d = new Date(start);
+    for (let w = 0; w < weeks; w++) {
+        for (let day = 0; day < 7; day++) {
+            const key = dateKey(d);
+            const count = map[key] || 0;
+            cells += `<div class="activity-calendar__cell activity-calendar__cell--${level(count)}" data-date="${key}" data-count="${count}"></div>`;
+            d.setDate(d.getDate() + 1);
+        }
+    }
+    container.style.gridTemplateColumns = `repeat(${weeks}, 10px)`;
+    container.innerHTML = cells;
+
+    const summary = document.getElementById('activity-summary');
+    if (summary) {
+        summary.textContent = total > 0
+            ? `${total} match${total > 1 ? 's' : ''} au cours des 3 derniers mois.`
+            : 'Aucun match au cours des 3 derniers mois.';
+    }
+
+    // Info-bulle personnalisée au survol des cases
+    const tooltip = document.getElementById('activity-tooltip');
+    if (tooltip && container) {
+        container.addEventListener('mouseover', (e) => {
+            const cell = e.target.closest('.activity-calendar__cell');
+            if (!cell) return;
+            const count = Number(cell.dataset.count) || 0;
+            const parts = (cell.dataset.date || '').split('-');
+            const day = parts.length === 3 ? `${parts[2]}/${parts[1]}` : '';
+            tooltip.textContent = count > 0
+                ? `${count} match${count > 1 ? 's' : ''} le ${day}`
+                : 'Aucun match';
+            tooltip.classList.add('is-visible');
+        });
+
+        container.addEventListener('mousemove', (e) => {
+            const box = document.querySelector('.activity-calendar');
+            if (!box) return;
+            const rect = box.getBoundingClientRect();
+            tooltip.style.left = (e.clientX - rect.left + 14) + 'px';
+            tooltip.style.top = (e.clientY - rect.top + 14) + 'px';
+        });
+
+        container.addEventListener('mouseout', (e) => {
+            if (!e.relatedTarget || !e.relatedTarget.closest('.activity-calendar__cell')) {
+                tooltip.classList.remove('is-visible');
+            }
+        });
+    }
+}
+
 function escapeHtml(text) {
     if (!text) return '';
     return text.toString().replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[m]));
@@ -284,6 +404,11 @@ if (typeof window.__initialClassesKilled !== 'undefined') {
 // Rendu initial du graphique à barres "Maps jouées" (données injectées par PHP)
 if (typeof window.__initialTopMaps !== 'undefined') {
     renderMapsChart(window.__initialTopMaps);
+}
+
+// Rendu initial du calendrier d'activité (données injectées par PHP)
+if (typeof window.__activityData !== 'undefined') {
+    renderActivityCalendar(window.__activityData);
 }
 
 // Clic sur une ligne du tableau des matchs récents → ouvre la page détail du log
