@@ -72,6 +72,30 @@ $db->exec("CREATE TABLE IF NOT EXISTS log_dates (
     date   INTEGER
 )");
 
+// Scores RED/BLU des matchs (page détail d'un log)
+$db->exec("CREATE TABLE IF NOT EXISTS match_scores (
+    match_id   INTEGER PRIMARY KEY,
+    red_score  INTEGER DEFAULT 0,
+    blue_score INTEGER DEFAULT 0
+)");
+
+// Migration : colonne team sur player_matches (red / blue), ajoutée une seule fois
+try {
+    $pmCols = $db->query("PRAGMA table_info(player_matches)")->fetchAll(PDO::FETCH_ASSOC);
+    $pmHasTeam = false;
+    foreach ($pmCols as $pmCol) {
+        if ($pmCol['name'] === 'team') {
+            $pmHasTeam = true;
+            break;
+        }
+    }
+    if (!$pmHasTeam) {
+        $db->exec("ALTER TABLE player_matches ADD COLUMN team TEXT DEFAULT NULL");
+    }
+} catch (PDOException $e) {
+    error_log("Migration team: " . $e->getMessage());
+}
+
 $db->exec("CREATE TABLE IF NOT EXISTS player_matches (
     steamid            TEXT,
     match_id           INTEGER,

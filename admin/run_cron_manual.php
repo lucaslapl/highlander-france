@@ -17,7 +17,8 @@ $available_scripts = [
     'sync_steam_avatars' => 'sync_steam_avatars.php',
     'backfill_log_dates' => 'backfill_log_dates.php',
     'migrate_player_match_stats' => 'migrate_player_match_stats.php',
-    'backfill_player_match_stats' => 'backfill_player_match_stats.php'
+    'backfill_player_match_stats' => 'backfill_player_match_stats.php',
+    'backfill_match_teams' => 'backfill_match_teams.php',
 ];
 
 $output = "";
@@ -120,6 +121,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['trigger_cron'])) {
                     <option value="backfill_log_dates" <?= $selected_action === 'backfill_log_dates' ? 'selected' : '' ?>>Backfill des dates de matchs (backfill_log_dates.php)</option>
                     <option value="migrate_player_match_stats" <?= $selected_action === 'migrate_player_match_stats' ? 'selected' : '' ?>>Migration des stats de match (migrate_player_match_stats.php)</option>
                     <option value="backfill_player_match_stats" <?= $selected_action === 'backfill_player_match_stats' ? 'selected' : '' ?>>Backfill des stats de match (backfill_player_match_stats.php)</option>
+                    <option value="backfill_match_teams" <?= $selected_action === 'backfill_match_teams' ? 'selected' : '' ?>>Backfill des équipes et scores de match (backfill_match_teams.php)</option>
                 </select>
 
                 <div>

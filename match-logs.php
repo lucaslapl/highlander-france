@@ -221,9 +221,14 @@ $isAdmin = (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true);
                     <td>${log._display}</td>
                     <td>${log.map}</td>
                     <td>
-                        <a class="log-link" href="https://logs.tf/${log.id}" target="_blank">
-                            ${log.title}
-                        </a>
+                        <div class="log-title-cell flex align-center gap-10">
+                            <a class="log-link" href="log/match-log.php?id=${log.id}">
+                                ${log.title}
+                            </a>
+                            <a class="log-external" href="https://logs.tf/${log.id}" target="_blank" rel="noopener" title="Voir sur logs.tf">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            </a>
+                        </div>
                     </td>
                     ${actionsCell}
                 </tr>

@@ -338,7 +338,7 @@ $rolesConfig = [
                                         $resultClass = $won === 1 ? 'result-win' : ($won === 0 ? 'result-loss' : 'result-unknown');
                                         $resultLabel = $won === 1 ? 'Victoire' : ($won === 0 ? 'Défaite' : '—');
                                         ?>
-                                        <tr class="match-row" data-href="https://logs.tf/<?= $mId ?>">
+                                        <tr class="match-row" data-href="/log/match-log.php?id=<?= $mId ?>">
                                             <td data-label="Classe">
                                                 <img src="/_img/classes/<?= $cPlayed ?>.png" alt="<?= ucfirst($cPlayed) ?>" class="class-icon" title="Joué en <?= ucfirst($cPlayed) ?>">
                                                 <span><?= ucfirst($cPlayed) ?></span>

@@ -296,6 +296,7 @@ function extractLogPlayerStats($details)
         $won = ($playerTeam === 'red') ? $wonIfRed : (($playerTeam === 'blue') ? $wonIfBlue : null);
 
         $stats[$steamid] = [
+            'team'               => $playerTeam,
             'length'             => $logLength,
             'won'                => $won,
             'dapm'               => (int)($pData['dapm'] ?? 0),
@@ -332,8 +333,8 @@ function upsertPlayerMatchStats($db, $steamid, $matchId, $mapName, $classPlayed,
         (steamid, match_id, map_name, class_played, game_mode,
          dmg, kills, deaths, assists, suicides, heal, medkits, ubers, drops,
          backstabs, headshots, longest_killstreak, classes_killed,
-         length, dapm, dmg_taken, medkits_hp, airshots, captures, won)
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+         length, dapm, dmg_taken, medkits_hp, airshots, captures, won, team)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ON CONFLICT(steamid, match_id) DO UPDATE SET
             dmg = excluded.dmg,
             kills = excluded.kills,
@@ -354,7 +355,8 @@ function upsertPlayerMatchStats($db, $steamid, $matchId, $mapName, $classPlayed,
             medkits_hp = excluded.medkits_hp,
             airshots = excluded.airshots,
             captures = excluded.captures,
-            won = excluded.won");
+            won = excluded.won,
+            team = excluded.team");
 
     $stmt->execute([
         $steamid,
@@ -382,6 +384,7 @@ function upsertPlayerMatchStats($db, $steamid, $matchId, $mapName, $classPlayed,
         (int)($stats['airshots'] ?? 0),
         (int)($stats['captures'] ?? 0),
         array_key_exists('won', $stats) ? (is_null($stats['won']) ? null : (int)$stats['won']) : null,
+        (isset($stats['team']) && in_array($stats['team'], ['red', 'blue'])) ? $stats['team'] : null,
     ]);
 }
 

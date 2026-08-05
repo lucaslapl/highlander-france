@@ -156,6 +156,16 @@ try {
 
             $perLogStats = extractLogPlayerStats($details);
 
+            // Scores RED / BLU (page détail d'un log)
+            $redScore  = (int)($details['teams']['Red']['score'] ?? 0);
+            $blueScore = (int)($details['teams']['Blue']['score'] ?? 0);
+            $db->prepare("INSERT INTO match_scores (match_id, red_score, blue_score)
+                          VALUES (?, ?, ?)
+                          ON CONFLICT(match_id) DO UPDATE SET
+                              red_score = excluded.red_score,
+                              blue_score = excluded.blue_score")
+                ->execute([$logId, $redScore, $blueScore]);
+
             if (isset($details['players'])) {
                 foreach ($details['players'] as $steamid => $pData) {
 

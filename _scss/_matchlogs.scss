@@ -106,3 +106,338 @@
                 color: #999;
                 padding: 0 2px;
             }
+
+            /**** MATCH LOG DETAIL ****/
+
+            .log-title-cell {
+                .log-external {
+                    color: #999;
+                    font-size: 12px;
+                    transition: color 0.2s;
+
+                    &:hover {
+                        color: $accent;
+                    }
+                }
+            }
+
+            .matchlog-header {
+                background: #000000b5;
+                padding: 20px;
+                border-radius: 8px;
+                margin-bottom: 25px;
+
+                .matchlog-back {
+                    display: inline-block;
+                    color: #999;
+                    font-size: 14px;
+                    margin-bottom: 15px;
+                    transition: color 0.2s;
+
+                    &:hover {
+                        color: $accent;
+                    }
+                }
+
+                .matchlog-title {
+                    h2 {
+                        margin: 0;
+                    }
+
+                    .matchlog-mode {
+                        padding: 3px 10px;
+                        border-radius: 4px;
+                        font-size: 13px;
+                        font-weight: bold;
+                        color: #fff;
+                        text-transform: uppercase;
+
+                        &.mode-9v9 {
+                            background: #72227d;
+                        }
+
+                        &.mode-6s {
+                            background: #2b6cb0;
+                        }
+                    }
+                }
+
+                .matchlog-meta {
+                    margin-top: 15px;
+                    flex-wrap: wrap;
+                    gap: 12px 25px;
+
+                    .matchlog-meta-item {
+                        color: #ccc;
+                        font-size: 14px;
+
+                        i {
+                            margin-right: 5px;
+                            color: $accent;
+                        }
+                    }
+
+                    .matchlog-logs-tf {
+                        display: inline-flex;
+                        align-items: center;
+                        gap: 8px;
+                        color: $accent;
+                        text-decoration: none;
+                        font-size: 14px;
+
+                        .logs-tf-logo {
+                            height: 18px;
+                            width: auto;
+                        }
+                    }
+                }
+
+                .matchlog-admin {
+                    .btn-blacklist {
+                        background: #2b2b2b;
+                        border: 1px solid #444;
+                        color: #f35f5f;
+                        border-radius: 4px;
+                        padding: 6px 11px;
+                        font-size: 13px;
+                        cursor: pointer;
+                        transition: background 0.2s;
+
+                        &:hover {
+                            background: #381e1e;
+                            border-color: #f35f5f;
+                        }
+                    }
+                }
+            }
+
+            .matchlog-table-wrapper {
+                overflow-x: auto;
+
+                .matchlog-table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    min-width: 900px;
+
+                    th,
+                    td {
+                        padding: 7px 9px;
+                        text-align: center;
+                        white-space: nowrap;
+                        font-size: 13px;
+                    }
+
+                    th {
+                        background-color: #000000b5;
+                        cursor: pointer;
+                        user-select: none;
+                        transition: color 0.2s;
+                        font-size: 12px;
+                        text-transform: uppercase;
+                        letter-spacing: 0.3px;
+
+                        &:hover {
+                            color: $accent;
+                        }
+
+                        &.sorted-desc::after,
+                        &.sorted-asc::after {
+                            content: " \25BE";
+                            color: $accent;
+                        }
+
+                        &.sorted-asc::after {
+                            content: " \25B4";
+                        }
+                    }
+
+                    tr:nth-child(even) {
+                        background-color: #0000008a;
+                    }
+
+                    tr:hover {
+                        background-color: rgba(0, 0, 0, 0.45);
+                    }
+
+                    th:first-child,
+                    td:first-child {
+                        text-align: center;
+                        width: 40px;
+                    }
+
+                    td:nth-child(3) {
+                        text-align: left;
+                    }
+
+                    .player-cell {
+                        justify-content: flex-start;
+
+                        .player-avatar {
+                            width: 28px;
+                            height: 28px;
+                            border-radius: 4px;
+                            object-fit: cover;
+                        }
+
+                        .player-link {
+                            color: $accent;
+                            text-decoration: none;
+
+                            &:hover {
+                                text-decoration: underline;
+                            }
+                        }
+                    }
+
+                    .class-icon {
+                        width: 24px;
+                        height: 24px;
+                        vertical-align: middle;
+                    }
+
+                    .class-unknown {
+                        display: inline-flex;
+                        align-items: center;
+                        justify-content: center;
+                        width: 24px;
+                        height: 24px;
+                        border-radius: 4px;
+                        background: #444;
+                        color: #ccc;
+                        font-size: 13px;
+                        font-weight: bold;
+                    }
+
+                    .col-dmg {
+                        color: #ffd24d;
+                        font-weight: bold;
+                    }
+                }
+            }
+
+            .matchlog-scorebar {
+                gap: 25px;
+                margin-bottom: 25px;
+                padding: 15px 20px;
+                background: #000000b5;
+                border-radius: 8px;
+
+                .score-team {
+                    font-size: 20px;
+                    font-weight: bold;
+                    text-transform: uppercase;
+                    letter-spacing: 1px;
+                }
+
+                .score-value {
+                    font-size: 28px;
+                    font-weight: bold;
+                }
+
+                .score-sep {
+                    color: #888;
+                    font-size: 22px;
+                }
+
+                .score-red {
+                    color: #ff6b6b;
+                }
+
+                .score-blue {
+                    color: #5b9bd5;
+                }
+            }
+
+            .matchlog-teams {
+                display: flex;
+                flex-direction: column;
+                gap: 25px;
+                align-items: stretch;
+
+                .matchlog-team {
+                    width: 100%;
+                    background: #0000008a;
+                    border-radius: 8px;
+                    padding: 15px;
+                    border-left: 3px solid transparent;
+                    box-sizing: border-box;
+
+                    &.team-red {
+                        border-left-color: #ff6b6b;
+                    }
+
+                    &.team-blue {
+                        border-left-color: #5b9bd5;
+                    }
+
+                    .matchlog-team-head {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
+                        padding: 0 5px 12px 5px;
+
+                        .team-head-left {
+                            .team-name {
+                                font-size: 18px;
+                                font-weight: bold;
+                                text-transform: uppercase;
+                                letter-spacing: 1px;
+
+                                .team-red & {
+                                    color: #ff6b6b;
+                                }
+
+                                .team-blue & {
+                                    color: #5b9bd5;
+                                }
+                            }
+
+                            .team-result {
+                                padding: 2px 10px;
+                                border-radius: 4px;
+                                font-size: 12px;
+                                font-weight: bold;
+                                text-transform: uppercase;
+                                color: #fff;
+
+                                &.result-win {
+                                    background: #2f8f46;
+                                }
+
+                                &.result-loss {
+                                    background: #a33b3b;
+                                }
+
+                                &.result-draw {
+                                    background: #666;
+                                }
+                            }
+                        }
+
+                        .team-score {
+                            font-size: 22px;
+                            font-weight: bold;
+                            color: #fff;
+                        }
+                    }
+
+                    .matchlog-table-wrapper {
+                        .matchlog-table {
+                            min-width: 0;
+                        }
+                    }
+                }
+            }
+
+            .matchlog-team-unassigned {
+                margin-top: 25px;
+                background: #0000008a;
+                border-radius: 8px;
+                padding: 15px;
+
+                h3 {
+                    margin: 0 0 12px 0;
+                    color: #ccc;
+                    font-size: 16px;
+                }
+            }

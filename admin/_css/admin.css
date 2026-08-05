@@ -643,7 +643,9 @@ body #main .admin-card .checkbox-group .admin-label {
   padding: 12px 15px;
   border-radius: 4px;
   cursor: pointer;
-  user-select: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
   transition: background 0.2s, border-color 0.2s;
   border: 1px solid transparent;
   font-size: 14px;
@@ -899,6 +901,4 @@ body #main {
   body #main.admin-main {
     padding: 0 10px;
   }
-}
-
-/*# sourceMappingURL=admin.css.map */
+}/*# sourceMappingURL=admin.css.map */

@@ -273,6 +273,7 @@ body #main #content .profile-tabs {
   background: #141414;
   padding: 6px;
   border-radius: 8px;
+  width: -moz-fit-content;
   width: fit-content;
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
@@ -304,7 +305,8 @@ body #main #content .profile-tabs .profile-tab-btn.active {
   width: 45px;
   height: 45px;
   display: block;
-  object-fit: contain;
+  -o-object-fit: contain;
+     object-fit: contain;
 }
 
 .gap-10 {
@@ -317,6 +319,4 @@ body #main #content .profile-tabs .profile-tab-btn.active {
 
 .align-center {
   align-items: center;
-}
-
-/*# sourceMappingURL=profile.css.map */
+}/*# sourceMappingURL=profile.css.map */

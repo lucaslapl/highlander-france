@@ -249,7 +249,7 @@ async function switchProfileMode(button, mode, steamidFallback = null) {
                 const resultClass = `result-${won}`;
                 const resultLabel = won === 'win' ? 'Victoire' : (won === 'loss' ? 'Défaite' : '—');
                 html += `
-                    <tr class="match-row" data-href="https://logs.tf/${mId}">
+                    <tr class="match-row" data-href="/log/match-log.php?id=${mId}">
                         <td data-label="Classe">
                             <img src="/_img/classes/${cPlayed}.png" alt="${cPlayed}" class="class-icon" title="Joué en ${cPlayed}">
                             <span>${cPlayed.charAt(0).toUpperCase() + cPlayed.slice(1)}</span>
@@ -286,10 +286,10 @@ if (typeof window.__initialTopMaps !== 'undefined') {
     renderMapsChart(window.__initialTopMaps);
 }
 
-// Clic sur une ligne du tableau des matchs récents → ouvre la log logs.tf
+// Clic sur une ligne du tableau des matchs récents → ouvre la page détail du log
 document.addEventListener('click', function (event) {
     const row = event.target.closest('.match-row');
     if (row && row.dataset.href) {
-        window.open(row.dataset.href, '_blank');
+        window.location.href = row.dataset.href;
     }
 });

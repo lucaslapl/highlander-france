@@ -875,6 +875,7 @@ body #main #content #join a:hover {
   height: 32px;
   border-radius: 50%;
 }
+
 .leaderboard-note {
   margin: 20px 0;
   text-align: center;
@@ -984,6 +985,282 @@ body #main #content #join a:hover {
   align-self: center;
   color: #999;
   padding: 0 2px;
+}
+
+/**** MATCH LOG DETAIL ****/
+.log-title-cell .log-external {
+  color: #999;
+  font-size: 12px;
+  transition: color 0.2s;
+}
+.log-title-cell .log-external:hover {
+  color: #fbb7fb;
+}
+
+.matchlog-header {
+  background: rgba(0, 0, 0, 0.7098039216);
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 25px;
+}
+.matchlog-header .matchlog-back {
+  display: inline-block;
+  color: #999;
+  font-size: 14px;
+  margin-bottom: 15px;
+  transition: color 0.2s;
+}
+.matchlog-header .matchlog-back:hover {
+  color: #fbb7fb;
+}
+.matchlog-header .matchlog-title h2 {
+  margin: 0;
+}
+.matchlog-header .matchlog-title .matchlog-mode {
+  padding: 3px 10px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: bold;
+  color: #fff;
+  text-transform: uppercase;
+}
+.matchlog-header .matchlog-title .matchlog-mode.mode-9v9 {
+  background: #72227d;
+}
+.matchlog-header .matchlog-title .matchlog-mode.mode-6s {
+  background: #2b6cb0;
+}
+.matchlog-header .matchlog-meta {
+  margin-top: 15px;
+  flex-wrap: wrap;
+  gap: 12px 25px;
+}
+.matchlog-header .matchlog-meta .matchlog-meta-item {
+  color: #ccc;
+  font-size: 14px;
+}
+.matchlog-header .matchlog-meta .matchlog-meta-item i {
+  margin-right: 5px;
+  color: #fbb7fb;
+}
+.matchlog-header .matchlog-meta .matchlog-logs-tf {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #fbb7fb;
+  text-decoration: none;
+  font-size: 14px;
+}
+.matchlog-header .matchlog-meta .matchlog-logs-tf .logs-tf-logo {
+  height: 18px;
+  width: auto;
+}
+.matchlog-header .matchlog-admin .btn-blacklist {
+  background: #2b2b2b;
+  border: 1px solid #444;
+  color: #f35f5f;
+  border-radius: 4px;
+  padding: 6px 11px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.matchlog-header .matchlog-admin .btn-blacklist:hover {
+  background: #381e1e;
+  border-color: #f35f5f;
+}
+
+.matchlog-table-wrapper {
+  overflow-x: auto;
+}
+.matchlog-table-wrapper .matchlog-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 900px;
+}
+.matchlog-table-wrapper .matchlog-table th,
+.matchlog-table-wrapper .matchlog-table td {
+  padding: 7px 9px;
+  text-align: center;
+  white-space: nowrap;
+  font-size: 13px;
+}
+.matchlog-table-wrapper .matchlog-table th {
+  background-color: rgba(0, 0, 0, 0.7098039216);
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  transition: color 0.2s;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.matchlog-table-wrapper .matchlog-table th:hover {
+  color: #fbb7fb;
+}
+.matchlog-table-wrapper .matchlog-table th.sorted-desc::after, .matchlog-table-wrapper .matchlog-table th.sorted-asc::after {
+  content: " ▾";
+  color: #fbb7fb;
+}
+.matchlog-table-wrapper .matchlog-table th.sorted-asc::after {
+  content: " ▴";
+}
+.matchlog-table-wrapper .matchlog-table tr:nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.5411764706);
+}
+.matchlog-table-wrapper .matchlog-table tr:hover {
+  background-color: rgba(0, 0, 0, 0.45);
+}
+.matchlog-table-wrapper .matchlog-table th:first-child,
+.matchlog-table-wrapper .matchlog-table td:first-child {
+  text-align: center;
+  width: 40px;
+}
+.matchlog-table-wrapper .matchlog-table td:nth-child(3) {
+  text-align: left;
+}
+.matchlog-table-wrapper .matchlog-table .player-cell {
+  justify-content: flex-start;
+}
+.matchlog-table-wrapper .matchlog-table .player-cell .player-avatar {
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.matchlog-table-wrapper .matchlog-table .player-cell .player-link {
+  color: #fbb7fb;
+  text-decoration: none;
+}
+.matchlog-table-wrapper .matchlog-table .player-cell .player-link:hover {
+  text-decoration: underline;
+}
+.matchlog-table-wrapper .matchlog-table .class-icon {
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
+}
+.matchlog-table-wrapper .matchlog-table .class-unknown {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  background: #444;
+  color: #ccc;
+  font-size: 13px;
+  font-weight: bold;
+}
+.matchlog-table-wrapper .matchlog-table .col-dmg {
+  color: #ffd24d;
+  font-weight: bold;
+}
+
+.matchlog-scorebar {
+  gap: 25px;
+  margin-bottom: 25px;
+  padding: 15px 20px;
+  background: rgba(0, 0, 0, 0.7098039216);
+  border-radius: 8px;
+}
+.matchlog-scorebar .score-team {
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.matchlog-scorebar .score-value {
+  font-size: 28px;
+  font-weight: bold;
+}
+.matchlog-scorebar .score-sep {
+  color: #888;
+  font-size: 22px;
+}
+.matchlog-scorebar .score-red {
+  color: #ff6b6b;
+}
+.matchlog-scorebar .score-blue {
+  color: #5b9bd5;
+}
+
+.matchlog-teams {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  align-items: stretch;
+}
+.matchlog-teams .matchlog-team {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5411764706);
+  border-radius: 8px;
+  padding: 15px;
+  border-left: 3px solid transparent;
+  box-sizing: border-box;
+}
+.matchlog-teams .matchlog-team.team-red {
+  border-left-color: #ff6b6b;
+}
+.matchlog-teams .matchlog-team.team-blue {
+  border-left-color: #5b9bd5;
+}
+.matchlog-teams .matchlog-team .matchlog-team-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 5px 12px 5px;
+}
+.matchlog-teams .matchlog-team .matchlog-team-head .team-head-left .team-name {
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.team-red .matchlog-teams .matchlog-team .matchlog-team-head .team-head-left .team-name {
+  color: #ff6b6b;
+}
+.team-blue .matchlog-teams .matchlog-team .matchlog-team-head .team-head-left .team-name {
+  color: #5b9bd5;
+}
+.matchlog-teams .matchlog-team .matchlog-team-head .team-head-left .team-result {
+  padding: 2px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #fff;
+}
+.matchlog-teams .matchlog-team .matchlog-team-head .team-head-left .team-result.result-win {
+  background: #2f8f46;
+}
+.matchlog-teams .matchlog-team .matchlog-team-head .team-head-left .team-result.result-loss {
+  background: #a33b3b;
+}
+.matchlog-teams .matchlog-team .matchlog-team-head .team-head-left .team-result.result-draw {
+  background: #666;
+}
+.matchlog-teams .matchlog-team .matchlog-team-head .team-score {
+  font-size: 22px;
+  font-weight: bold;
+  color: #fff;
+}
+.matchlog-teams .matchlog-team .matchlog-table-wrapper .matchlog-table {
+  min-width: 0;
+}
+
+.matchlog-team-unassigned {
+  margin-top: 25px;
+  background: rgba(0, 0, 0, 0.5411764706);
+  border-radius: 8px;
+  padding: 15px;
+}
+.matchlog-team-unassigned h3 {
+  margin: 0 0 12px 0;
+  color: #ccc;
+  font-size: 16px;
 }
 
 /** FOOTER **/
